@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Candidate Profile | Verify</n    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: { primary: "#F50302", secondary: "#4D4D4D" },
+            borderRadius: {
+              none: "0px",
+              sm: "4px",
+              DEFAULT: "8px",
+              md: "12px",
+              lg: "16px",
+              xl: "20px",
+              "2xl": "24px",
+              "3xl": "32px",
+              full: "9999px",
+              button: "8px",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Futura:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
+    />
+    <style>
+      :where([class^="ri-"])::before { content: "\f3c2"; }
+      body {
+        font-family: 'Futura', sans-serif;
+        background-color: #f8fafc;
+      }
+      input[type="number"]::-webkit-inner-spin-button,
+      input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      .custom-checkbox {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 18px;
+        height: 18px;
+        border: 2px solid #d1d5db;
+        border-radius: 4px;
+        outline: none;
+        cursor: pointer;
+        position: relative;
+      }
+      .custom-checkbox:checked {
+        background-color: #F50302;
+        border-color: #F50302;
+      }
+      .custom-checkbox:checked::after {
+        content: '';
+        position: absolute;
+        top: 2px;
+        left: 5px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+      .custom-radio {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 18px;
+        height: 18px;
+        border: 2px solid #d1d5db;
+        border-radius: 50%;
+        outline: none;
+        cursor: pointer;
+        position: relative;
+      }
+      .custom-radio:checked {
+        border-color: #F50302;
+      }
+      .custom-radio:checked::after {
+        content: '';
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #F50302;
+      }
+      .custom-switch {
+        position: relative;
+        display: inline-block;
+        width: 44px;
+        height: 22px;
+      }
+      .custom-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+        border-radius: 34px;
+      }
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        width: 18px;
+        left: 3px;
+        bottom: 2px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+      }
+      input:checked + .slider {
+        background-color: #F50302;
+      }
+      input:checked + .slider:before {
+        transform: translateX(20px);
+      }
+      .tier-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .tier-bronze {
+        background-color: #A6A6A6;
+        color: white;
+      }
+      .tier-silver {
+        background-color: #4D4D4D;
+        color: white;
+      }
+      .tier-gold {
+        background-color: #F50302;
+        color: white;
+      }
+      .skill-meter {
+        height: 6px;
+        background-color: #e5e7eb;
+        border-radius: 3px;
+        overflow: hidden;
+      }
+      .skill-meter-fill {
+        height: 100%;
+        background-color: #F50302;
+      }
+      .tab-active {
+        color: #F50302;
+        border-bottom: 2px solid #F50302;
+      }
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: 12px;
+        top: 28px;
+        bottom: 0;
+        width: 2px;
+        background-color: #e5e7eb;
+      }
+      .timeline-item:last-child::before {
+        display: none;
+      }
+      .timeline-dot {
+        position: absolute;
+        left: 0;
+        top: 24px;
+        width: 26px;
+        height: 26px;
+        background-color: #fff;
+        border: 2px solid #F50302;
+        border-radius: 50%;
+        z-index: 1;
+      }
+      .timeline-dot::after {
+        content: "";
+        position: absolute;
+        left: 5px;
+        top: 5px;
+        width: 12px;
+        height: 12px;
+        background-color: #F50302;
+        border-radius: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+      <div class="flex items-center justify-between px-6 py-4">
+        <div class="flex items-center">
+          <a href="#" class="text-2xl"
+            ><img
+              src="https://static.readdy.ai/image/783dd8c3d2d1f38f9648f46144ac17f1/bc2b69f3a823a0bfcee48284d9c2d098.jpeg"
+              alt="Verify"
+              class="h-8"
+          /></a>
+        </div>
+        <div class="flex items-center space-x-6">
+          <div class="flex items-center bg-gray-100 rounded-full px-3 py-1">
+            <span class="text-primary font-semibold mr-2">12</span>
+            <span class="text-gray-600 text-sm">Credits</span>
+          </div>
+          <div class="relative">
+            <button class="flex items-center space-x-2">
+              <div
+                class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center"
+              >
+                <i class="ri-user-line text-gray-600"></i>
+              </div>
+              <span class="text-gray-700">James Wilson</span>
+              <i class="ri-arrow-down-s-line text-gray-500"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <nav class="bg-white border-t border-gray-200">
+        <div class="flex items-center justify-between px-6">
+          <div class="flex space-x-1">
+            <a
+              href="/dashboard"
+              class="px-4 py-3 text-gray-600 hover:text-gray-900 flex items-center"
+            >
+              <i class="ri-dashboard-line mr-2"></i>
+              Dashboard
+            </a>
+            <a
+              href="/saved"
+              class="px-4 py-3 text-gray-600 hover:text-gray-900 flex items-center"
+            >
+              <i class="ri-bookmark-line mr-2"></i>
+              Saved Candidates
+            </a>
+            <a
+              href="/rejected"
+              class="px-4 py-3 text-gray-600 hover:text-gray-900 flex items-center"
+            >
+              <i class="ri-close-circle-fill mr-2"></i>
+              Rejected
+            </a>
+            <a
+              href="/credits"
+              class="px-4 py-3 text-gray-600 hover:text-gray-900 flex items-center"
+            >
+              <i class="ri-history-line mr-2"></i>
+              Credits
+            </a>
+            <a
+              href="/settings"
+              class="px-4 py-3 text-gray-600 hover:text-gray-900 flex items-center"
+            >
+              <i class="ri-settings-4-line mr-2"></i>
+              Settings
+            </a>
+          </div>
+          <div class="flex items-center space-x-4">
+            <button class="text-gray-600 hover:text-gray-900">
+              <i class="ri-notification-3-line text-xl"></i>
+            </button>
+            <button class="text-gray-600 hover:text-gray-900">
+              <i class="ri-question-line text-xl"></i>
+            </button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Sub-header with breadcrumb -->
+    <div class="bg-white border-t border-gray-200 sticky top-0 z-10 shadow-sm">
+      <div
+        class="container mx-auto px-4 py-3 max-w-7xl flex justify-between items-center"
+      >
+        <div class="flex items-center">
+          <a
+            href="/saved"
+            class="text-gray-600 hover:text-gray-900 flex items-center"
+          >
+            <i class="ri-arrow-left-line mr-2"></i>
+            Back to Saved Candidates
+          </a>
