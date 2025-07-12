@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Terms of Service - Verify</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: { primary: "#F50302", secondary: "#4D4D4D" },
+            borderRadius: {
+              none: "0px",
+              sm: "4px",
+              DEFAULT: "8px",
+              md: "12px",
+              lg: "16px",
+              xl: "20px",
+              "2xl": "24px",
+              "3xl": "32px",
+              full: "9999px",
+              button: "8px",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
+    />
+    <style>
+      :where([class^="ri-"])::before { content: "\f3c2"; }
+      @import url('https://fonts.googleapis.com/css2?family=Futura:wght@400;500;700&display=swap');
+      body {
+          font-family: 'Futura', sans-serif;
+      }
+      .table-of-contents a:hover {
+          color: #F50302;
+          text-decoration: underline;
+      }
+      .tos-content h2 {
+          scroll-margin-top: 100px;
+      }
+    </style>
+  </head>
+  <body class="bg-white text-gray-900">
+    <!-- Header -->
+    <header class="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
+      <div
+        class="container mx-auto px-4 py-4 flex justify-between items-center"
+      >
+        <div class="flex items-center">
+          <a
+            href="home-page.html"
+            data-readdy="true"
+            class="mr-4 text-gray-800 hover:text-primary flex items-center"
+          >
+            <i class="ri-arrow-left-line ri-lg"></i>
+            <span class="ml-2">Back to Home</span>
+          </a>
+          <div class="text-2xl font-bold tracking-tight flex items-center">
+            <img
+              src="https://static.readdy.ai/image/783dd8c3d2d1f38f9648f46144ac17f1/bc2b69f3a823a0bfcee48284d9c2d098.jpeg"
+              alt="Verify Logo"
+              class="h-8"
+            />
+          </div>
+        </div>
+        <div class="text-xl font-bold">Terms of Service</div>
+        <div class="w-32"></div>
+        <!-- Spacer for balance -->
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-16">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row gap-8">
+          <!-- Table of Contents (Sidebar) -->
+          <div class="md:w-1/4">
+            <div
+              class="sticky top-24 bg-white p-6 rounded-lg shadow-sm border border-gray-100"
+            >
+              <h3 class="text-lg font-bold mb-4">Contents</h3>
+              <ul class="space-y-2 table-of-contents">
+                <li>
+                  <a
+                    href="#introduction"
+                    class="text-gray-600 hover:text-primary"
+                    >1. Introduction</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#user-obligations"
+                    class="text-gray-600 hover:text-primary"
+                    >2. User Obligations</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#platform-rules"
+                    class="text-gray-600 hover:text-primary"
+                    >3. Platform Rules</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#verification-process"
+                    class="text-gray-600 hover:text-primary"
+                    >4. Verification Process</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#payment-terms"
+                    class="text-gray-600 hover:text-primary"
+                    >5. Payment Terms</a
+                  >
+                </li>
+                <li>
+                  <a href="#liability" class="text-gray-600 hover:text-primary"
+                    >6. Liability Limitations</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#intellectual-property"
+                    class="text-gray-600 hover:text-primary"
+                    >7. Intellectual Property</a
+                  >
+                </li>
+                <li>
+                  <a href="#data-usage" class="text-gray-600 hover:text-primary"
+                    >8. Data Usage</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#termination"
+                    class="text-gray-600 hover:text-primary"
+                    >9. Account Termination</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#dispute-resolution"
+                    class="text-gray-600 hover:text-primary"
+                    >10. Dispute Resolution</a
+                  >
+                </li>
+                <li>
+                  <a href="#amendments" class="text-gray-600 hover:text-primary"
+                    >11. Amendments</a
+                  >
+                </li>
+                <li>
+                  <a href="#contact" class="text-gray-600 hover:text-primary"
+                    >12. Contact Information</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Terms of Service Content -->
+          <div class="md:w-3/4 tos-content">
+            <div
+              class="bg-white p-8 rounded-lg shadow-sm border border-gray-100"
+            >
+              <div class="max-w-3xl">
+                <div class="mb-12">
+                  <h1 class="text-3xl font-bold mb-4">Terms of Service</h1>
+                  <p class="text-gray-600">Last Updated: June 3, 2025</p>
+                </div>
+
+                <!-- Introduction -->
+                <section id="introduction" class="mb-12">
+                  <h2 class="text-2xl font-bold mb-4 text-gray-800">
+                    1. Introduction and Scope
+                  </h2>
+                  <div class="space-y-4 text-gray-700">
+                    <p>
+                      Welcome to Verify ("we," "our," or "us"). These Terms of
+                      Service ("Terms") govern your access to and use of the
+                      Verify platform, including our website, mobile
+                      applications, and services (collectively, the "Platform").
+                    </p>
+                    <p>
+                      By accessing or using our Platform, you agree to be bound
+                      by these Terms. If you do not agree to these Terms, you
+                      may not access or use the Platform. Please read these
+                      Terms carefully before proceeding.
+                    </p>
+                    <p>
+                      Verify is a platform that connects qualified workers with
+                      employers by verifying documents and credentials to ensure
+                      safety and trust. Our services are available only in South
+                      Africa.
+                    </p>
+                  </div>
+                </section>
+
+                <!-- User Obligations -->
+                <section id="user-obligations" class="mb-12">
+                  <h2 class="text-2xl font-bold mb-4 text-gray-800">
+                    2. User Obligations and Account Terms
+                  </h2>
+                  <div class="space-y-4 text-gray-700">
+                    <h3 class="text-xl font-semibold mb-2">
+                      2.1 Account Registration
+                    </h3>
+                    <p>
+                      To use certain features of the Platform, you must register
+                      for an account. You agree to provide accurate, current,
+                      and complete information during the registration process
+                      and to update such information to keep it accurate,
+                      current, and complete.
+                    </p>
+
+                    <h3 class="text-xl font-semibold mb-2">
+                      2.2 Account Security
+                    </h3>
+                    <p>
+                      You are responsible for safeguarding your password and for
+                      all activities that occur under your account. You agree to
+                      notify us immediately of any unauthorized use of your
+                      account or any other breach of security.
+                    </p>
+
+                    <h3 class="text-xl font-semibold mb-2">
+                      2.3 Age Requirements
+                    </h3>
+                    <p>
+                      You must be at least 18 years old to use the Platform. By
+                      using the Platform, you represent and warrant that you are
+                      18 years of age or older.
+                    </p>
+
+                    <h3 class="text-xl font-semibold mb-2">
+                      2.4 Truthful Information
+                    </h3>
+                    <p>
+                      You agree to provide only truthful and accurate
+                      information about yourself, your qualifications, and your
+                      experience. Misrepresentation of any information may
+                      result in immediate termination of your account and
+                      potential legal consequences.
+                    </p>
+                  </div>
+                </section>
+
+                <!-- Platform Rules -->
+                <section id="platform-rules" class="mb-12">
+                  <h2 class="text-2xl font-bold mb-4 text-gray-800">
+                    3. Platform Rules and Guidelines
+                  </h2>
+                  <div class="space-y-4 text-gray-700">
+                    <h3 class="text-xl font-semibold mb-2">
+                      3.1 Prohibited Activities
+                    </h3>
+                    <p>
+                      You agree not to engage in any of the following prohibited
+                      activities:
+                    </p>
+                    <ul class="list-disc pl-6 space-y-2">
+                      <li>
+                        Using the Platform for any illegal purpose or in
+                        violation of any local, state, national, or
+                        international law
+                      </li>
+                      <li>
+                        Harassing, threatening, or intimidating other users
+                      </li>
+                      <li>Posting false, misleading, or deceptive content</li>
+                      <li>Impersonating another person or entity</li>
+                      <li>
+                        Attempting to circumvent any security measures of the
+                        Platform
+                      </li>
+                      <li>
+                        Using the Platform to send unsolicited communications or
+                        spam
+                      </li>
+                      <li>
+                        Interfering with the proper functioning of the Platform
+                      </li>
+                    </ul>
+
+                    <h3 class="text-xl font-semibold mb-2">
+                      3.2 Communication Guidelines
+                    </h3>
+                    <p>
+                      All communications between users must be professional and
+                      respectful. Harassment, discrimination, or abusive
+                      language will not be tolerated and may result in account
+                      termination.
+                    </p>
+
+                    <h3 class="text-xl font-semibold mb-2">
+                      3.3 Reporting Violations
+                    </h3>
+                    <p>
+                      If you observe content or behavior that violates these
+                      Terms, please report it to us immediately at
+                      <a
+                        href="mailto:support@verify.co.za"
+                        class="text-primary hover:underline"
+                        >support@verify.co.za</a
+                      >.
+                    </p>
+                  </div>
+                </section>
+
+                <!-- Verification Process -->
+                <section id="verification-process" class="mb-12">
+                  <h2 class="text-2xl font-bold mb-4 text-gray-800">
+                    4. Verification Process Terms
+                  </h2>
+                  <div class="space-y-4 text-gray-700">
+                    <h3 class="text-xl font-semibold mb-2">
+                      4.1 Verification Tiers
+                    </h3>
+                    <p>Verify offers three verification tiers:</p>
+                    <ul class="list-disc pl-6 space-y-2">
+                      <li><strong>Bronze:</strong> Basic CV verification</li>
+                      <li>
+                        <strong>Silver:</strong> CV verification and police
+                        clearance
+                      </li>
+                      <li>
+                        <strong>Gold:</strong> CV verification, police
+                        clearance, and polygraph test
+                      </li>
+                    </ul>
+
+                    <h3 class="text-xl font-semibold mb-2">
+                      4.2 Document Submission
+                    </h3>
+                    <p>
+                      You agree to submit authentic and unaltered documents for
+                      verification. Submission of falsified documents is
+                      strictly prohibited and may result in legal action.
+                    </p>
+
+                    <h3 class="text-xl font-semibold mb-2">
+                      4.3 Verification Timeframes
+                    </h3>
+                    <p>
+                      Verification timeframes vary by tier: Bronze (1-2 business
+                      days), Silver (3-5 business days), and Gold (5-7 business
+                      days). These timeframes are estimates and may vary based
+                      on volume and external factors.
+                    </p>
+
+                    <h3 class="text-xl font-semibold mb-2">
+                      4.4 Verification Results
+                    </h3>
+                    <p>
+                      Verification results are based on the information provided
+                      and the verification methods used. Verify does not
+                      guarantee employment or the quality of workers or
+                      employers on the Platform.
+                    </p>
+                  </div>
+                </section>
+
+                <!-- Payment Terms -->
+                <section id="payment-terms" class="mb-12">
+                  <h2 class="text-2xl font-bold mb-4 text-gray-800">
+                    5. Payment Terms and Refunds
+                  </h2>
+                  <div class="space-y-4 text-gray-700">
+                    <h3 class="text-xl font-semibold mb-2">
+                      5.1 Fees and Charges
+                    </h3>
+                    <p>
+                      Fees for verification services and employer packages are
+                      clearly displayed on the Platform. All fees are in South
+                      African Rand (ZAR) and include applicable taxes.
+                    </p>
+
+                    <h3 class="text-xl font-semibold mb-2">
+                      5.2 Payment Methods
+                    </h3>
+                    <p>
+                      We accept various payment methods as indicated on the
+                      Platform. You agree to provide accurate payment
+                      information and authorize us to charge the applicable fees
+                      to your selected payment method.
+                    </p>
+
+                    <h3 class="text-xl font-semibold mb-2">
+                      5.3 Refund Policy
+                    </h3>
+                    <p>
+                      For job seekers: Verification fees are non-refundable once
+                      the verification process has begun. If verification has
+                      not yet begun, a refund may be requested within 48 hours
+                      of payment.
+                    </p>
+                    <p>
+                      For employers: CV bundle purchases are non-refundable once
+                      any CV has been unlocked. Unused bundles may be eligible
+                      for partial refunds within 7 days of purchase.
+                    </p>
+
+                    <h3 class="text-xl font-semibold mb-2">
+                      5.4 CV Credit Expiration
+                    </h3>
+                    <p>CV credits expire based on the package purchased:</p>
+                    <ul class="list-disc pl-6 space-y-2">
+                      <li>Small Bundle (10 CVs): 30 days from purchase</li>
+                      <li>Medium Bundle (25 CVs): 60 days from purchase</li>
+                      <li>Large Bundle (60 CVs): 90 days from purchase</li>
+                    </ul>
+                    <p>Expired credits cannot be refunded or extended.</p>
+                  </div>
+                </section>
+
+                <!-- Liability Limitations -->
+                <section id="liability" class="mb-12">
+                  <h2 class="text-2xl font-bold mb-4 text-gray-800">
+                    6. Liability Limitations
+                  </h2>
+                  <div class="space-y-4 text-gray-700">
+                    <h3 class="text-xl font-semibold mb-2">
+                      6.1 Disclaimer of Warranties
+                    </h3>
+                    <p>
+                      THE PLATFORM IS PROVIDED "AS IS" AND "AS AVAILABLE"
+                      WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED,
+                      INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF
+                      MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND
+                      NON-INFRINGEMENT.
+                    </p>
+
+                    <h3 class="text-xl font-semibold mb-2">
+                      6.2 Limitation of Liability
+                    </h3>
+                    <p>
+                      TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, VERIFY
+                      SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL,
+                      CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS
+                      OR REVENUES, WHETHER INCURRED DIRECTLY OR INDIRECTLY, OR
+                      ANY LOSS OF DATA, USE, GOODWILL, OR OTHER INTANGIBLE
+                      LOSSES, RESULTING FROM:
+                    </p>
+                    <ul class="list-disc pl-6 space-y-2">
+                      <li>
+                        YOUR ACCESS TO OR USE OF OR INABILITY TO ACCESS OR USE
+                        THE PLATFORM
+                      </li>
+                      <li>
+                        ANY CONDUCT OR CONTENT OF ANY THIRD PARTY ON THE
+                        PLATFORM
+                      </li>
+                      <li>ANY CONTENT OBTAINED FROM THE PLATFORM</li>
+                      <li>
+                        UNAUTHORIZED ACCESS, USE, OR ALTERATION OF YOUR
+                        TRANSMISSIONS OR CONTENT
+                      </li>
+                    </ul>
+
+                    <h3 class="text-xl font-semibold mb-2">
+                      6.3 No Employment Relationship
+                    </h3>
+                    <p>
+                      Verify is not an employment agency or labor broker. We do
+                      not employ, control, direct, or supervise any workers, nor
+                      are we responsible for the work performed by any worker.
+                      Verify merely facilitates connections between workers and
+                      employers.
+                    </p>
+
+                    <h3 class="text-xl font-semibold mb-2">
+                      6.4 Verification Limitations
+                    </h3>
+                    <p>
+                      While we strive to verify information accurately, we
+                      cannot guarantee the accuracy, completeness, or
+                      reliability of any verification. Employers should conduct
+                      their own due diligence before hiring.
+                    </p>
+                  </div>
+                </section>
+
+                <!-- Intellectual Property -->
+                <section id="intellectual-property" class="mb-12">
+                  <h2 class="text-2xl font-bold mb-4 text-gray-800">
+                    7. Intellectual Property Rights
+                  </h2>
+                  <div class="space-y-4 text-gray-700">
+                    <h3 class="text-xl font-semibold mb-2">
+                      7.1 Platform Content
+                    </h3>
+                    <p>
+                      The Platform and its original content, features, and
+                      functionality are owned by Verify and are protected by
+                      international copyright, trademark, patent, trade secret,
+                      and other intellectual property or proprietary rights
+                      laws.
+                    </p>
+
+                    <h3 class="text-xl font-semibold mb-2">7.2 User Content</h3>
+                    <p>
+                      By submitting content to the Platform, you grant Verify a
+                      worldwide, non-exclusive, royalty-free license to use,
+                      reproduce, modify, adapt, publish, translate, and
+                      distribute such content in connection with providing the
+                      Platform services.
+                    </p>
+
+                    <h3 class="text-xl font-semibold mb-2">7.3 Feedback</h3>
+                    <p>
+                      Any feedback, suggestions, ideas, or other information you
+                      provide about the Platform may be used by Verify without
+                      any obligation to compensate you.
+                    </p>
+
+                    <h3 class="text-xl font-semibold mb-2">7.4 Trademarks</h3>
+                    <p>
+                      The Verify name, logo, and all related names, logos,
+                      product and service names, designs, and slogans are
+                      trademarks of Verify or its affiliates. You may not use
+                      such marks without the prior written permission of Verify.
+                    </p>
+                  </div>
+                </section>
+
+                <!-- Data Usage -->
+                <section id="data-usage" class="mb-12">
+                  <h2 class="text-2xl font-bold mb-4 text-gray-800">
+                    8. Data Usage and Privacy
+                  </h2>
+                  <div class="space-y-4 text-gray-700">
+                    <h3 class="text-xl font-semibold mb-2">
+                      8.1 Privacy Policy
+                    </h3>
+                    <p>
+                      Our
+                      <a
+                        href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/3233044f-99eb-41ac-bd74-920688dc7868"
+                        data-readdy="true"
+                        class="text-primary hover:underline"
+                        >Privacy Policy</a
+                      >
+                      describes how we collect, use, and share information about
+                      you when you use our Platform. By using the Platform, you
+                      consent to our collection and use of your data as
+                      described in the Privacy Policy.
+                    </p>
+
+                    <h3 class="text-xl font-semibold mb-2">
+                      8.2 Data Security
+                    </h3>
+                    <p>
+                      We implement reasonable security measures to protect your
+                      personal information. However, no method of transmission
+                      over the Internet or electronic storage is 100% secure,
+                      and we cannot guarantee absolute security.
+                    </p>
+
+                    <h3 class="text-xl font-semibold mb-2">
+                      8.3 Data Retention
+                    </h3>
+                    <p>
+                      We retain your personal information for as long as
+                      necessary to fulfill the purposes outlined in our Privacy
+                      Policy, unless a longer retention period is required or
+                      permitted by law.
+                    </p>
+
+                    <h3 class="text-xl font-semibold mb-2">
+                      8.4 Third-Party Access
+                    </h3>
+                    <p>
+                      Employers who purchase CV bundles will have access to the
+                      personal information you provide in your profile,
+                      including contact details and verification results. By
+                      creating a profile, you consent to this sharing of
+                      information.
+                    </p>
+                  </div>
+                </section>
+
+                <!-- Account Termination -->
+                <section id="termination" class="mb-12">
+                  <h2 class="text-2xl font-bold mb-4 text-gray-800">
+                    9. Account Termination Policies
+                  </h2>
+                  <div class="space-y-4 text-gray-700">
+                    <h3 class="text-xl font-semibold mb-2">
+                      9.1 Termination by User
+                    </h3>
+                    <p>
+                      You may terminate your account at any time by contacting
+                      us at
+                      <a
+                        href="mailto:support@verify.co.za"
+                        class="text-primary hover:underline"
+                        >support@verify.co.za</a
+                      >. Upon termination, your profile will no longer be
+                      visible to employers, but we may retain certain
+                      information as required by law or for legitimate business
+                      purposes.
+                    </p>
+
+                    <h3 class="text-xl font-semibold mb-2">
+                      9.2 Termination by Verify
+                    </h3>
+                    <p>
+                      We may terminate or suspend your account immediately,
+                      without prior notice or liability, for any reason,
+                      including if you breach these Terms. Upon termination,
+                      your right to use the Platform will immediately cease.
+                    </p>
+
+                    <h3 class="text-xl font-semibold mb-2">
+                      9.3 Effects of Termination
+                    </h3>
+                    <p>Upon termination of your account:</p>
+                    <ul class="list-disc pl-6 space-y-2">
+                      <li>
+                        For job seekers: Any active verification process will be
+                        discontinued without refund
+                      </li>
+                      <li>
+                        For employers: Any unused CV credits will be forfeited
+                        without refund
+                      </li>
+                      <li>All users: Access to the Platform will be revoked</li>
+                    </ul>
+
+                    <h3 class="text-xl font-semibold mb-2">
+                      9.4 Surviving Provisions
+                    </h3>
+                    <p>
+                      The sections regarding Intellectual Property, Liability
+                      Limitations, Dispute Resolution, and any other provisions
+                      that by their nature should survive termination shall
+                      survive termination of these Terms.
+                    </p>
+                  </div>
+                </section>
+
+                <!-- Dispute Resolution -->
+                <section id="dispute-resolution" class="mb-12">
+                  <h2 class="text-2xl font-bold mb-4 text-gray-800">
+                    10. Dispute Resolution Procedures
+                  </h2>
+                  <div class="space-y-4 text-gray-700">
+                    <h3 class="text-xl font-semibold mb-2">
+                      10.1 Governing Law
+                    </h3>
+                    <p>
+                      These Terms shall be governed by and construed in
+                      accordance with the laws of the Republic of South Africa,
+                      without regard to its conflict of law provisions.
+                    </p>
+
+                    <h3 class="text-xl font-semibold mb-2">
+                      10.2 Informal Resolution
+                    </h3>
+                    <p>
+                      Before filing a claim against Verify, you agree to attempt
+                      to resolve the dispute informally by contacting us at
+                      <a
+                        href="mailto:legal@verify.co.za"
+                        class="text-primary hover:underline"
+                        >legal@verify.co.za</a
+                      >. We will attempt to resolve the dispute informally by
+                      contacting you via email.
+                    </p>
+
+                    <h3 class="text-xl font-semibold mb-2">
+                      10.3 Formal Proceedings
+                    </h3>
+                    <p>
+                      If we cannot resolve a dispute informally, any legal
+                      action or proceeding shall be brought exclusively in the
+                      courts of South Africa, and you consent to the
+                      jurisdiction of such courts.
+                    </p>
+
+                    <h3 class="text-xl font-semibold mb-2">
+                      10.4 Time Limitation
+                    </h3>
+                    <p>
+                      You agree that any cause of action arising out of or
+                      related to the Platform must commence within one (1) year
+                      after the cause of action accrues. Otherwise, such cause
+                      of action is permanently barred.
+                    </p>
+                  </div>
+                </section>
+
+                <!-- Amendments -->
+                <section id="amendments" class="mb-12">
+                  <h2 class="text-2xl font-bold mb-4 text-gray-800">
+                    11. Amendments and Updates
+                  </h2>
+                  <div class="space-y-4 text-gray-700">
+                    <h3 class="text-xl font-semibold mb-2">
+                      11.1 Changes to Terms
+                    </h3>
+                    <p>
+                      We reserve the right to modify these Terms at any time. If
+                      we make material changes, we will notify you by email or
+                      by posting a notice on our Platform prior to the changes
+                      becoming effective.
+                    </p>
+
+                    <h3 class="text-xl font-semibold mb-2">
+                      11.2 Continued Use
+                    </h3>
+                    <p>
+                      Your continued use of the Platform after any changes to
+                      these Terms constitutes your acceptance of the new Terms.
+                      If you do not agree to the modified terms, you should
+                      discontinue your use of the Platform.
+                    </p>
+
+                    <h3 class="text-xl font-semibold mb-2">
+                      11.3 Platform Changes
+                    </h3>
+                    <p>
+                      We reserve the right to modify, suspend, or discontinue
+                      the Platform or any part thereof with or without notice at
+                      any time. We will not be liable to you or any third party
+                      for any modification, suspension, or discontinuance of the
+                      Platform.
+                    </p>
+                  </div>
+                </section>
+
+                <!-- Contact Information -->
+                <section id="contact" class="mb-12">
+                  <h2 class="text-2xl font-bold mb-4 text-gray-800">
+                    12. Contact Information
+                  </h2>
+                  <div class="space-y-4 text-gray-700">
+                    <p>
+                      If you have any questions about these Terms, please
+                      contact us at:
+                    </p>
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                      <p class="mb-2"><strong>Verify (Pty) Ltd</strong></p>
+                      <p class="mb-2">
+                        Email:
+                        <a
+                          href="mailto:support@verify.co.za"
+                          class="text-primary hover:underline"
+                          >support@verify.co.za</a
+                        >
+                      </p>
+                      <p class="mb-2">Phone: 087 123 4567</p>
+                      <p>
+                        Address: 123 Main Street, Cape Town, 8001, South Africa
+                      </p>
+                    </div>
+                  </div>
+                </section>
+
+                <!-- Acknowledgment -->
+                <div class="mt-12 p-6 bg-gray-50 rounded-lg">
+                  <p class="text-gray-700 font-semibold">
+                    By using the Verify platform, you acknowledge that you have
+                    read, understood, and agree to be bound by these Terms of
+                    Service.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 py-8">
+      <div class="container mx-auto px-4">
+        <div class="border-t border-gray-300 pt-8">
+          <div class="flex flex-col md:flex-row justify-between items-center">
+            <p class="text-gray-600 mb-4 md:mb-0">
+              &copy; 2025 Verify. All rights reserved. South African platform
+              only.
+            </p>
+            <div class="flex space-x-6">
+              <a
+                href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/3233044f-99eb-41ac-bd74-920688dc7868"
+                data-readdy="true"
+                class="text-gray-600 hover:text-primary"
+                >Privacy Policy</a
+              >
+              <a
+                href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/0c4af476-1405-4543-b628-417302d1465c"
+                data-readdy="true"
+                class="text-gray-600 hover:text-primary"
+                >Home</a
+              >
+              <a href="#" class="text-gray-600 hover:text-primary"
+                >Cookie Policy</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script id="smooth-scroll-script">
+      document.addEventListener("DOMContentLoaded", function () {
+        const links = document.querySelectorAll(".table-of-contents a");
+
+        links.forEach((link) => {
+          link.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            const targetId = this.getAttribute("href");
+            const targetElement = document.querySelector(targetId);
+
+            if (targetElement) {
+              window.scrollTo({
+                top: targetElement.offsetTop - 80,
+                behavior: "smooth",
+              });
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

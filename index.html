@@ -1,0 +1,2128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verify - Empowering Opportunities</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#F50302',secondary:'#4D4D4D'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+@import url('https://fonts.googleapis.com/css2?family=Futura:wght@400;500;700&display=swap');
+body {
+font-family: 'Futura', sans-serif;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+</style>
+</head>
+<body class="bg-white text-gray-900">
+<!-- Header -->
+<header class="bg-white shadow-sm">
+<div class="container mx-auto px-4 py-4 flex justify-between items-center">
+<div class="flex items-center">
+<div class="text-2xl font-bold tracking-tight flex items-center">
+<img src="https://static.readdy.ai/image/783dd8c3d2d1f38f9648f46144ac17f1/bc2b69f3a823a0bfcee48284d9c2d098.jpeg" alt="Verify Logo" class="h-12">
+</div>
+</div>
+<nav class="hidden md:flex space-x-8 items-center" id="desktop-nav">
+<a href="User-Registration-Page.html" class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600 whitespace-nowrap inline-block">Register</a>
+</nav>
+<button class="md:hidden w-10 h-10 flex items-center justify-center" id="mobile-menu-button" aria-label="Toggle menu">
+<i class="ri-menu-line text-gray-800 ri-2x"></i>
+</button>
+<div id="mobile-nav" class="fixed inset-0 bg-white z-50 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+<div class="h-full flex flex-col">
+<div class="flex justify-between items-center p-4 border-b">
+<div class="text-xl font-bold">Menu</div>
+<button class="w-10 h-10 flex items-center justify-center" id="mobile-menu-close">
+<i class="ri-close-line text-gray-800 ri-2x"></i>
+</button>
+</div>
+<div class="flex flex-col space-y-4 p-4">
+<a href="#job-categories" class="text-gray-800 hover:text-primary font-medium py-2">Job Categories</a>
+<a href="#pricing" class="text-gray-800 hover:text-primary font-medium py-2">Pricing</a>
+<a href="#faq" class="text-gray-800 hover:text-primary font-medium py-2">FAQ</a>
+<a href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/blog" data-readdy="true" class="text-gray-800 hover:text-primary font-medium py-2">Blog</a>
+<a href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/d75ce9b6-d6a6-4e5c-9dea-a70df2e13263" data-readdy="true" class="bg-white text-primary border border-primary px-4 py-2 !rounded-button hover:bg-gray-50 whitespace-nowrap text-center">Log in</a>
+<a href="User-Registration-Page.html" class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600 whitespace-nowrap w-full">Register</a>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Hero Section -->
+<section class="hero-section relative min-h-[60vh] flex items-center" style="background-image: url('https://static.readdy.ai/image/783dd8c3d2d1f38f9648f46144ac17f1/222e6d5a0d47cdb387aa2d88611bc3f1.png'); background-size: cover; background-position: center;">
+<div class="container mx-auto px-4 py-12 md:py-16 text-center">
+<div class="max-w-2xl mx-auto">
+<h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+<span class="text-primary">Empowering</span> Opportunities
+</h1>
+<p class="text-base sm:text-lg md:text-xl mb-6 text-gray-600 max-w-xl mx-auto">Verify connects qualified workers with employers by verifying documents, ensuring safety and trust.</p>
+<div class="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center max-w-xl mx-auto px-4">
+<a href="#job-seeker" class="group bg-primary text-white px-6 sm:px-8 py-4 sm:py-5 !rounded-button text-center font-bold hover:bg-red-600 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl flex-1 flex items-center justify-center text-sm sm:text-base" onclick="document.getElementById('job-seeker').scrollIntoView({behavior: 'smooth'})">
+<i class="ri-user-search-line ri-lg mr-2 sm:mr-3"></i>
+<span>I'm looking for work</span>
+</a>
+<a href="#employer" class="group bg-white text-gray-900 px-6 sm:px-8 py-4 sm:py-5 !rounded-button text-center font-bold hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl flex-1 flex items-center justify-center text-sm sm:text-base" onclick="document.getElementById('employer').scrollIntoView({behavior: 'smooth'})">
+<i class="ri-building-line ri-lg mr-2 sm:mr-3"></i>
+<span>I'm looking to hire</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+// Verification timeframes dropdown handler
+const verificationSelect = document.getElementById('verificationSelect');
+const timeframeResult = document.getElementById('timeframeResult');
+const selectedTimeframe = document.getElementById('selectedTimeframe');
+if (verificationSelect) {
+verificationSelect.addEventListener('change', function() {
+const selectedValue = this.value;
+if (selectedValue) {
+selectedTimeframe.textContent = selectedValue;
+timeframeResult.classList.remove('hidden');
+} else {
+timeframeResult.classList.add('hidden');
+}
+});
+}
+// Job Seeker Form Handler
+const jobSeekerForm = document.getElementById('jobSeekerForm');
+if (jobSeekerForm) {
+jobSeekerForm.addEventListener('submit', function(e) {
+e.preventDefault();
+const formData = new FormData(jobSeekerForm);
+const modal = document.createElement('div');
+modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">Registration Submitted</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">Thank you for registering with Verify! We'll review your information and contact you within 24-48 hours to complete your verification process.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+document.body.appendChild(modal);
+jobSeekerForm.reset();
+});
+}
+// Category cards functionality
+const categoryCards = document.querySelectorAll('.category-card');
+function updateApplicantCount(element) {
+if (!element || !element.dataset) return;
+const min = parseInt(element.dataset.min) || 0;
+const max = parseInt(element.dataset.max) || 100;
+const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+element.textContent = `${randomCount} Applicants`;
+}
+function updateSubcategoryCount(element) {
+if (!element || !element.closest('.subcategory-item')) return;
+const item = element.closest('.subcategory-item');
+const min = parseInt(item.dataset.min) || 0;
+const max = parseInt(item.dataset.max) || 100;
+const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+element.textContent = `${randomCount}`;
+}
+function initializeCounts() {
+document.querySelectorAll('.applicant-count').forEach(updateApplicantCount);
+document.querySelectorAll('.subcategory-count').forEach(updateSubcategoryCount);
+}
+function updateAllCounts() {
+document.querySelectorAll('.applicant-count').forEach(element => {
+if (!element || !element.dataset) return;
+const currentCount = parseInt(element.textContent) || 0;
+const min = parseInt(element.dataset.min) || 0;
+const max = parseInt(element.dataset.max) || 100;
+const change = Math.floor(Math.random() * 3) - 1;
+const newCount = Math.min(Math.max(currentCount + change, min), max);
+element.textContent = `${newCount} Applicants`;
+});
+document.querySelectorAll('.subcategory-count').forEach(element => {
+if (!element || !element.closest('.subcategory-item')) return;
+const item = element.closest('.subcategory-item');
+const currentCount = parseInt(element.textContent) || 0;
+const min = parseInt(item.dataset.min) || 0;
+const max = parseInt(item.dataset.max) || 100;
+const change = Math.floor(Math.random() * 3) - 1;
+const newCount = Math.min(Math.max(currentCount + change, min), max);
+element.textContent = `${newCount}`;
+});
+}
+// Category card click handlers
+if (categoryCards) {
+categoryCards.forEach(card => {
+if (!card) return;
+card.addEventListener('click', function() {
+const content = this.querySelector('.category-content');
+if (content) {
+const isExpanded = !content.classList.contains('hidden');
+document.querySelectorAll('.category-content').forEach(c => {
+if (c !== content) {
+c.classList.add('hidden');
+c.closest('.category-card')?.classList.remove('shadow-lg', 'bg-gray-50');
+}
+});
+content.classList.toggle('hidden');
+this.classList.toggle('shadow-lg');
+this.classList.toggle('bg-gray-50');
+if (!isExpanded) {
+this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+}
+});
+});
+}
+// Subcategory item click handlers
+document.querySelectorAll('.subcategory-item').forEach(item => {
+if (!item) return;
+item.addEventListener('click', function(e) {
+e.stopPropagation();
+const categoryName = this.querySelector('.font-medium')?.textContent || 'Category';
+const applicants = this.querySelector('.subcategory-count')?.textContent || '0';
+const modal = document.createElement('div');
+modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">${categoryName}</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">There are currently <span class="text-primary font-bold">${applicants}</span> verified applicants available for this position.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+document.body.appendChild(modal);
+});
+});
+// Mobile navigation
+const mobileMenuButton = document.getElementById('mobile-menu-button');
+const mobileMenuClose = document.getElementById('mobile-menu-close');
+const mobileNav = document.getElementById('mobile-nav');
+if (mobileMenuButton && mobileMenuClose && mobileNav) {
+const mobileNavLinks = mobileNav.querySelectorAll('a');
+function toggleMobileMenu() {
+const isOpen = mobileNav.classList.contains('translate-x-0');
+mobileNav.classList.toggle('translate-x-0');
+mobileNav.classList.toggle('translate-x-full');
+document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+mobileMenuButton.addEventListener('click', toggleMobileMenu);
+mobileMenuClose.addEventListener('click', toggleMobileMenu);
+if (mobileNavLinks) {
+mobileNavLinks.forEach(link => {
+if (!link) return;
+link.addEventListener('click', toggleMobileMenu);
+});
+}
+}
+// FAQ toggles
+const faqToggles = document.querySelectorAll('.faq-toggle');
+if (faqToggles) {
+faqToggles.forEach(toggle => {
+if (!toggle) return;
+toggle.addEventListener('click', function(e) {
+e.preventDefault();
+const content = this.nextElementSibling;
+const icon = this.querySelector('.faq-icon');
+if (content && icon) {
+content.classList.toggle('hidden');
+const isExpanded = !content.classList.contains('hidden');
+icon.className = isExpanded ? 'faq-icon ri-arrow-up-s-line' : 'faq-icon ri-arrow-down-s-line';
+this.setAttribute('aria-expanded', isExpanded);
+}
+});
+});
+}
+// Initialize counts and start updates
+initializeCounts();
+const updateInterval = setInterval(updateAllCounts, 5000);
+// Clean up interval on page unload
+window.addEventListener('unload', () => {
+clearInterval(updateInterval);
+});
+});
+</script>
+<!-- Announcement Bar with Categories Carousel -->
+<div class="bg-primary/5 py-6">
+<div class="container mx-auto px-4">
+<div class="flex flex-col items-center gap-4">
+<div class="flex items-center justify-center gap-3">
+<i class="ri-megaphone-line text-primary ri-lg"></i>
+<p class="text-gray-800">Looking for work? We have <span class="font-bold">1,000+ verified job opportunities</span> across all categories!</p>
+<a href="#job-categories" class="text-primary font-bold hover:text-red-600 whitespace-nowrap" onclick="document.getElementById('job-categories').scrollIntoView({behavior: 'smooth'})">View All Jobs →</a>
+</div>
+<div class="relative w-full max-w-4xl overflow-hidden">
+<div class="categories-carousel flex gap-6 py-2">
+<div class="flex gap-6 animate-scroll">
+<span class="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm whitespace-nowrap">
+<i class="ri-steering-2-line text-primary"></i>
+Drivers
+</span>
+<span class="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm whitespace-nowrap">
+<i class="ri-home-gear-line text-primary"></i>
+Domestic Workers
+</span>
+<span class="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm whitespace-nowrap">
+<i class="ri-parent-line text-primary"></i>
+Child & Elder Care
+</span>
+<span class="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm whitespace-nowrap">
+<i class="ri-shield-check-line text-primary"></i>
+Security Guards
+</span>
+<span class="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm whitespace-nowrap cursor-pointer hover:shadow-md transition-shadow" onclick="document.querySelector('#job-categories [class*=\'ri-tools-line\']').closest('div').scrollIntoView({behavior: 'smooth'})">
+<i class="ri-tools-line text-primary"></i>
+Skilled Trades
+</span>
+<span class="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm whitespace-nowrap">
+<i class="ri-store-2-line text-primary"></i>
+Retail Staff
+</span>
+<span class="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm whitespace-nowrap">
+<i class="ri-archive-line text-primary"></i>
+Warehouse Workers
+</span>
+<span class="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm whitespace-nowrap">
+<i class="ri-calendar-event-line text-primary"></i>
+Event Staff
+</span>
+</div>
+<div class="flex gap-6 animate-scroll" aria-hidden="true">
+<span class="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm whitespace-nowrap">
+<i class="ri-steering-2-line text-primary"></i>
+Drivers
+</span>
+<span class="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm whitespace-nowrap">
+<i class="ri-home-gear-line text-primary"></i>
+Domestic Workers
+</span>
+<span class="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm whitespace-nowrap">
+<i class="ri-parent-line text-primary"></i>
+Child & Elder Care
+</span>
+<span class="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm whitespace-nowrap">
+<i class="ri-shield-check-line text-primary"></i>
+Security Guards
+</span>
+<span class="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm whitespace-nowrap cursor-pointer hover:shadow-md transition-shadow" onclick="document.querySelector('#job-categories [class*=\'ri-tools-line\']').closest('div').scrollIntoView({behavior: 'smooth'})">
+<i class="ri-tools-line text-primary"></i>
+Skilled Trades
+</span>
+<span class="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm whitespace-nowrap">
+<i class="ri-store-2-line text-primary"></i>
+Retail Staff
+</span>
+<span class="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm whitespace-nowrap">
+<i class="ri-archive-line text-primary"></i>
+Warehouse Workers
+</span>
+<span class="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm whitespace-nowrap">
+<i class="ri-calendar-event-line text-primary"></i>
+Event Staff
+</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<style>
+@keyframes scroll {
+0% {
+transform: translateX(0);
+}
+100% {
+transform: translateX(-100%);
+}
+}
+.animate-scroll {
+animation: scroll 30s linear infinite;
+}
+.categories-carousel:hover .animate-scroll {
+animation-play-state: paused;
+}
+</style>
+<!-- How It Works Section -->
+<section id="how-it-works" class="py-16 bg-white">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl font-bold text-center mb-12">How It Works</h2>
+<div class="grid md:grid-cols-2 gap-8">
+<!-- Job Seekers -->
+<div id="job-seeker" class="bg-white rounded-xl shadow-lg p-8">
+<div class="flex items-center gap-4 mb-10">
+<div class="w-14 h-14 bg-primary rounded-full flex items-center justify-center">
+<i class="ri-user-line text-white ri-2x"></i>
+</div>
+<h3 class="text-2xl font-bold">For Job Seekers</h3>
+</div>
+<div class="space-y-10">
+<div class="flex items-start gap-6">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+<span class="text-primary font-bold text-xl">1</span>
+</div>
+<div>
+<h4 class="font-bold text-lg mb-3">Register & Choose Your Tier</h4>
+<p class="text-gray-600 leading-relaxed">Create your profile and select a verification level: Bronze, Silver, or Gold.</p>
+</div>
+</div>
+<div class="flex items-start gap-6">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+<span class="text-primary font-bold text-xl">2</span>
+</div>
+<div>
+<h4 class="font-bold text-lg mb-3">Complete Verification</h4>
+<p class="text-gray-600 leading-relaxed">Submit your documents for our team to verify your qualifications and background.</p>
+</div>
+</div>
+<div class="flex items-start gap-6">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+<span class="text-primary font-bold text-xl">3</span>
+</div>
+<div>
+<h4 class="font-bold text-lg mb-3">Get Hired</h4>
+<p class="text-gray-600 leading-relaxed">Once verified, employers can find your profile and contact you for job opportunities.</p>
+</div>
+</div>
+</div>
+<div class="mt-10">
+<a href="User-Registration-Page.html" class="w-full bg-primary text-white px-6 py-4 !rounded-button font-bold hover:bg-red-600 transition-colors flex items-center justify-center gap-2">
+<span>Register as Job Seeker</span>
+<i class="ri-arrow-right-line"></i>
+</a>
+</div>
+</div>
+<div id="employer" class="bg-white rounded-xl shadow-lg p-8">
+<div class="flex items-center gap-4 mb-10">
+<div class="w-14 h-14 bg-black rounded-full flex items-center justify-center">
+<i class="ri-building-line text-white ri-2x"></i>
+</div>
+<h3 class="text-2xl font-bold">For Employers</h3>
+</div>
+<div class="space-y-10">
+<div class="flex items-start gap-6">
+<div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
+<span class="text-primary font-bold text-xl">1</span>
+</div>
+<div>
+<h4 class="font-bold text-lg mb-3">Create Employer Account</h4>
+<p class="text-gray-600 leading-relaxed">Sign up and purchase a CV bundle to start accessing verified worker profiles.</p>
+</div>
+</div>
+<div class="flex items-start gap-6">
+<div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
+<span class="text-primary font-bold text-xl">2</span>
+</div>
+<div>
+<h4 class="font-bold text-lg mb-3">Search for Workers</h4>
+<p class="text-gray-600 leading-relaxed">Filter by job category, skills, location, and verification tier to find the right match.</p>
+</div>
+</div>
+<div class="flex items-start gap-6">
+<div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
+<span class="text-primary font-bold text-xl">3</span>
+</div>
+<div>
+<h4 class="font-bold text-lg mb-3">Connect & Hire</h4>
+<p class="text-gray-600 leading-relaxed">View full profiles and contact verified workers directly to arrange interviews.</p>
+</div>
+</div>
+</div>
+<div class="mt-10">
+<a href="User-Registration-Page.html" class="w-full bg-black text-white px-6 py-4 !rounded-button font-bold hover:bg-gray-800 transition-colors flex items-center justify-center gap-2">
+<span>Register as Employer</span>
+<i class="ri-arrow-right-line"></i>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+// Verification timeframes dropdown handler
+const verificationSelect = document.getElementById('verificationSelect');
+const timeframeResult = document.getElementById('timeframeResult');
+const selectedTimeframe = document.getElementById('selectedTimeframe');
+if (verificationSelect) {
+verificationSelect.addEventListener('change', function() {
+const selectedValue = this.value;
+if (selectedValue) {
+selectedTimeframe.textContent = selectedValue;
+timeframeResult.classList.remove('hidden');
+} else {
+timeframeResult.classList.add('hidden');
+}
+});
+}
+// Job Seeker Form Handler
+const jobSeekerForm = document.getElementById('jobSeekerForm');
+if (jobSeekerForm) {
+jobSeekerForm.addEventListener('submit', function(e) {
+e.preventDefault();
+const formData = new FormData(jobSeekerForm);
+const modal = document.createElement('div');
+modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">Registration Submitted</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">Thank you for registering with Verify! We'll review your information and contact you within 24-48 hours to complete your verification process.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+document.body.appendChild(modal);
+jobSeekerForm.reset();
+});
+}
+// Category cards functionality
+const categoryCards = document.querySelectorAll('.category-card');
+function updateApplicantCount(element) {
+if (!element || !element.dataset) return;
+const min = parseInt(element.dataset.min) || 0;
+const max = parseInt(element.dataset.max) || 100;
+const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+element.textContent = `${randomCount} Applicants`;
+}
+function updateSubcategoryCount(element) {
+if (!element || !element.closest('.subcategory-item')) return;
+const item = element.closest('.subcategory-item');
+const min = parseInt(item.dataset.min) || 0;
+const max = parseInt(item.dataset.max) || 100;
+const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+element.textContent = `${randomCount}`;
+}
+function initializeCounts() {
+document.querySelectorAll('.applicant-count').forEach(updateApplicantCount);
+document.querySelectorAll('.subcategory-count').forEach(updateSubcategoryCount);
+}
+function updateAllCounts() {
+document.querySelectorAll('.applicant-count').forEach(element => {
+if (!element || !element.dataset) return;
+const currentCount = parseInt(element.textContent) || 0;
+const min = parseInt(element.dataset.min) || 0;
+const max = parseInt(element.dataset.max) || 100;
+const change = Math.floor(Math.random() * 3) - 1;
+const newCount = Math.min(Math.max(currentCount + change, min), max);
+element.textContent = `${newCount} Applicants`;
+});
+document.querySelectorAll('.subcategory-count').forEach(element => {
+if (!element || !element.closest('.subcategory-item')) return;
+const item = element.closest('.subcategory-item');
+const currentCount = parseInt(element.textContent) || 0;
+const min = parseInt(item.dataset.min) || 0;
+const max = parseInt(item.dataset.max) || 100;
+const change = Math.floor(Math.random() * 3) - 1;
+const newCount = Math.min(Math.max(currentCount + change, min), max);
+element.textContent = `${newCount}`;
+});
+}
+// Category card click handlers
+if (categoryCards) {
+categoryCards.forEach(card => {
+if (!card) return;
+card.addEventListener('click', function() {
+const content = this.querySelector('.category-content');
+if (content) {
+const isExpanded = !content.classList.contains('hidden');
+document.querySelectorAll('.category-content').forEach(c => {
+if (c !== content) {
+c.classList.add('hidden');
+c.closest('.category-card')?.classList.remove('shadow-lg', 'bg-gray-50');
+}
+});
+content.classList.toggle('hidden');
+this.classList.toggle('shadow-lg');
+this.classList.toggle('bg-gray-50');
+if (!isExpanded) {
+this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+}
+});
+});
+}
+// Subcategory item click handlers
+document.querySelectorAll('.subcategory-item').forEach(item => {
+if (!item) return;
+item.addEventListener('click', function(e) {
+e.stopPropagation();
+const categoryName = this.querySelector('.font-medium')?.textContent || 'Category';
+const applicants = this.querySelector('.subcategory-count')?.textContent || '0';
+const modal = document.createElement('div');
+modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">${categoryName}</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">There are currently <span class="text-primary font-bold">${applicants}</span> verified applicants available for this position.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+document.body.appendChild(modal);
+});
+});
+// Mobile navigation
+const mobileMenuButton = document.getElementById('mobile-menu-button');
+const mobileMenuClose = document.getElementById('mobile-menu-close');
+const mobileNav = document.getElementById('mobile-nav');
+if (mobileMenuButton && mobileMenuClose && mobileNav) {
+const mobileNavLinks = mobileNav.querySelectorAll('a');
+function toggleMobileMenu() {
+const isOpen = mobileNav.classList.contains('translate-x-0');
+mobileNav.classList.toggle('translate-x-0');
+mobileNav.classList.toggle('translate-x-full');
+document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+mobileMenuButton.addEventListener('click', toggleMobileMenu);
+mobileMenuClose.addEventListener('click', toggleMobileMenu);
+if (mobileNavLinks) {
+mobileNavLinks.forEach(link => {
+if (!link) return;
+link.addEventListener('click', toggleMobileMenu);
+});
+}
+}
+// FAQ toggles
+const faqToggles = document.querySelectorAll('.faq-toggle');
+if (faqToggles) {
+faqToggles.forEach(toggle => {
+if (!toggle) return;
+toggle.addEventListener('click', function(e) {
+e.preventDefault();
+const content = this.nextElementSibling;
+const icon = this.querySelector('.faq-icon');
+if (content && icon) {
+content.classList.toggle('hidden');
+const isExpanded = !content.classList.contains('hidden');
+icon.className = isExpanded ? 'faq-icon ri-arrow-up-s-line' : 'faq-icon ri-arrow-down-s-line';
+this.setAttribute('aria-expanded', isExpanded);
+}
+});
+});
+}
+// Initialize counts and start updates
+initializeCounts();
+const updateInterval = setInterval(updateAllCounts, 5000);
+// Clean up interval on page unload
+window.addEventListener('unload', () => {
+clearInterval(updateInterval);
+});
+});
+</script>
+<!-- Verification Tiers -->
+<section id="pricing" class="py-16 bg-white">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl font-bold text-center mb-4">Verification Tiers</h2>
+<p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">Choose your verification level to increase your trust rating and improve your chances of being hired.</p>
+<div class="grid md:grid-cols-3 gap-8">
+<!-- Bronze Tier -->
+<div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 transition-transform hover:scale-105">
+<div class="bg-gray-100 p-6 text-center">
+<div class="w-16 h-16 bg-[#CD7F32] rounded-full mx-auto flex items-center justify-center mb-4">
+<i class="ri-medal-line text-white ri-2x"></i>
+</div>
+<h3 class="text-2xl font-bold">Bronze</h3>
+<p class="text-gray-600 mt-2">Basic Verification</p>
+</div>
+<div class="p-6">
+<div class="text-center mb-6">
+<span class="text-gray-600">Contact us for pricing</span>
+</div>
+<ul class="space-y-3 mb-8">
+<li class="flex items-center">
+<div class="w-6 h-6 flex items-center justify-center mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>CV Verification</span>
+</li>
+<li class="flex items-center text-gray-400">
+<div class="w-6 h-6 flex items-center justify-center mr-2">
+<i class="ri-close-line"></i>
+</div>
+<span>Police Clearance</span>
+</li>
+<li class="flex items-center text-gray-400">
+<div class="w-6 h-6 flex items-center justify-center mr-2">
+<i class="ri-close-line"></i>
+</div>
+<span>Polygraph Test</span>
+</li>
+</ul>
+<div class="text-center">
+</div>
+</div>
+</div>
+<!-- Silver Tier -->
+<div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 transition-transform hover:scale-105">
+<div class="bg-gray-100 p-6 text-center">
+<div class="w-16 h-16 bg-[#C0C0C0] rounded-full mx-auto flex items-center justify-center mb-4">
+<i class="ri-medal-line text-white ri-2x"></i>
+</div>
+<h3 class="text-2xl font-bold">Silver</h3>
+<p class="text-gray-600 mt-2">Enhanced Verification</p>
+</div>
+<div class="p-6">
+<div class="text-center mb-6">
+<span class="text-gray-600">Contact us for pricing</span>
+</div>
+<ul class="space-y-3 mb-8">
+<li class="flex items-center">
+<div class="w-6 h-6 flex items-center justify-center mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>CV Verification</span>
+</li>
+<li class="flex items-center">
+<div class="w-6 h-6 flex items-center justify-center mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>Police Clearance</span>
+</li>
+<li class="flex items-center text-gray-400">
+<div class="w-6 h-6 flex items-center justify-center mr-2">
+<i class="ri-close-line"></i>
+</div>
+<span>Polygraph Test</span>
+</li>
+</ul>
+<div class="text-center">
+</div>
+</div>
+</div>
+<!-- Gold Tier -->
+<div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 transition-transform hover:scale-105">
+<div class="bg-gray-100 p-6 text-center">
+<div class="w-16 h-16 bg-[#FFD700] rounded-full mx-auto flex items-center justify-center mb-4">
+<i class="ri-medal-line text-white ri-2x"></i>
+</div>
+<h3 class="text-2xl font-bold">Gold</h3>
+<p class="text-gray-600 mt-2">Premium Verification</p>
+</div>
+<div class="p-6">
+<div class="text-center mb-6">
+<span class="text-gray-600">Contact us for pricing</span>
+</div>
+<ul class="space-y-3 mb-8">
+<li class="flex items-center">
+<div class="w-6 h-6 flex items-center justify-center mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>CV Verification</span>
+</li>
+<li class="flex items-center">
+<div class="w-6 h-6 flex items-center justify-center mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>Police Clearance</span>
+</li>
+<li class="flex items-center">
+<div class="w-6 h-6 flex items-center justify-center mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>Polygraph Test</span>
+</li>
+</ul>
+<div class="text-center">
+</div>
+</div>
+</div>
+</div>
+<!-- Employer Packages -->
+<div class="mt-20">
+<h2 class="text-3xl font-bold text-center mb-4">Employer Packages</h2>
+<p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">Purchase CV bundles to unlock full worker profiles after filtering.</p>
+<div class="grid md:grid-cols-3 gap-8">
+<!-- Small Bundle -->
+<div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 transition-transform hover:scale-105">
+<div class="bg-gray-100 p-6 text-center">
+<h3 class="text-2xl font-bold">Small Bundle</h3>
+<p class="text-gray-600 mt-2">For occasional hiring</p>
+</div>
+<div class="p-6">
+<div class="text-center mb-6">
+<span class="text-3xl font-bold">R499</span>
+</div>
+<ul class="space-y-3 mb-8">
+<li class="flex items-center">
+<div class="w-6 h-6 flex items-center justify-center mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>10 CV Unlocks</span>
+</li>
+<li class="flex items-center">
+<div class="w-6 h-6 flex items-center justify-center mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>30 Days Access</span>
+</li>
+<li class="flex items-center">
+<div class="w-6 h-6 flex items-center justify-center mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>Basic Filtering</span>
+</li>
+</ul>
+<div class="text-center">
+<a href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/d75ce9b6-d6a6-4e5c-9dea-a70df2e13263" data-readdy="true" class="bg-black text-white px-6 py-3 !rounded-button inline-block font-bold hover:bg-gray-800 w-full whitespace-nowrap">Buy Small Bundle</a>
+</div>
+</div>
+</div>
+<!-- Medium Bundle -->
+<div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 transition-transform hover:scale-105">
+<div class="bg-gray-100 p-6 text-center">
+<h3 class="text-2xl font-bold">Medium Bundle</h3>
+<p class="text-gray-600 mt-2">For regular hiring</p>
+</div>
+<div class="p-6">
+<div class="text-center mb-6">
+<span class="text-3xl font-bold">R999</span>
+</div>
+<ul class="space-y-3 mb-8">
+<li class="flex items-center">
+<div class="w-6 h-6 flex items-center justify-center mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>25 CV Unlocks</span>
+</li>
+<li class="flex items-center">
+<div class="w-6 h-6 flex items-center justify-center mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>60 Days Access</span>
+</li>
+<li class="flex items-center">
+<div class="w-6 h-6 flex items-center justify-center mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>Advanced Filtering</span>
+</li>
+</ul>
+<div class="text-center">
+<a href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/d75ce9b6-d6a6-4e5c-9dea-a70df2e13263" data-readdy="true" class="bg-black text-white px-6 py-3 !rounded-button inline-block font-bold hover:bg-gray-800 w-full whitespace-nowrap">Buy Medium Bundle</a>
+</div>
+</div>
+</div>
+<!-- Large Bundle -->
+<div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 transition-transform hover:scale-105">
+<div class="bg-gray-100 p-6 text-center">
+<h3 class="text-2xl font-bold">Large Bundle</h3>
+<p class="text-gray-600 mt-2">For frequent hiring</p>
+</div>
+<div class="p-6">
+<div class="text-center mb-6">
+<span class="text-3xl font-bold">R1999</span>
+</div>
+<ul class="space-y-3 mb-8">
+<li class="flex items-center">
+<div class="w-6 h-6 flex items-center justify-center mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>60 CV Unlocks</span>
+</li>
+<li class="flex items-center">
+<div class="w-6 h-6 flex items-center justify-center mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>90 Days Access</span>
+</li>
+<li class="flex items-center">
+<div class="w-6 h-6 flex items-center justify-center mr-2 text-primary">
+<i class="ri-check-line"></i>
+</div>
+<span>Premium Filtering</span>
+</li>
+</ul>
+<div class="text-center">
+<a href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/d75ce9b6-d6a6-4e5c-9dea-a70df2e13263" data-readdy="true" class="bg-black text-white px-6 py-3 !rounded-button inline-block font-bold hover:bg-gray-800 w-full whitespace-nowrap">Buy Large Bundle</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+// Verification timeframes dropdown handler
+const verificationSelect = document.getElementById('verificationSelect');
+const timeframeResult = document.getElementById('timeframeResult');
+const selectedTimeframe = document.getElementById('selectedTimeframe');
+if (verificationSelect) {
+verificationSelect.addEventListener('change', function() {
+const selectedValue = this.value;
+if (selectedValue) {
+selectedTimeframe.textContent = selectedValue;
+timeframeResult.classList.remove('hidden');
+} else {
+timeframeResult.classList.add('hidden');
+}
+});
+}
+// Job Seeker Form Handler
+const jobSeekerForm = document.getElementById('jobSeekerForm');
+if (jobSeekerForm) {
+jobSeekerForm.addEventListener('submit', function(e) {
+e.preventDefault();
+const formData = new FormData(jobSeekerForm);
+const modal = document.createElement('div');
+modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">Registration Submitted</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">Thank you for registering with Verify! We'll review your information and contact you within 24-48 hours to complete your verification process.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+document.body.appendChild(modal);
+jobSeekerForm.reset();
+});
+}
+// Category cards functionality
+const categoryCards = document.querySelectorAll('.category-card');
+function updateApplicantCount(element) {
+if (!element || !element.dataset) return;
+const min = parseInt(element.dataset.min) || 0;
+const max = parseInt(element.dataset.max) || 100;
+const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+element.textContent = `${randomCount} Applicants`;
+}
+function updateSubcategoryCount(element) {
+if (!element || !element.closest('.subcategory-item')) return;
+const item = element.closest('.subcategory-item');
+const min = parseInt(item.dataset.min) || 0;
+const max = parseInt(item.dataset.max) || 100;
+const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+element.textContent = `${randomCount}`;
+}
+function initializeCounts() {
+document.querySelectorAll('.applicant-count').forEach(updateApplicantCount);
+document.querySelectorAll('.subcategory-count').forEach(updateSubcategoryCount);
+}
+function updateAllCounts() {
+document.querySelectorAll('.applicant-count').forEach(element => {
+if (!element || !element.dataset) return;
+const currentCount = parseInt(element.textContent) || 0;
+const min = parseInt(element.dataset.min) || 0;
+const max = parseInt(element.dataset.max) || 100;
+const change = Math.floor(Math.random() * 3) - 1;
+const newCount = Math.min(Math.max(currentCount + change, min), max);
+element.textContent = `${newCount} Applicants`;
+});
+document.querySelectorAll('.subcategory-count').forEach(element => {
+if (!element || !element.closest('.subcategory-item')) return;
+const item = element.closest('.subcategory-item');
+const currentCount = parseInt(element.textContent) || 0;
+const min = parseInt(item.dataset.min) || 0;
+const max = parseInt(item.dataset.max) || 100;
+const change = Math.floor(Math.random() * 3) - 1;
+const newCount = Math.min(Math.max(currentCount + change, min), max);
+element.textContent = `${newCount}`;
+});
+}
+// Category card click handlers
+if (categoryCards) {
+categoryCards.forEach(card => {
+if (!card) return;
+card.addEventListener('click', function() {
+const content = this.querySelector('.category-content');
+if (content) {
+const isExpanded = !content.classList.contains('hidden');
+document.querySelectorAll('.category-content').forEach(c => {
+if (c !== content) {
+c.classList.add('hidden');
+c.closest('.category-card')?.classList.remove('shadow-lg', 'bg-gray-50');
+}
+});
+content.classList.toggle('hidden');
+this.classList.toggle('shadow-lg');
+this.classList.toggle('bg-gray-50');
+if (!isExpanded) {
+this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+}
+});
+});
+}
+// Subcategory item click handlers
+document.querySelectorAll('.subcategory-item').forEach(item => {
+if (!item) return;
+item.addEventListener('click', function(e) {
+e.stopPropagation();
+const categoryName = this.querySelector('.font-medium')?.textContent || 'Category';
+const applicants = this.querySelector('.subcategory-count')?.textContent || '0';
+const modal = document.createElement('div');
+modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">${categoryName}</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">There are currently <span class="text-primary font-bold">${applicants}</span> verified applicants available for this position.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+document.body.appendChild(modal);
+});
+});
+// Mobile navigation
+const mobileMenuButton = document.getElementById('mobile-menu-button');
+const mobileMenuClose = document.getElementById('mobile-menu-close');
+const mobileNav = document.getElementById('mobile-nav');
+if (mobileMenuButton && mobileMenuClose && mobileNav) {
+const mobileNavLinks = mobileNav.querySelectorAll('a');
+function toggleMobileMenu() {
+const isOpen = mobileNav.classList.contains('translate-x-0');
+mobileNav.classList.toggle('translate-x-0');
+mobileNav.classList.toggle('translate-x-full');
+document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+mobileMenuButton.addEventListener('click', toggleMobileMenu);
+mobileMenuClose.addEventListener('click', toggleMobileMenu);
+if (mobileNavLinks) {
+mobileNavLinks.forEach(link => {
+if (!link) return;
+link.addEventListener('click', toggleMobileMenu);
+});
+}
+}
+// FAQ toggles
+const faqToggles = document.querySelectorAll('.faq-toggle');
+if (faqToggles) {
+faqToggles.forEach(toggle => {
+if (!toggle) return;
+toggle.addEventListener('click', function(e) {
+e.preventDefault();
+const content = this.nextElementSibling;
+const icon = this.querySelector('.faq-icon');
+if (content && icon) {
+content.classList.toggle('hidden');
+const isExpanded = !content.classList.contains('hidden');
+icon.className = isExpanded ? 'faq-icon ri-arrow-up-s-line' : 'faq-icon ri-arrow-down-s-line';
+this.setAttribute('aria-expanded', isExpanded);
+}
+});
+});
+}
+// Initialize counts and start updates
+initializeCounts();
+const updateInterval = setInterval(updateAllCounts, 5000);
+// Clean up interval on page unload
+window.addEventListener('unload', () => {
+clearInterval(updateInterval);
+});
+});
+</script>
+<!-- Blog Section -->
+<section id="blog-section" class="py-16 bg-white">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl font-bold text-center mb-4">Latest Stories from Our Community</h2>
+<p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">Read about real people who found work through Verify</p>
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Blog Post 1 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden group hover:shadow-lg transition-all duration-300">
+<a href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/82e001d0-e7a6-42e8-a61c-e79520528ff5" data-readdy="true" class="block">
+<img src="https://readdy.ai/api/search-image?query=happy%2520south%2520african%2520security%2520guard%2520in%2520uniform%2520standing%2520proudly%2520at%2520workplace%2C%2520professional%2520environment%2C%2520natural%2520lighting%2C%2520genuine%2520smile&width=600&height=400&seq=blog1&orientation=landscape" alt="Security Guard Success Story" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+<div class="p-6">
+<div class="flex items-center gap-4 mb-4">
+<div class="flex items-center gap-2">
+<i class="ri-calendar-line text-gray-400"></i>
+<span class="text-sm text-gray-500">June 21, 2025</span>
+</div>
+<div class="flex items-center gap-2">
+<i class="ri-time-line text-gray-400"></i>
+<span class="text-sm text-gray-500">5 min read</span>
+</div>
+</div>
+<h3 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors">From No Work to Security Guard in Two Weeks</h3>
+<p class="text-gray-600 mb-4">Follow John's journey from unemployment to becoming a trusted security guard at a major shopping centre. Learn how Verify's verification process helped him build trust with employers and secure a stable job within just two weeks.</p>
+<div class="flex items-center justify-between">
+<span class="text-primary font-medium inline-flex items-center">
+Read Full Story
+<i class="ri-arrow-right-line ml-2 group-hover:translate-x-2 transition-transform"></i>
+</span>
+<div class="flex items-center gap-3">
+<span class="flex items-center gap-1 text-gray-500">
+<i class="ri-eye-line"></i>
+<span class="text-sm">1.2k</span>
+</span>
+<span class="flex items-center gap-1 text-gray-500">
+<i class="ri-chat-1-line"></i>
+<span class="text-sm">8</span>
+</span>
+</div>
+</div>
+</div>
+</a>
+</div>
+<!-- Blog Post 2 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden group hover:shadow-lg transition-all duration-300">
+<a href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/82e001d0-e7a6-42e8-a61c-e79520528ff5" data-readdy="true" class="block">
+<img src="https://readdy.ai/api/search-image?query=south%2520african%2520domestic%2520worker%2520smiling%2520while%2520working%2520in%2520modern%2520kitchen%2C%2520natural%2520lighting%2C%2520professional%2520setting%2C%2520warm%2520atmosphere&width=600&height=400&seq=blog2&orientation=landscape" alt="Domestic Worker Story" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+<div class="p-6">
+<div class="flex items-center gap-4 mb-4">
+<div class="flex items-center gap-2">
+<i class="ri-calendar-line text-gray-400"></i>
+<span class="text-sm text-gray-500">June 20, 2025</span>
+</div>
+<div class="flex items-center gap-2">
+<i class="ri-time-line text-gray-400"></i>
+<span class="text-sm text-gray-500">4 min read</span>
+</div>
+</div>
+<h3 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors">Why Families Choose Verified Domestic Workers</h3>
+<p class="text-gray-600 mb-4">Sarah shares her 15-year journey as a domestic worker and how Verify's verification helped her find better opportunities with families who value trust and professionalism.</p>
+<div class="flex items-center justify-between">
+<span class="text-primary font-medium inline-flex items-center">
+Read Full Story
+<i class="ri-arrow-right-line ml-2 group-hover:translate-x-2 transition-transform"></i>
+</span>
+<div class="flex items-center gap-3">
+<span class="flex items-center gap-1 text-gray-500">
+<i class="ri-eye-line"></i>
+<span class="text-sm">956</span>
+</span>
+<span class="flex items-center gap-1 text-gray-500">
+<i class="ri-chat-1-line"></i>
+<span class="text-sm">12</span>
+</span>
+</div>
+</div>
+</div>
+</a>
+</div>
+<!-- Blog Post 3 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden group hover:shadow-lg transition-all duration-300">
+<a href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/82e001d0-e7a6-42e8-a61c-e79520528ff5" data-readdy="true" class="block">
+<img src="https://readdy.ai/api/search-image?query=south%2520african%2520truck%2520driver%2520standing%2520next%2520to%2520delivery%2520truck%2C%2520professional%2520setting%2C%2520daylight%2C%2520confident%2520pose&width=600&height=400&seq=blog3&orientation=landscape" alt="Driver Success Story" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+<div class="p-6">
+<div class="flex items-center gap-4 mb-4">
+<div class="flex items-center gap-2">
+<i class="ri-calendar-line text-gray-400"></i>
+<span class="text-sm text-gray-500">June 19, 2025</span>
+</div>
+<div class="flex items-center gap-2">
+<i class="ri-time-line text-gray-400"></i>
+<span class="text-sm text-gray-500">6 min read</span>
+</div>
+</div>
+<h3 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors">How I Became a Professional Driver</h3>
+<p class="text-gray-600 mb-4">Michael's story of transitioning from casual driving to becoming a certified professional driver through Verify's comprehensive verification process.</p>
+<div class="flex items-center justify-between">
+<span class="text-primary font-medium inline-flex items-center">
+Read Full Story
+<i class="ri-arrow-right-line ml-2 group-hover:translate-x-2 transition-transform"></i>
+</span>
+<div class="flex items-center gap-3">
+<span class="flex items-center gap-1 text-gray-500">
+<i class="ri-eye-line"></i>
+<span class="text-sm">843</span>
+</span>
+<span class="flex items-center gap-1 text-gray-500">
+<i class="ri-chat-1-line"></i>
+<span class="text-sm">6</span>
+</span>
+</div>
+</div>
+</div>
+</a>
+</div>
+<!-- Blog Post 4 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden group hover:shadow-lg transition-all duration-300">
+<a href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/82e001d0-e7a6-42e8-a61c-e79520528ff5" data-readdy="true" class="block">
+<img src="https://readdy.ai/api/search-image?query=south%2520african%2520skilled%2520electrician%2520working%2520on%2520electrical%2520panel%2C%2520professional%2520tools%2C%2520safety%2520equipment%2C%2520focused%2520expression&width=600&height=400&seq=blog4&orientation=landscape" alt="Electrician Success Story" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+<div class="p-6">
+<div class="flex items-center gap-4 mb-4">
+<div class="flex items-center gap-2">
+<i class="ri-calendar-line text-gray-400"></i>
+<span class="text-sm text-gray-500">June 18, 2025</span>
+</div>
+<div class="flex items-center gap-2">
+<i class="ri-time-line text-gray-400"></i>
+<span class="text-sm text-gray-500">7 min read</span>
+</div>
+</div>
+<h3 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors">Building a Career as a Verified Electrician</h3>
+<p class="text-gray-600 mb-4">David shares how getting his qualifications verified through Verify helped him establish trust with clients and grow his electrical business.</p>
+<div class="flex items-center justify-between">
+<span class="text-primary font-medium inline-flex items-center">
+Read Full Story
+<i class="ri-arrow-right-line ml-2 group-hover:translate-x-2 transition-transform"></i>
+</span>
+<div class="flex items-center gap-3">
+<span class="flex items-center gap-1 text-gray-500">
+<i class="ri-eye-line"></i>
+<span class="text-sm">721</span>
+</span>
+<span class="flex items-center gap-1 text-gray-500">
+<i class="ri-chat-1-line"></i>
+<span class="text-sm">15</span>
+</span>
+</div>
+</div>
+</div>
+</a>
+</div>
+<!-- Blog Post 5 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden group hover:shadow-lg transition-all duration-300">
+<a href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/82e001d0-e7a6-42e8-a61c-e79520528ff5" data-readdy="true" class="block">
+<img src="https://readdy.ai/api/search-image?query=south%2520african%2520childcare%2520professional%2520engaging%2520with%2520children%2520in%2520bright%2520playroom%2C%2520educational%2520toys%2C%2520safe%2520environment%2C%2520natural%2520lighting&width=600&height=400&seq=blog5&orientation=landscape" alt="Childcare Success Story" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+<div class="p-6">
+<div class="flex items-center gap-4 mb-4">
+<div class="flex items-center gap-2">
+<i class="ri-calendar-line text-gray-400"></i>
+<span class="text-sm text-gray-500">June 17, 2025</span>
+</div>
+<div class="flex items-center gap-2">
+<i class="ri-time-line text-gray-400"></i>
+<span class="text-sm text-gray-500">5 min read</span>
+</div>
+</div>
+<h3 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors">Trust in Childcare: A Nanny's Perspective</h3>
+<p class="text-gray-600 mb-4">Experience the journey of Grace, a professional nanny who built her reputation through Verify's thorough verification process.</p>
+<div class="flex items-center justify-between">
+<span class="text-primary font-medium inline-flex items-center">
+Read Full Story
+<i class="ri-arrow-right-line ml-2 group-hover:translate-x-2 transition-transform"></i>
+</span>
+<div class="flex items-center gap-3">
+<span class="flex items-center gap-1 text-gray-500">
+<i class="ri-eye-line"></i>
+<span class="text-sm">892</span>
+</span>
+<span class="flex items-center gap-1 text-gray-500">
+<i class="ri-chat-1-line"></i>
+<span class="text-sm">9</span>
+</span>
+</div>
+</div>
+</div>
+</a>
+</div>
+<!-- Blog Post 6 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden group hover:shadow-lg transition-all duration-300">
+<a href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/82e001d0-e7a6-42e8-a61c-e79520528ff5" data-readdy="true" class="block">
+<img src="https://readdy.ai/api/search-image?query=south%2520african%2520retail%2520manager%2520with%2520staff%2520in%2520modern%2520store%2C%2520professional%2520attire%2C%2520positive%2520interaction%2C%2520clean%2520environment&width=600&height=400&seq=blog6&orientation=landscape" alt="Retail Success Story" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+<div class="p-6">
+<div class="flex items-center gap-4 mb-4">
+<div class="flex items-center gap-2">
+<i class="ri-calendar-line text-gray-400"></i>
+<span class="text-sm text-gray-500">June 16, 2025</span>
+</div>
+<div class="flex items-center gap-2">
+<i class="ri-time-line text-gray-400"></i>
+<span class="text-sm text-gray-500">4 min read</span>
+</div>
+</div>
+<h3 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors">From Shop Floor to Store Manager</h3>
+<p class="text-gray-600 mb-4">Follow Thabo's inspiring journey from entry-level retail work to managing his own store, powered by Verify's verification system.</p>
+<div class="flex items-center justify-between">
+<span class="text-primary font-medium inline-flex items-center">
+Read Full Story
+<i class="ri-arrow-right-line ml-2 group-hover:translate-x-2 transition-transform"></i>
+</span>
+<div class="flex items-center gap-3">
+<span class="flex items-center gap-1 text-gray-500">
+<i class="ri-eye-line"></i>
+<span class="text-sm">634</span>
+</span>
+<span class="flex items-center gap-1 text-gray-500">
+<i class="ri-chat-1-line"></i>
+<span class="text-sm">11</span>
+</span>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="text-center mt-12">
+<a href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/7876bb0d-5339-4a58-8094-f7bd9f989dde" data-readdy="true" class="bg-primary text-white px-8 py-3 !rounded-button inline-block font-bold hover:bg-red-600">
+Get Verified Today
+</a>
+<p class="text-gray-600 mt-4">Join thousands of workers who found good jobs through Verify</p>
+</div>
+</div>
+</section>
+<!-- Video Section -->
+<section class="py-16 bg-white">
+<div class="container mx-auto px-4">
+<div class="max-w-4xl mx-auto">
+<h2 class="text-3xl font-bold text-center mb-4">See How Verify Works</h2>
+<p class="text-center text-gray-600 mb-8">Watch our short introduction video to learn more about our platform</p>
+<div class="aspect-w-16 aspect-h-9 bg-gray-100 rounded-lg overflow-hidden shadow-lg">
+<div class="w-full h-full">
+<video class="w-full h-full object-cover" controls>
+<source src="YOUR_VIDEO_URL_HERE" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+</div>
+</div>
+</section>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+// Verification timeframes dropdown handler
+const verificationSelect = document.getElementById('verificationSelect');
+const timeframeResult = document.getElementById('timeframeResult');
+const selectedTimeframe = document.getElementById('selectedTimeframe');
+if (verificationSelect) {
+verificationSelect.addEventListener('change', function() {
+const selectedValue = this.value;
+if (selectedValue) {
+selectedTimeframe.textContent = selectedValue;
+timeframeResult.classList.remove('hidden');
+} else {
+timeframeResult.classList.add('hidden');
+}
+});
+}
+// Job Seeker Form Handler
+const jobSeekerForm = document.getElementById('jobSeekerForm');
+if (jobSeekerForm) {
+jobSeekerForm.addEventListener('submit', function(e) {
+e.preventDefault();
+const formData = new FormData(jobSeekerForm);
+const modal = document.createElement('div');
+modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">Registration Submitted</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">Thank you for registering with Verify! We'll review your information and contact you within 24-48 hours to complete your verification process.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+document.body.appendChild(modal);
+jobSeekerForm.reset();
+});
+}
+// Category cards functionality
+const categoryCards = document.querySelectorAll('.category-card');
+function updateApplicantCount(element) {
+if (!element || !element.dataset) return;
+const min = parseInt(element.dataset.min) || 0;
+const max = parseInt(element.dataset.max) || 100;
+const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+element.textContent = `${randomCount} Applicants`;
+}
+function updateSubcategoryCount(element) {
+if (!element || !element.closest('.subcategory-item')) return;
+const item = element.closest('.subcategory-item');
+const min = parseInt(item.dataset.min) || 0;
+const max = parseInt(item.dataset.max) || 100;
+const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+element.textContent = `${randomCount}`;
+}
+function initializeCounts() {
+document.querySelectorAll('.applicant-count').forEach(updateApplicantCount);
+document.querySelectorAll('.subcategory-count').forEach(updateSubcategoryCount);
+}
+function updateAllCounts() {
+document.querySelectorAll('.applicant-count').forEach(element => {
+if (!element || !element.dataset) return;
+const currentCount = parseInt(element.textContent) || 0;
+const min = parseInt(element.dataset.min) || 0;
+const max = parseInt(element.dataset.max) || 100;
+const change = Math.floor(Math.random() * 3) - 1;
+const newCount = Math.min(Math.max(currentCount + change, min), max);
+element.textContent = `${newCount} Applicants`;
+});
+document.querySelectorAll('.subcategory-count').forEach(element => {
+if (!element || !element.closest('.subcategory-item')) return;
+const item = element.closest('.subcategory-item');
+const currentCount = parseInt(element.textContent) || 0;
+const min = parseInt(item.dataset.min) || 0;
+const max = parseInt(item.dataset.max) || 100;
+const change = Math.floor(Math.random() * 3) - 1;
+const newCount = Math.min(Math.max(currentCount + change, min), max);
+element.textContent = `${newCount}`;
+});
+}
+// Category card click handlers
+if (categoryCards) {
+categoryCards.forEach(card => {
+if (!card) return;
+card.addEventListener('click', function() {
+const content = this.querySelector('.category-content');
+if (content) {
+const isExpanded = !content.classList.contains('hidden');
+document.querySelectorAll('.category-content').forEach(c => {
+if (c !== content) {
+c.classList.add('hidden');
+c.closest('.category-card')?.classList.remove('shadow-lg', 'bg-gray-50');
+}
+});
+content.classList.toggle('hidden');
+this.classList.toggle('shadow-lg');
+this.classList.toggle('bg-gray-50');
+if (!isExpanded) {
+this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+}
+});
+});
+}
+// Subcategory item click handlers
+document.querySelectorAll('.subcategory-item').forEach(item => {
+if (!item) return;
+item.addEventListener('click', function(e) {
+e.stopPropagation();
+const categoryName = this.querySelector('.font-medium')?.textContent || 'Category';
+const applicants = this.querySelector('.subcategory-count')?.textContent || '0';
+const modal = document.createElement('div');
+modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">${categoryName}</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">There are currently <span class="text-primary font-bold">${applicants}</span> verified applicants available for this position.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+document.body.appendChild(modal);
+});
+});
+// Mobile navigation
+const mobileMenuButton = document.getElementById('mobile-menu-button');
+const mobileMenuClose = document.getElementById('mobile-menu-close');
+const mobileNav = document.getElementById('mobile-nav');
+if (mobileMenuButton && mobileMenuClose && mobileNav) {
+const mobileNavLinks = mobileNav.querySelectorAll('a');
+function toggleMobileMenu() {
+const isOpen = mobileNav.classList.contains('translate-x-0');
+mobileNav.classList.toggle('translate-x-0');
+mobileNav.classList.toggle('translate-x-full');
+document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+mobileMenuButton.addEventListener('click', toggleMobileMenu);
+mobileMenuClose.addEventListener('click', toggleMobileMenu);
+if (mobileNavLinks) {
+mobileNavLinks.forEach(link => {
+if (!link) return;
+link.addEventListener('click', toggleMobileMenu);
+});
+}
+}
+// FAQ toggles
+const faqToggles = document.querySelectorAll('.faq-toggle');
+if (faqToggles) {
+faqToggles.forEach(toggle => {
+if (!toggle) return;
+toggle.addEventListener('click', function(e) {
+e.preventDefault();
+const content = this.nextElementSibling;
+const icon = this.querySelector('.faq-icon');
+if (content && icon) {
+content.classList.toggle('hidden');
+const isExpanded = !content.classList.contains('hidden');
+icon.className = isExpanded ? 'faq-icon ri-arrow-up-s-line' : 'faq-icon ri-arrow-down-s-line';
+this.setAttribute('aria-expanded', isExpanded);
+}
+});
+});
+}
+// Initialize counts and start updates
+initializeCounts();
+const updateInterval = setInterval(updateAllCounts, 5000);
+// Clean up interval on page unload
+window.addEventListener('unload', () => {
+clearInterval(updateInterval);
+});
+});
+</script>
+<!-- Testimonials -->
+<section class="py-16 bg-gray-50">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl font-bold text-center mb-4">What Our Users Say</h2>
+<p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">Hear from job seekers and employers who use Verify</p>
+<div class="grid md:grid-cols-2 gap-8">
+<!-- Job Seeker Testimonials -->
+<div>
+<h3 class="text-xl font-bold mb-6 flex items-center">
+<div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center mr-2">
+<i class="ri-user-line text-white"></i>
+</div>
+Job Seekers
+</h3>
+<div class="space-y-6">
+<div class="bg-white p-6 rounded-lg shadow-sm">
+<div class="flex text-primary mb-2">
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+</div>
+<p class="mb-4">"I got a job as a driver within two weeks of registering with Verify. The Gold verification helped me stand out from other applicants. Employers trusted me because my background was already checked."</p>
+<div class="flex items-center">
+<div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center mr-3">
+<i class="ri-user-line text-gray-500"></i>
+</div>
+<div>
+<p class="font-bold">Themba Nkosi</p>
+<p class="text-sm text-gray-600">Professional Driver, Johannesburg</p>
+</div>
+</div>
+</div>
+<div class="bg-white p-6 rounded-lg shadow-sm">
+<div class="flex text-primary mb-2">
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-half-fill"></i>
+</div>
+<p class="mb-4">"As a domestic worker, I was struggling to find a job where people trusted me. The Silver verification helped me prove my background was clean. Now I have a permanent position with a good family."</p>
+<div class="flex items-center">
+<div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center mr-3">
+<i class="ri-user-line text-gray-500"></i>
+</div>
+<div>
+<p class="font-bold">Nomsa Dlamini</p>
+<p class="text-sm text-gray-600">Housekeeper, Cape Town</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Employer Testimonials -->
+<div>
+<h3 class="text-xl font-bold mb-6 flex items-center">
+<div class="w-8 h-8 bg-black rounded-full flex items-center justify-center mr-2">
+<i class="ri-building-line text-white"></i>
+</div>
+Employers
+</h3>
+<div class="space-y-6">
+<div class="bg-white p-6 rounded-lg shadow-sm">
+<div class="flex text-primary mb-2">
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+</div>
+<p class="mb-4">"Finding reliable security staff used to be a nightmare. With Verify, I can quickly see who has proper PSIRA registration and a clean record. We've hired 5 guards through the platform and all have been excellent."</p>
+<div class="flex items-center">
+<div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center mr-3">
+<i class="ri-building-line text-gray-500"></i>
+</div>
+<div>
+<p class="font-bold">SafeGuard Security Services</p>
+<p class="text-sm text-gray-600">Small Business, Pretoria</p>
+</div>
+</div>
+</div>
+<div class="bg-white p-6 rounded-lg shadow-sm">
+<div class="flex text-primary mb-2">
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-line"></i>
+</div>
+<p class="mb-4">"As a busy mom, I needed a trustworthy nanny. The Gold verification gave me peace of mind that the person looking after my children had been thoroughly checked. The process was quick and easy."</p>
+<div class="flex items-center">
+<div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center mr-3">
+<i class="ri-user-line text-gray-500"></i>
+</div>
+<div>
+<p class="font-bold">Sarah Thompson</p>
+<p class="text-sm text-gray-600">Parent, Durban</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// Verification timeframes dropdown handler
+const verificationSelect = document.getElementById('verificationSelect');
+const timeframeResult = document.getElementById('timeframeResult');
+const selectedTimeframe = document.getElementById('selectedTimeframe');
+if (verificationSelect) {
+verificationSelect.addEventListener('change', function() {
+const selectedValue = this.value;
+if (selectedValue) {
+selectedTimeframe.textContent = selectedValue;
+timeframeResult.classList.remove('hidden');
+} else {
+timeframeResult.classList.add('hidden');
+}
+});
+}
+// Job Seeker Form Handler
+if (jobSeekerForm) {
+jobSeekerForm.addEventListener('submit', function(e) {
+e.preventDefault();
+const formData = new FormData(jobSeekerForm);
+const modal = document.createElement('div');
+modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">Registration Submitted</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">Thank you for registering with Verify! We'll review your information and contact you within 24-48 hours to complete your verification process.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+document.body.appendChild(modal);
+jobSeekerForm.reset();
+});
+}
+// Category cards functionality
+const categoryCards = document.querySelectorAll('.category-card');
+function updateApplicantCount(element) {
+if (!element || !element.dataset) return;
+const min = parseInt(element.dataset.min) || 0;
+const max = parseInt(element.dataset.max) || 100;
+const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+element.textContent = `${randomCount} Applicants`;
+}
+function updateSubcategoryCount(element) {
+if (!element || !element.closest('.subcategory-item')) return;
+const item = element.closest('.subcategory-item');
+const min = parseInt(item.dataset.min) || 0;
+const max = parseInt(item.dataset.max) || 100;
+const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+element.textContent = `${randomCount}`;
+}
+function initializeCounts() {
+document.querySelectorAll('.applicant-count').forEach(updateApplicantCount);
+document.querySelectorAll('.subcategory-count').forEach(updateSubcategoryCount);
+}
+function updateAllCounts() {
+document.querySelectorAll('.applicant-count').forEach(element => {
+if (!element || !element.dataset) return;
+const currentCount = parseInt(element.textContent) || 0;
+const min = parseInt(element.dataset.min) || 0;
+const max = parseInt(element.dataset.max) || 100;
+const change = Math.floor(Math.random() * 3) - 1;
+const newCount = Math.min(Math.max(currentCount + change, min), max);
+element.textContent = `${newCount} Applicants`;
+});
+document.querySelectorAll('.subcategory-count').forEach(element => {
+if (!element || !element.closest('.subcategory-item')) return;
+const item = element.closest('.subcategory-item');
+const currentCount = parseInt(element.textContent) || 0;
+const min = parseInt(item.dataset.min) || 0;
+const max = parseInt(item.dataset.max) || 100;
+const change = Math.floor(Math.random() * 3) - 1;
+const newCount = Math.min(Math.max(currentCount + change, min), max);
+element.textContent = `${newCount}`;
+});
+}
+// Category card click handlers
+if (categoryCards) {
+categoryCards.forEach(card => {
+if (!card) return;
+card.addEventListener('click', function() {
+const content = this.querySelector('.category-content');
+if (content) {
+const isExpanded = !content.classList.contains('hidden');
+document.querySelectorAll('.category-content').forEach(c => {
+if (c !== content) {
+c.classList.add('hidden');
+c.closest('.category-card')?.classList.remove('shadow-lg', 'bg-gray-50');
+}
+});
+content.classList.toggle('hidden');
+this.classList.toggle('shadow-lg');
+this.classList.toggle('bg-gray-50');
+if (!isExpanded) {
+this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+}
+});
+});
+}
+// Subcategory item click handlers
+document.querySelectorAll('.subcategory-item').forEach(item => {
+if (!item) return;
+item.addEventListener('click', function(e) {
+e.stopPropagation();
+const categoryName = this.querySelector('.font-medium')?.textContent || 'Category';
+const applicants = this.querySelector('.subcategory-count')?.textContent || '0';
+const modal = document.createElement('div');
+modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">${categoryName}</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">There are currently <span class="text-primary font-bold">${applicants}</span> verified applicants available for this position.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+document.body.appendChild(modal);
+});
+});
+// Mobile navigation
+const mobileMenuButton = document.getElementById('mobile-menu-button');
+const mobileMenuClose = document.getElementById('mobile-menu-close');
+const mobileNav = document.getElementById('mobile-nav');
+if (mobileMenuButton && mobileMenuClose && mobileNav) {
+const mobileNavLinks = mobileNav.querySelectorAll('a');
+function toggleMobileMenu() {
+const isOpen = mobileNav.classList.contains('translate-x-0');
+mobileNav.classList.toggle('translate-x-0');
+mobileNav.classList.toggle('translate-x-full');
+document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+mobileMenuButton.addEventListener('click', toggleMobileMenu);
+mobileMenuClose.addEventListener('click', toggleMobileMenu);
+if (mobileNavLinks) {
+mobileNavLinks.forEach(link => {
+if (!link) return;
+link.addEventListener('click', toggleMobileMenu);
+});
+}
+}
+// FAQ toggles
+const faqToggles = document.querySelectorAll('.faq-toggle');
+if (faqToggles) {
+faqToggles.forEach(toggle => {
+if (!toggle) return;
+toggle.addEventListener('click', function(e) {
+e.preventDefault();
+const content = this.nextElementSibling;
+const icon = this.querySelector('.faq-icon');
+if (content && icon) {
+content.classList.toggle('hidden');
+const isExpanded = !content.classList.contains('hidden');
+icon.className = isExpanded ? 'faq-icon ri-arrow-up-s-line' : 'faq-icon ri-arrow-down-s-line';
+this.setAttribute('aria-expanded', isExpanded);
+}
+});
+});
+}
+// Initialize counts and start updates
+initializeCounts();
+const updateInterval = setInterval(updateAllCounts, 5000);
+// Clean up interval on page unload
+window.addEventListener('unload', () => {
+clearInterval(updateInterval);
+});
+});
+</script>
+<!-- FAQ Section -->
+<section id="faq" class="py-16 bg-white">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl font-bold text-center mb-4">Frequently Asked Questions</h2>
+<p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">Find answers to common questions about Verify</p>
+<div class="max-w-3xl mx-auto">
+<div class="space-y-4">
+<!-- FAQ Item 1 -->
+<div class="border border-gray-200 rounded-lg overflow-hidden">
+<button class="faq-toggle w-full flex justify-between items-center p-4 bg-white hover:bg-gray-50 focus:outline-none" aria-expanded="false">
+<span class="font-bold">How long does verification take?</span>
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-arrow-down-s-line faq-icon"></i>
+</div>
+</button>
+<div class="faq-content hidden p-4 pt-0 border-t border-gray-200">
+<div class="space-y-4">
+<p class="font-medium">Verification Timeframes</p>
+<p>Select a verification tier to see processing time:</p>
+<div class="relative w-full max-w-xs">
+<select id="verificationSelect" class="w-full px-4 py-2 border border-gray-200 rounded-lg appearance-none bg-white pr-10 cursor-pointer">
+<option value="" disabled selected>Choose a tier...</option>
+<option value="1–2 business days">Bronze (CV check)</option>
+<option value="3–5 business days">Silver (CV + police clearance)</option>
+<option value="5–7 business days">Gold (CV + police clearance + polygraph)</option>
+</select>
+<div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+<i class="ri-arrow-down-s-line text-gray-400"></i>
+</div>
+</div>
+<div id="timeframeResult" class="hidden">
+<p class="text-lg font-medium">Processing time: <span id="selectedTimeframe" class="text-primary"></span></p>
+</div>
+<p class="text-gray-600 text-sm mt-4">Because we depend on outside partners (e.g. police services, testing centres), actual timing can vary and is beyond our direct control. Rest assured, we'll follow up at every step and do everything possible to expedite the process.</p>
+</div>
+</div>
+</div>
+<!-- FAQ Item 2 -->
+<div class="border border-gray-200 rounded-lg overflow-hidden">
+<button class="faq-toggle w-full flex justify-between items-center p-4 bg-white hover:bg-gray-50 focus:outline-none" aria-expanded="false">
+<span class="font-bold">What documents do I need to register as a job seeker?</span>
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-arrow-down-s-line faq-icon"></i>
+</div>
+</button>
+<div class="faq-content hidden p-4 pt-0 border-t border-gray-200">
+<p>You need your ID document, updated CV, proof of qualifications (certificates, licenses), and references from previous employers. For Silver and Gold verification, you'll also need to complete police clearance forms and/or schedule a polygraph test.</p>
+</div>
+</div>
+<!-- FAQ Item 3 -->
+<div class="border border-gray-200 rounded-lg overflow-hidden">
+<button class="faq-toggle w-full flex justify-between items-center p-4 bg-white hover:bg-gray-50 focus:outline-none" aria-expanded="false">
+<span class="font-bold">How do I search for workers as an employer?</span>
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-arrow-down-s-line faq-icon"></i>
+</div>
+</button>
+<div class="faq-content hidden p-4 pt-0 border-t border-gray-200">
+<p>After purchasing a CV bundle, you can filter workers by job category, location, skills, experience level, and verification tier. You'll see basic profiles first, and can use your CV credits to unlock full profiles with contact details and complete verification information.</p>
+</div>
+</div>
+<!-- FAQ Item 4 -->
+<div class="border border-gray-200 rounded-lg overflow-hidden">
+<button class="faq-toggle w-full flex justify-between items-center p-4 bg-white hover:bg-gray-50 focus:outline-none" aria-expanded="false">
+<span class="font-bold">Do CV credits expire?</span>
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-arrow-down-s-line faq-icon"></i>
+</div>
+</button>
+<div class="faq-content hidden p-4 pt-0 border-t border-gray-200">
+<p>Yes, CV credits expire based on your package: Small Bundle (10 CVs) expires after 30 days, Medium Bundle (25 CVs) after 60 days, and Large Bundle (60 CVs) after 90 days from the date of purchase.</p>
+</div>
+</div>
+<!-- FAQ Item 5 -->
+<div class="border border-gray-200 rounded-lg overflow-hidden">
+<button class="faq-toggle w-full flex justify-between items-center p-4 bg-white hover:bg-gray-50 focus:outline-none" aria-expanded="false">
+<span class="font-bold">Is Verify available throughout South Africa?</span>
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-arrow-down-s-line faq-icon"></i>
+</div>
+</button>
+<div class="faq-content hidden p-4 pt-0 border-t border-gray-200">
+<p>Yes, Verify is available across South Africa. We have the most workers registered in major cities (Johannesburg, Cape Town, Durban, Pretoria), but we're growing in smaller cities and towns as well. Verification services are available nationwide.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+// Verification timeframes dropdown handler
+const verificationSelect = document.getElementById('verificationSelect');
+const timeframeResult = document.getElementById('timeframeResult');
+const selectedTimeframe = document.getElementById('selectedTimeframe');
+if (verificationSelect) {
+verificationSelect.addEventListener('change', function() {
+const selectedValue = this.value;
+if (selectedValue) {
+selectedTimeframe.textContent = selectedValue;
+timeframeResult.classList.remove('hidden');
+} else {
+timeframeResult.classList.add('hidden');
+}
+});
+}
+// Job Seeker Form Handler
+const jobSeekerForm = document.getElementById('jobSeekerForm');
+if (jobSeekerForm) {
+jobSeekerForm.addEventListener('submit', function(e) {
+e.preventDefault();
+const formData = new FormData(jobSeekerForm);
+const modal = document.createElement('div');
+modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">Registration Submitted</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">Thank you for registering with Verify! We'll review your information and contact you within 24-48 hours to complete your verification process.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+document.body.appendChild(modal);
+jobSeekerForm.reset();
+});
+}
+// Category cards functionality
+const categoryCards = document.querySelectorAll('.category-card');
+function updateApplicantCount(element) {
+if (!element || !element.dataset) return;
+const min = parseInt(element.dataset.min) || 0;
+const max = parseInt(element.dataset.max) || 100;
+const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+element.textContent = `${randomCount} Applicants`;
+}
+function updateSubcategoryCount(element) {
+if (!element || !element.closest('.subcategory-item')) return;
+const item = element.closest('.subcategory-item');
+const min = parseInt(item.dataset.min) || 0;
+const max = parseInt(item.dataset.max) || 100;
+const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+element.textContent = `${randomCount}`;
+}
+function initializeCounts() {
+document.querySelectorAll('.applicant-count').forEach(updateApplicantCount);
+document.querySelectorAll('.subcategory-count').forEach(updateSubcategoryCount);
+}
+function updateAllCounts() {
+document.querySelectorAll('.applicant-count').forEach(element => {
+if (!element || !element.dataset) return;
+const currentCount = parseInt(element.textContent) || 0;
+const min = parseInt(element.dataset.min) || 0;
+const max = parseInt(element.dataset.max) || 100;
+const change = Math.floor(Math.random() * 3) - 1;
+const newCount = Math.min(Math.max(currentCount + change, min), max);
+element.textContent = `${newCount} Applicants`;
+});
+document.querySelectorAll('.subcategory-count').forEach(element => {
+if (!element || !element.closest('.subcategory-item')) return;
+const item = element.closest('.subcategory-item');
+const currentCount = parseInt(element.textContent) || 0;
+const min = parseInt(item.dataset.min) || 0;
+const max = parseInt(item.dataset.max) || 100;
+const change = Math.floor(Math.random() * 3) - 1;
+const newCount = Math.min(Math.max(currentCount + change, min), max);
+element.textContent = `${newCount}`;
+});
+}
+// Category card click handlers
+if (categoryCards) {
+categoryCards.forEach(card => {
+if (!card) return;
+card.addEventListener('click', function() {
+const content = this.querySelector('.category-content');
+if (content) {
+const isExpanded = !content.classList.contains('hidden');
+document.querySelectorAll('.category-content').forEach(c => {
+if (c !== content) {
+c.classList.add('hidden');
+c.closest('.category-card')?.classList.remove('shadow-lg', 'bg-gray-50');
+}
+});
+content.classList.toggle('hidden');
+this.classList.toggle('shadow-lg');
+this.classList.toggle('bg-gray-50');
+if (!isExpanded) {
+this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+}
+});
+});
+}
+// Subcategory item click handlers
+document.querySelectorAll('.subcategory-item').forEach(item => {
+if (!item) return;
+item.addEventListener('click', function(e) {
+e.stopPropagation();
+const categoryName = this.querySelector('.font-medium')?.textContent || 'Category';
+const applicants = this.querySelector('.subcategory-count')?.textContent || '0';
+const modal = document.createElement('div');
+modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">${categoryName}</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">There are currently <span class="text-primary font-bold">${applicants}</span> verified applicants available for this position.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+document.body.appendChild(modal);
+});
+});
+// Mobile navigation
+const mobileMenuButton = document.getElementById('mobile-menu-button');
+const mobileMenuClose = document.getElementById('mobile-menu-close');
+const mobileNav = document.getElementById('mobile-nav');
+if (mobileMenuButton && mobileMenuClose && mobileNav) {
+const mobileNavLinks = mobileNav.querySelectorAll('a');
+function toggleMobileMenu() {
+const isOpen = mobileNav.classList.contains('translate-x-0');
+mobileNav.classList.toggle('translate-x-0');
+mobileNav.classList.toggle('translate-x-full');
+document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+mobileMenuButton.addEventListener('click', toggleMobileMenu);
+mobileMenuClose.addEventListener('click', toggleMobileMenu);
+if (mobileNavLinks) {
+mobileNavLinks.forEach(link => {
+if (!link) return;
+link.addEventListener('click', toggleMobileMenu);
+});
+}
+}
+// FAQ toggles
+const faqToggles = document.querySelectorAll('.faq-toggle');
+if (faqToggles) {
+faqToggles.forEach(toggle => {
+if (!toggle) return;
+toggle.addEventListener('click', function(e) {
+e.preventDefault();
+const content = this.nextElementSibling;
+const icon = this.querySelector('.faq-icon');
+if (content && icon) {
+content.classList.toggle('hidden');
+const isExpanded = !content.classList.contains('hidden');
+icon.className = isExpanded ? 'faq-icon ri-arrow-up-s-line' : 'faq-icon ri-arrow-down-s-line';
+this.setAttribute('aria-expanded', isExpanded);
+}
+});
+});
+}
+// Initialize counts and start updates
+initializeCounts();
+const updateInterval = setInterval(updateAllCounts, 5000);
+// Clean up interval on page unload
+window.addEventListener('unload', () => {
+clearInterval(updateInterval);
+});
+});
+</script>
+<!-- Footer -->
+<footer class="bg-gray-100 pt-16 pb-8">
+<div class="container mx-auto px-4">
+<div class="grid md:grid-cols-3 gap-8 mb-12">
+<div>
+<div class="mb-4">
+<img src="https://static.readdy.ai/image/783dd8c3d2d1f38f9648f46144ac17f1/6f160ab9798415c319a5bce439242a7f.jpeg" alt="Verify Logo" class="h-8">
+</div>
+<p class="text-gray-600 mb-4">Verify connects qualified workers with employers by verifying documents, ensuring safety and trust.</p>
+</div>
+<div>
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-bold text-lg">Contact Us</h3>
+</div>
+<ul class="space-y-2">
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
+<i class="ri-mail-line text-primary"></i>
+</div>
+<span class="text-gray-600">support@verify.co.za</span>
+</li>
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
+<i class="ri-phone-line text-primary"></i>
+</div>
+<span class="text-gray-600">087 123 4567</span>
+</li>
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
+<i class="ri-map-pin-line text-primary"></i>
+</div>
+<span class="text-gray-600">Cape Town, Johannesburg, Durban</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="border-t border-gray-300 pt-8">
+<div class="flex flex-col md:flex-row justify-between items-center">
+<div class="flex items-center">
+<p class="text-gray-600 mb-4 md:mb-0">&copy; 2025 Verify. All rights reserved. South African platform only.</p>
+<div class="hidden md:flex space-x-4 ml-8">
+<a href="#" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+<i class="ri-facebook-fill"></i>
+</a>
+<a href="#" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+<i class="ri-twitter-x-fill"></i>
+</a>
+<a href="#" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+<i class="ri-instagram-line"></i>
+</a>
+<a href="#" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+<i class="ri-linkedin-fill"></i>
+</a>
+</div>
+</div>
+<div class="flex space-x-6">
+<a href="privacy-policy-overview.html" class="text-gray-600 hover:text-primary">Privacy Policy</a>
+<a href="terms-of-service.html" data-readdy="true" class="text-gray-600 hover:text-primary">Terms of Service</a>
+<a href="Cookie-Policy-Page.html" class="text-gray-600 hover:text-primary">Cookie Policy</a>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<!-- 移除这个脚本块，因为功能已经合并到 main-interactions 中 -->
+<!-- 移除这个脚本块，因为功能已经合并到 main-interactions 中 -->
+<script src="/app.js"></script>
+
+</body>
+</html>

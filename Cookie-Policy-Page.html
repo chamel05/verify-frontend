@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cookie Policy - Verify</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: { primary: "#F50302", secondary: "#4D4D4D" },
+            borderRadius: {
+              none: "0px",
+              sm: "4px",
+              DEFAULT: "8px",
+              md: "12px",
+              lg: "16px",
+              xl: "20px",
+              "2xl": "24px",
+              "3xl": "32px",
+              full: "9999px",
+              button: "8px",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
+    />
+    <style>
+      :where([class^="ri-"])::before { content: "\f3c2"; }
+      @import url('https://fonts.googleapis.com/css2?family=Futura:wght@400;500;700&display=swap');
+      body {
+      font-family: 'Futura', sans-serif;
+      }
+      input[type="number"]::-webkit-inner-spin-button,
+      input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+      }
+      .cookie-toggle:checked + .toggle-bg {
+      background-color: #F50302;
+      }
+      .cookie-toggle:checked + .toggle-bg .toggle-dot {
+      transform: translateX(100%);
+      }
+    </style>
+  </head>
+  <body class="bg-white text-gray-900">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+      <div
+        class="container mx-auto px-4 py-4 flex justify-between items-center"
+      >
+        <div class="flex items-center">
+          <div class="text-2xl font-bold tracking-tight flex items-center">
+            <img
+              src="https://static.readdy.ai/image/783dd8c3d2d1f38f9648f46144ac17f1/bc2b69f3a823a0bfcee48284d9c2d098.jpeg"
+              alt="Verify Logo"
+              class="h-12"
+            />
+          </div>
+        </div>
+        <nav class="hidden md:flex space-x-8 items-center">
+          <a
+            href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/0c4af476-1405-4543-b628-417302d1465c"
+            data-readdy="true"
+            class="text-gray-800 hover:text-primary font-medium"
+            >How it works</a
+          >
+          <a
+            href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/0c4af476-1405-4543-b628-417302d1465c#job-categories"
+            data-readdy="true"
+            class="text-gray-800 hover:text-primary font-medium"
+            >Job Categories</a
+          >
+          <a
+            href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/0c4af476-1405-4543-b628-417302d1465c#pricing"
+            data-readdy="true"
+            class="text-gray-800 hover:text-primary font-medium"
+            >Pricing</a
+          >
+          <a
+            href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/0c4af476-1405-4543-b628-417302d1465c#faq"
+            data-readdy="true"
+            class="text-gray-800 hover:text-primary font-medium"
+            >FAQ</a
+          >
+          <a
+            href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/d75ce9b6-d6a6-4e5c-9dea-a70df2e13263"
+            data-readdy="true"
+            class="bg-white text-primary border border-primary px-4 py-2 !rounded-button hover:bg-gray-50 whitespace-nowrap inline-block"
+            >Log in</a
+          >
+          <button
+            class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600 whitespace-nowrap"
+          >
+            Register
+          </button>
+        </nav>
+        <div class="md:hidden w-10 h-10 flex items-center justify-center">
+          <i class="ri-menu-line text-gray-800 ri-2x"></i>
+        </div>
+      </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="bg-gray-50">
+      <div class="container mx-auto px-4 py-3">
+        <div class="flex items-center text-sm text-gray-600">
+          <a
+            href="home-page.html"
+            data-readdy="true"
+            class="hover:text-primary"
+            >Home</a
+          >
+          <i class="ri-arrow-right-s-line mx-2"></i>
+          <span class="text-gray-900 font-medium">Cookie Policy</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="py-12">
+      <div class="container mx-auto px-4 max-w-4xl">
+        <div class="flex items-center justify-center mb-8">
+          <div
+            class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center"
+          >
+            <i class="ri-cookie-line text-primary ri-2x"></i>
+          </div>
+        </div>
+
+        <h1 class="text-3xl md:text-4xl font-bold text-center mb-8">
+          Cookie Policy
+        </h1>
+        <p class="text-gray-600 mb-8 text-center">Last updated: June 3, 2025</p>
+
+        <div class="bg-white rounded-lg shadow-md p-8 mb-8">
+          <div class="prose max-w-none">
+            <p class="mb-6">
+              This Cookie Policy explains how Verify ("we", "us", or "our") uses
+              cookies and similar technologies to recognize you when you visit
+              our website. It explains what these technologies are and why we
+              use them, as well as your rights to control our use of them.
+            </p>
+
+            <h2 class="text-2xl font-bold mt-8 mb-4">What are cookies?</h2>
+            <p class="mb-6">
+              Cookies are small data files that are placed on your computer or
+              mobile device when you visit a website. Cookies are widely used by
+              website owners in order to make their websites work, or to work
+              more efficiently, as well as to provide reporting information.
+            </p>
+            <p class="mb-6">
+              Cookies set by the website owner (in this case, Verify) are called
+              "first-party cookies". Cookies set by parties other than the
+              website owner are called "third-party cookies". Third-party
+              cookies enable third-party features or functionality to be
+              provided on or through the website (e.g., advertising, interactive
+              content, and analytics). The parties that set these third-party
+              cookies can recognize your computer both when it visits the
+              website in question and also when it visits certain other
+              websites.
+            </p>
+
+            <h2 class="text-2xl font-bold mt-8 mb-4">Why do we use cookies?</h2>
+            <p class="mb-6">
+              We use first-party and third-party cookies for several reasons.
+              Some cookies are required for technical reasons in order for our
+              website to operate, and we refer to these as "essential" or
+              "strictly necessary" cookies. Other cookies also enable us to
+              track and target the interests of our users to enhance the
+              experience on our website. Third parties serve cookies through our
+              website for advertising, analytics, and other purposes.
+            </p>
+
+            <h2 class="text-2xl font-bold mt-8 mb-4">
+              Types of cookies we use
+            </h2>
+
+            <div class="mt-6 mb-8 border-b border-gray-200 pb-6">
+              <h3 class="text-xl font-bold mb-3 flex items-center">
+                <div
+                  class="w-8 h-8 bg-primary rounded-full flex items-center justify-center mr-3 text-white"
+                >
+                  <i class="ri-lock-line"></i>
+                </div>
+                Essential Cookies
+              </h3>
+              <p class="mb-3">
+                These cookies are strictly necessary to provide you with
+                services available through our website and to use some of its
+                features, such as access to secure areas.
+              </p>
+              <div class="bg-gray-50 p-4 rounded-lg mt-4">
+                <p class="text-sm font-medium mb-2">Examples:</p>
+                <ul
+                  class="list-disc list-inside text-sm text-gray-600 space-y-1"
+                >
+                  <li>Authentication cookies</li>
+                  <li>Security cookies</li>
+                  <li>Load balancing cookies</li>
+                </ul>
+                <p class="text-sm text-gray-600 mt-2">
+                  Duration: Session to 2 years
+                </p>
+              </div>
+            </div>
+
+            <div class="mt-6 mb-8 border-b border-gray-200 pb-6">
+              <h3 class="text-xl font-bold mb-3 flex items-center">
+                <div
+                  class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mr-3 text-white"
+                >
+                  <i class="ri-settings-line"></i>
+                </div>
+                Functional Cookies
+              </h3>
+              <p class="mb-3">
+                These cookies allow us to remember choices you make when you use
+                our website, such as remembering your login details or language
+                preference. The purpose of these cookies is to provide you with
+                a more personal experience and to avoid you having to re-enter
+                your preferences every time you visit our website.
+              </p>
+              <div class="bg-gray-50 p-4 rounded-lg mt-4">
+                <p class="text-sm font-medium mb-2">Examples:</p>
+                <ul
+                  class="list-disc list-inside text-sm text-gray-600 space-y-1"
+                >
+                  <li>Language preference cookies</li>
+                  <li>Region selection cookies</li>
+                  <li>User interface customization cookies</li>
+                </ul>
+                <p class="text-sm text-gray-600 mt-2">
+                  Duration: 30 days to 1 year
+                </p>
+              </div>
+            </div>
+
+            <div class="mt-6 mb-8 border-b border-gray-200 pb-6">
+              <h3 class="text-xl font-bold mb-3 flex items-center">
+                <div
+                  class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-3 text-white"
+                >
+                  <i class="ri-bar-chart-line"></i>
+                </div>
+                Analytics Cookies
+              </h3>
+              <p class="mb-3">
+                These cookies collect information that is used either in
+                aggregate form to help us understand how our website is being
+                used or how effective our marketing campaigns are, or to help us
+                customize our website for you.
+              </p>
+              <div class="bg-gray-50 p-4 rounded-lg mt-4">
+                <p class="text-sm font-medium mb-2">Examples:</p>
+                <ul
+                  class="list-disc list-inside text-sm text-gray-600 space-y-1"
+                >
+                  <li>Google Analytics cookies</li>
+                  <li>Hotjar cookies</li>
+                  <li>Performance monitoring cookies</li>
+                </ul>
+                <p class="text-sm text-gray-600 mt-2">
+                  Duration: 90 days to 2 years
+                </p>
+              </div>
+            </div>
+
+            <div class="mt-6 mb-8">
+              <h3 class="text-xl font-bold mb-3 flex items-center">
+                <div
+                  class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center mr-3 text-white"
+                >
+                  <i class="ri-advertisement-line"></i>
+                </div>
+                Marketing Cookies
+              </h3>
+              <p class="mb-3">
+                These cookies are used to track your browsing habits to enable
+                us to show advertising which is more likely to be of interest to
+                you. These cookies use information about your browsing history
+                to group you with other users who have similar interests. Based
+                on that information, and with our permission, third-party
+                advertisers can place cookies to enable them to show
+                advertisements which we think will be relevant to your interests
+                while you are on third-party websites.
+              </p>
+              <div class="bg-gray-50 p-4 rounded-lg mt-4">
+                <p class="text-sm font-medium mb-2">Examples:</p>
+                <ul
+                  class="list-disc list-inside text-sm text-gray-600 space-y-1"
+                >
+                  <li>Facebook advertising cookies</li>
+                  <li>Google Ads cookies</li>
+                  <li>Retargeting cookies</li>
+                </ul>
+                <p class="text-sm text-gray-600 mt-2">
+                  Duration: 30 days to 2 years
+                </p>
+              </div>
+            </div>
+
+            <h2 class="text-2xl font-bold mt-8 mb-4">
+              How can you control cookies?
+            </h2>
+            <p class="mb-6">
+              You have the right to decide whether to accept or reject cookies.
+              You can exercise your cookie rights by setting your preferences in
+              the Cookie Consent Manager. The Cookie Consent Manager allows you
+              to select which categories of cookies you accept or reject.
+              Essential cookies cannot be rejected as they are strictly
+              necessary to provide you with services.
+            </p>
+            <p class="mb-6">
+              If you choose to reject cookies, you may still use our website
+              though your access to some functionality and areas of our website
+              may be restricted. You may also set or amend your web browser
+              controls to accept or refuse cookies.
+            </p>
+            <p class="mb-6">
+              The specific types of first and third-party cookies served through
+              our website and the purposes they perform are described in the
+              table below:
+            </p>
+
+            <h2 class="text-2xl font-bold mt-8 mb-4">How to delete cookies?</h2>
+            <p class="mb-6">
+              You can delete cookies already stored on your computer through
+              your browser settings. For more information about how to manage
+              cookies in your web browser, please visit:
+            </p>
+            <ul class="list-disc list-inside mb-6 space-y-2">
+              <li>
+                <a href="#" class="text-primary hover:underline">Chrome</a>
+              </li>
+              <li>
+                <a href="#" class="text-primary hover:underline">Firefox</a>
+              </li>
+              <li>
+                <a href="#" class="text-primary hover:underline">Safari</a>
+              </li>
+              <li><a href="#" class="text-primary hover:underline">Edge</a></li>
+              <li>
+                <a href="#" class="text-primary hover:underline"
+                  >Internet Explorer</a
+                >
+              </li>
+            </ul>
+
+            <h2 class="text-2xl font-bold mt-8 mb-4">
+              Changes to this Cookie Policy
+            </h2>
+            <p class="mb-6">
+              We may update this Cookie Policy from time to time in order to
+              reflect, for example, changes to the cookies we use or for other
+              operational, legal, or regulatory reasons. Please therefore
+              revisit this Cookie Policy regularly to stay informed about our
+              use of cookies and related technologies.
+            </p>
+            <p class="mb-6">
+              The date at the top of this Cookie Policy indicates when it was
+              last updated.
+            </p>
+
+            <h2 class="text-2xl font-bold mt-8 mb-4">Contact us</h2>
+            <p class="mb-6">
+              If you have any questions about our use of cookies or other
+              technologies, please email us at
+              <a
+                href="mailto:privacy@verify.co.za"
+                class="text-primary hover:underline"
+                >privacy@verify.co.za</a
+              >
+              or contact us at:
+            </p>
+            <p class="mb-2">Verify</p>
+            <p class="mb-2">123 Main Street</p>
+            <p class="mb-2">Cape Town, 8001</p>
+            <p>South Africa</p>
+          </div>
+        </div>
+
+        <!-- Cookie Preferences Manager -->
+        <div class="bg-white rounded-lg shadow-md p-8 mb-8">
+          <h2 class="text-2xl font-bold mb-6">Manage Cookie Preferences</h2>
+          <p class="text-gray-600 mb-8">
+            You can choose which categories of cookies you allow us to use.
+            Please note that essential cookies cannot be disabled as they are
+            necessary for the website to function properly.
+          </p>
+
+          <div class="space-y-6">
+            <div
+              class="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+            >
+              <div class="flex items-center">
+                <div
+                  class="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-4 text-white"
+                >
+                  <i class="ri-lock-line ri-lg"></i>
+                </div>
+                <div>
+                  <h3 class="font-bold">Essential Cookies</h3>
+                  <p class="text-sm text-gray-600">
+                    Required for the website to function properly
+                  </p>
+                </div>
+              </div>
+              <div class="relative">
+                <div
+                  class="w-14 h-7 bg-gray-300 rounded-full flex items-center px-1 opacity-50"
+                >
+                  <div class="w-5 h-5 bg-white rounded-full"></div>
+                </div>
+                <div
+                  class="absolute inset-0 flex items-center justify-end pr-8"
+                >
+                  <span class="text-xs font-medium text-gray-500"
+                    >Always On</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+            >
+              <div class="flex items-center">
+                <div
+                  class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center mr-4 text-white"
+                >
+                  <i class="ri-settings-line ri-lg"></i>
+                </div>
+                <div>
+                  <h3 class="font-bold">Functional Cookies</h3>
+                  <p class="text-sm text-gray-600">
+                    Enhance your experience and remember preferences
+                  </p>
+                </div>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  class="cookie-toggle sr-only peer"
+                  checked
+                />
+                <div
+                  class="toggle-bg w-14 h-7 bg-gray-300 peer-focus:outline-none rounded-full peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all toggle-dot"
+                ></div>
+              </label>
+            </div>
+
+            <div
+              class="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+            >
+              <div class="flex items-center">
+                <div
+                  class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center mr-4 text-white"
+                >
+                  <i class="ri-bar-chart-line ri-lg"></i>
+                </div>
+                <div>
+                  <h3 class="font-bold">Analytics Cookies</h3>
+                  <p class="text-sm text-gray-600">
+                    Help us improve our website by collecting anonymous data
+                  </p>
+                </div>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  class="cookie-toggle sr-only peer"
+                  checked
+                />
+                <div
+                  class="toggle-bg w-14 h-7 bg-gray-300 peer-focus:outline-none rounded-full peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all toggle-dot"
+                ></div>
+              </label>
+            </div>
+
+            <div
+              class="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+            >
+              <div class="flex items-center">
+                <div
+                  class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center mr-4 text-white"
+                >
+                  <i class="ri-advertisement-line ri-lg"></i>
+                </div>
+                <div>
+                  <h3 class="font-bold">Marketing Cookies</h3>
+                  <p class="text-sm text-gray-600">
+                    Allow us to provide personalized advertisements
+                  </p>
+                </div>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="cookie-toggle sr-only peer" />
+                <div
+                  class="toggle-bg w-14 h-7 bg-gray-300 peer-focus:outline-none rounded-full peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all toggle-dot"
+                ></div>
+              </label>
+            </div>
+          </div>
+
+          <div class="mt-8 flex flex-col sm:flex-row gap-4">
+            <button
+              id="save-preferences"
+              class="bg-primary text-white px-6 py-3 !rounded-button font-bold hover:bg-red-600 whitespace-nowrap flex-1"
+            >
+              Save Preferences
+            </button>
+            <button
+              id="accept-all"
+              class="bg-gray-800 text-white px-6 py-3 !rounded-button font-bold hover:bg-gray-700 whitespace-nowrap flex-1"
+            >
+              Accept All Cookies
+            </button>
+            <button
+              id="reject-all"
+              class="bg-white text-gray-800 border border-gray-300 px-6 py-3 !rounded-button font-bold hover:bg-gray-50 whitespace-nowrap flex-1"
+            >
+              Reject Non-Essential
+            </button>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <a
+            href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/0c4af476-1405-4543-b628-417302d1465c"
+            data-readdy="true"
+            class="inline-flex items-center text-primary hover:text-red-600"
+          >
+            <i class="ri-arrow-left-line mr-2"></i>
+            Back to Home Page
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 pt-16 pb-8">
+      <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-3 gap-8 mb-12">
+          <div>
+            <div class="mb-4">
+              <img
+                src="https://static.readdy.ai/image/783dd8c3d2d1f38f9648f46144ac17f1/bc2b69f3a823a0bfcee48284d9c2d098.jpeg"
+                alt="Verify Logo"
+                class="h-8"
+              />
+            </div>
+            <p class="text-gray-600 mb-4">
+              Verify connects qualified workers with employers by verifying
+              documents, ensuring safety and trust.
+            </p>
+          </div>
+          <div>
+            <h3 class="font-bold text-lg mb-4">Contact Us</h3>
+            <ul class="space-y-2">
+              <li class="flex items-start">
+                <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
+                  <i class="ri-mail-line text-primary"></i>
+                </div>
+                <span class="text-gray-600">support@verify.co.za</span>
+              </li>
+              <li class="flex items-start">
+                <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
+                  <i class="ri-phone-line text-primary"></i>
+                </div>
+                <span class="text-gray-600">087 123 4567</span>
+              </li>
+              <li class="flex items-start">
+                <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
+                  <i class="ri-map-pin-line text-primary"></i>
+                </div>
+                <span class="text-gray-600"
+                  >Cape Town, Johannesburg, Durban</span
+                >
+              </li>
+            </ul>
+            <div class="mt-6">
+              <h4 class="font-bold mb-2">Follow Us</h4>
+              <div class="flex space-x-4">
+                <a
+                  href="#"
+                  class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors"
+                >
+                  <i class="ri-facebook-fill"></i>
+                </a>
+                <a
+                  href="#"
+                  class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors"
+                >
+                  <i class="ri-twitter-x-fill"></i>
+                </a>
+                <a
+                  href="#"
+                  class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors"
+                >
+                  <i class="ri-instagram-line"></i>
+                </a>
+                <a
+                  href="#"
+                  class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors"
+                >
+                  <i class="ri-linkedin-fill"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-gray-300 pt-8">
+          <div class="flex flex-col md:flex-row justify-between items-center">
+            <p class="text-gray-600 mb-4 md:mb-0">
+              &copy; 2025 Verify. All rights reserved. South African platform
+              only.
+            </p>
+            <div class="flex space-x-6">
+              <a
+                href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/3233044f-99eb-41ac-bd74-920688dc7868"
+                data-readdy="true"
+                class="text-gray-600 hover:text-primary"
+                >Privacy Policy</a
+              >
+              <a
+                href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/b702023a-972e-4cea-889b-f4fdf76a1641"
+                data-readdy="true"
+                class="text-gray-600 hover:text-primary"
+                >Terms of Service</a
+              >
+              <a href="#" class="text-primary font-medium">Cookie Policy</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <button
+      id="back-to-top"
+      class="fixed bottom-6 right-6 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg opacity-0 invisible transition-all duration-300"
+    >
+      <i class="ri-arrow-up-line ri-lg"></i>
+    </button>
+
+    <!-- Cookie Banner -->
+    <div
+      id="cookie-banner"
+      class="fixed bottom-0 left-0 right-0 bg-white shadow-lg p-4 z-50 transform translate-y-full transition-transform duration-300"
+    >
+      <div class="container mx-auto px-4">
+        <div
+          class="flex flex-col md:flex-row items-center justify-between gap-4"
+        >
+          <div class="flex-1">
+            <h3 class="font-bold mb-2">We use cookies</h3>
+            <p class="text-sm text-gray-600">
+              We use cookies to enhance your browsing experience, serve
+              personalized ads or content, and analyze our traffic. By clicking
+              "Accept All", you consent to our use of cookies.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-3">
+            <button
+              id="customize-cookies"
+              class="bg-white text-gray-800 border border-gray-300 px-4 py-2 !rounded-button text-sm font-bold hover:bg-gray-50 whitespace-nowrap"
+            >
+              Customize
+            </button>
+            <button
+              id="reject-cookies"
+              class="bg-white text-gray-800 border border-gray-300 px-4 py-2 !rounded-button text-sm font-bold hover:bg-gray-50 whitespace-nowrap"
+            >
+              Reject All
+            </button>
+            <button
+              id="accept-cookies"
+              class="bg-primary text-white px-4 py-2 !rounded-button text-sm font-bold hover:bg-red-600 whitespace-nowrap"
+            >
+              Accept All
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script id="cookie-preferences-script">
+      document.addEventListener("DOMContentLoaded", function () {
+        // Cookie banner functionality
+        const cookieBanner = document.getElementById("cookie-banner");
+        const acceptCookies = document.getElementById("accept-cookies");
+        const rejectCookies = document.getElementById("reject-cookies");
+        const customizeCookies = document.getElementById("customize-cookies");
+
+        // Show cookie banner if no preference is set
+        if (!localStorage.getItem("cookiePreference")) {
+          setTimeout(() => {
+            cookieBanner.classList.remove("translate-y-full");
+          }, 1000);
+        }
+
+        acceptCookies.addEventListener("click", function () {
+          localStorage.setItem("cookiePreference", "accepted");
+          cookieBanner.classList.add("translate-y-full");
+          showToast("All cookies accepted");
+        });
+
+        rejectCookies.addEventListener("click", function () {
+          localStorage.setItem("cookiePreference", "rejected");
+          cookieBanner.classList.add("translate-y-full");
+          showToast("Non-essential cookies rejected");
+        });
+
+        customizeCookies.addEventListener("click", function () {
+          cookieBanner.classList.add("translate-y-full");
+          window.scrollTo({
+            top:
+              document.querySelector(".cookie-toggle").closest(".bg-white")
+                .offsetTop - 100,
+            behavior: "smooth",
+          });
+        });
+
+        // Cookie preferences manager
+        const savePreferences = document.getElementById("save-preferences");
+        const acceptAll = document.getElementById("accept-all");
+        const rejectAll = document.getElementById("reject-all");
+
+        savePreferences.addEventListener("click", function () {
+          const toggles = document.querySelectorAll(".cookie-toggle");
+          const preferences = {};
+
+          toggles.forEach((toggle) => {
+            const type = toggle
+              .closest(".flex.items-center.justify-between")
+              .querySelector("h3").textContent;
+            preferences[type] = toggle.checked;
+          });
+
+          localStorage.setItem(
+            "cookiePreferencesDetailed",
+            JSON.stringify(preferences),
+          );
+          showToast("Cookie preferences saved");
+        });
+
+        acceptAll.addEventListener("click", function () {
+          document.querySelectorAll(".cookie-toggle").forEach((toggle) => {
+            toggle.checked = true;
+          });
+          showToast("All cookies accepted");
+        });
+
+        rejectAll.addEventListener("click", function () {
+          document.querySelectorAll(".cookie-toggle").forEach((toggle) => {
+            toggle.checked = false;
+          });
+          // Keep essential cookies enabled (they're disabled in the UI anyway)
+          showToast("Non-essential cookies rejected");
+        });
+
+        // Back to top button
+        const backToTop = document.getElementById("back-to-top");
+
+        window.addEventListener("scroll", function () {
+          if (window.pageYOffset > 300) {
+            backToTop.classList.remove("opacity-0", "invisible");
+            backToTop.classList.add("opacity-100", "visible");
+          } else {
+            backToTop.classList.add("opacity-0", "invisible");
+            backToTop.classList.remove("opacity-100", "visible");
+          }
+        });
+
+        backToTop.addEventListener("click", function () {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        });
+
+        // Toast notification function
+        function showToast(message) {
+          const toast = document.createElement("div");
+          toast.className =
+            "fixed bottom-24 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg z-50 transition-opacity duration-300 opacity-0";
+          toast.textContent = message;
+          document.body.appendChild(toast);
+
+          setTimeout(() => {
+            toast.classList.remove("opacity-0");
+            toast.classList.add("opacity-100");
+          }, 100);
+
+          setTimeout(() => {
+            toast.classList.remove("opacity-100");
+            toast.classList.add("opacity-0");
+            setTimeout(() => {
+              document.body.removeChild(toast);
+            }, 300);
+          }, 3000);
+        }
+
+        // Load saved preferences if any
+        const savedPreferences = localStorage.getItem("cookiePreferencesDetailed");
+        if (savedPreferences) {
+          const preferences = JSON.parse(savedPreferences);
+          document.querySelectorAll(".cookie-toggle").forEach((toggle) => {
+            const type = toggle
+              .closest(".flex.items-center.justify-between")
+              .querySelector("h3").textContent;
+            if (preferences[type] !== undefined) {
+              toggle.checked = preferences[type];
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
