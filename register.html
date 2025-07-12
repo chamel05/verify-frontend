@@ -2665,15 +2665,16 @@
                   <div class="text-sm text-yellow-700">For development and testing purposes only</div>
                 </div>
               </div>
-              <button id="skipPayment" class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition-colors font-medium">
-                Skip Payment & Create Account
-              </button>
-              <div class="text-xs text-yellow-700 mt-2">
-                ⚠️ This will create an account without payment verification
-              </div>
-            </div>
-          `;
-        } else {
+              <!-- now submits the jobSeeker form directly -->
+<button
+  id="skipPayment"
+  type="submit"
+  form="jobSeekerRegistrationForm"
+  class="…"
+>
+  Skip Payment & Create Account
+</button>
+
           // Job seeker payment options (existing)
           orderSummary.innerHTML = `
             <div class="flex justify-between items-center mb-2">
@@ -2839,29 +2840,8 @@
             console.log('Processing Google Pay...');
             alert('Redirecting to Google Pay...');
           }
-          
-          if (e.target.id === 'skipPayment' || e.target.closest('#skipPayment')) {
-            // Skip payment for testing
-            handleSkipPayment();
-          }
         });
       });
-      
-      function handleSkipPayment() {
-        // Show confirmation dialog
-        if (confirm('⚠️ TESTING MODE: This will create an account without payment. Continue?')) {
-          // Simulate successful account creation
-          closeModal('paymentModal');
-          
-          // Show success message
-          alert('✅ Account created successfully (Testing Mode)!\n\nIn production, this would redirect to a success page or dashboard.');
-          
-          // You can redirect to a success page or dashboard here
-          // window.location.href = '/dashboard.html';
-          
-          console.log('Account created in testing mode');
-        }
-      }
       
       // Close modal when clicking outside
       window.addEventListener('click', function(e) {
