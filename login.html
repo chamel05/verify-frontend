@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login - Verify</title>
+    <title>Forgot Password - Verify</title>
     <script src="https://cdn.tailwindcss.com/3.4.16"></script>
     <script>
       tailwind.config = {
@@ -41,507 +41,236 @@
       @import url('https://fonts.googleapis.com/css2?family=Futura:wght@400;500;700&display=swap');
       body {
       font-family: 'Futura', sans-serif;
-      }
-      input[type="number"]::-webkit-inner-spin-button,
-      input[type="number"]::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-      }
-      .custom-checkbox {
-      position: relative;
-      padding-left: 28px;
-      cursor: pointer;
-      user-select: none;
-      }
-      .custom-checkbox input {
-      position: absolute;
-      opacity: 0;
-      cursor: pointer;
-      height: 0;
-      width: 0;
-      }
-      .checkmark {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 20px;
-      width: 20px;
-      background-color: #fff;
-      border: 1px solid #d1d5db;
-      border-radius: 4px;
-      }
-      .custom-checkbox:hover input ~ .checkmark {
       background-color: #f9fafb;
       }
-      .custom-checkbox input:checked ~ .checkmark {
-      background-color: #F50302;
-      border-color: #F50302;
+      .input-container {
+      position: relative;
       }
-      .checkmark:after {
-      content: "";
+      .input-container input {
+      padding-left: 40px;
+      }
+      .input-container .icon {
       position: absolute;
-      display: none;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9ca3af;
       }
-      .custom-checkbox input:checked ~ .checkmark:after {
-      display: block;
+      .error-message {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
       }
-      .custom-checkbox .checkmark:after {
-      left: 7px;
-      top: 3px;
-      width: 6px;
-      height: 10px;
-      border: solid white;
-      border-width: 0 2px 2px 0;
-      transform: rotate(45deg);
+      .error-message.show {
+      max-height: 60px;
       }
     </style>
   </head>
-  <body class="bg-white text-gray-900">
-    <!-- Header -->
-    <header class="bg-white shadow-sm">
-      <div
-        class="container mx-auto px-4 py-4 flex justify-between items-center"
-      >
-        <div class="flex items-center space-x-8">
-          <a href="home-page.html">
-            <div class="text-2xl font-bold tracking-tight flex items-center">
-              <img
-                src="https://static.readdy.ai/image/783dd8c3d2d1f38f9648f46144ac17f1/bc2b69f3a823a0bfcee48284d9c2d098.jpeg"
-                alt="Verify Logo"
-                class="h-12"
-              />
-            </div>
-          </a>
-          <a
-            href="home-page.html"
-            class="hidden md:flex items-center text-gray-700 hover:text-primary"
-          >
-            <i class="ri-arrow-left-line mr-2"></i>
-            Back Home
-          </a>
-        </div>
-        <nav class="hidden md:flex space-x-8 items-center" id="desktop-nav">
-          <a
-            href="User-Registration-Page.html"
-            data-readdy="true"
-            class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600 whitespace-nowrap inline-block"
-            >Register</a
-          >
-        </nav>
-        <button
-          class="md:hidden w-10 h-10 flex items-center justify-center"
-          id="mobile-menu-button"
-          aria-label="Toggle menu"
-        >
-          <i class="ri-menu-line text-gray-800 ri-2x"></i>
-        </button>
+  <body>
+    <div class="min-h-screen flex flex-col">
+      <!-- Header -->
+      <header class="bg-white shadow-sm">
         <div
-          id="mobile-nav"
-          class="fixed inset-0 bg-white z-50 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden"
+          class="container mx-auto px-4 py-4 flex justify-between items-center"
         >
-          <div class="h-full flex flex-col">
-            <div class="flex justify-between items-center p-4 border-b">
-              <div class="text-xl font-bold">Menu</div>
-              <button
-                class="w-10 h-10 flex items-center justify-center"
-                id="mobile-menu-close"
-              >
-                <i class="ri-close-line text-gray-800 ri-2x"></i>
-              </button>
+          <a
+            href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/98b54cfc-77fc-4734-8d05-abb5a1bcb728"
+            data-readdy="true"
+            class="flex items-center text-gray-800 hover:text-primary"
+          >
+            <div class="w-6 h-6 flex items-center justify-center mr-2">
+              <i class="ri-arrow-left-line"></i>
             </div>
-            <div class="flex flex-col space-y-4 p-4">
-              <button
-                id="back-home-btn"
-                class="flex items-center text-gray-800 hover:text-primary font-medium py-2"
-              >
-                <i class="ri-arrow-left-line mr-2"></i>
-                Back Home
-              </button>
-              <a
-                href="home-page.html"
-                data-readdy="true"
-                class="text-gray-800 hover:text-primary font-medium py-2"
-                >Home</a
-              >
-              <a
-                href="#faq"
-                class="text-gray-800 hover:text-primary font-medium py-2"
-                >FAQ</a
-              >
-              <a
-                href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/blog"
-                data-readdy="true"
-                class="text-gray-800 hover:text-primary font-medium py-2"
-                >Blog</a
-              >
-              <a
-                href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/98b54cfc-77fc-4734-8d05-abb5a1bcb728"
-                data-readdy="true"
-                class="bg-white text-primary border border-primary px-4 py-2 !rounded-button hover:bg-gray-50 whitespace-nowrap text-center"
-                >Log in</a
-              >
-              <a
-                href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/7876bb0d-5339-4a58-8094-f7bd9f989dde"
-                data-readdy="true"
-                class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600 whitespace-nowrap text-center"
-                >Register</a
-              >
-            </div>
+            <span>Back to Login</span>
+          </a>
+          <div class="text-2xl font-bold tracking-tight flex items-center">
+            <img
+              src="https://static.readdy.ai/image/783dd8c3d2d1f38f9648f46144ac17f1/bc2b69f3a823a0bfcee48284d9c2d098.jpeg"
+              alt="Verify Logo"
+              class="h-10"
+            />
+          </div>
+          <div class="w-24">
+            <!-- Spacer to balance the header -->
           </div>
         </div>
-      </div>
-    </header>
-    <!-- Login Section -->
-    <section class="py-12 md:py-16">
-      <div class="container mx-auto px-4">
-        <div class="max-w-md mx-auto">
-          <div class="flex flex-col items-center mb-8">
-            <div
-              class="w-24 h-24 bg-red-100 rounded-full flex items-center justify-center mb-6"
-            >
-              <i class="ri-user-line text-primary ri-2x"></i>
-            </div>
-            <h1 class="text-3xl font-bold text-center">Welcome Back</h1>
-            <p class="text-gray-600 mt-2 text-center">
-              Sign in to your account
+      </header>
+      <!-- Main Content -->
+      <main class="flex-grow flex items-center justify-center px-4 py-12">
+        <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
+          <div class="text-center mb-8">
+            <img
+              src="https://static.readdy.ai/image/783dd8c3d2d1f38f9648f46144ac17f1/bc2b69f3a823a0bfcee48284d9c2d098.jpeg"
+              alt="Verify Logo"
+              class="h-12 mx-auto mb-6"
+            />
+            <h1 class="text-2xl font-bold text-gray-900">
+              Forgot Your Password?
+            </h1>
+            <p class="text-gray-600 mt-2">
+              No worries, enter your email to reset your password.
             </p>
           </div>
-          <!-- User Type Selection -->
-          <div class="flex bg-gray-100 rounded-lg p-1 mb-8">
-            <button
-              class="flex-1 py-3 px-4 rounded-lg bg-primary text-white font-medium transition-all"
-              id="job-seeker-btn"
-            >
-              Job Seeker
-            </button>
-            <button
-              class="flex-1 py-3 px-4 rounded-lg text-gray-700 font-medium transition-all"
-              id="employer-btn"
-            >
-              Employer
-            </button>
-          </div>
-          <!-- Login Form -->
           <form
-            id="login-form"
-            action="https://readdy.ai/api/form/d1bh9sahnf08iom4v890"
+            id="resetPasswordForm"
+            action="https://readdy.ai/api/form/d1i1l1tv5gdvvhgr9u40"
             method="POST"
             class="space-y-6"
           >
-            <div class="relative">
-              <div
-                class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none"
+            <div>
+              <label
+                for="email"
+                class="block text-sm font-medium text-gray-700 mb-1"
+                >Email Address</label
               >
-                <i class="ri-user-line text-gray-400"></i>
+              <div class="input-container">
+                <div class="icon w-5 h-5 flex items-center justify-center">
+                  <i class="ri-mail-line"></i>
+                </div>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Enter your email address"
+                  class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                  required
+                />
               </div>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Company Email"
-                class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
-              />
-            </div>
-            <div class="relative">
               <div
-                class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none"
+                id="emailError"
+                class="error-message mt-1 text-primary text-sm flex items-center"
               >
-                <i class="ri-lock-line text-gray-400"></i>
+                <div class="w-4 h-4 flex items-center justify-center mr-1">
+                  <i class="ri-error-warning-line"></i>
+                </div>
+                <span>Please enter a valid email address</span>
               </div>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Password"
-                class="w-full pl-12 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
-              />
-              <button
-                type="button"
-                id="toggle-password"
-                class="absolute inset-y-0 right-0 flex items-center pr-3"
-              >
-                <i class="ri-eye-line text-gray-400" id="password-icon"></i>
-              </button>
-            </div>
-            <div class="flex items-center justify-between">
-              <label class="custom-checkbox flex items-center">
-                <input type="checkbox" id="remember-me" name="remember_me" />
-                <span class="checkmark"></span>
-                <span class="text-gray-700 ml-2">Remember me</span>
-              </label>
-              <a href="#" class="text-primary hover:text-red-700 font-medium"
-                >Forgot password?</a
-              >
             </div>
             <button
               type="submit"
-              class="w-full bg-primary text-white py-3 !rounded-button font-bold hover:bg-red-600 transition-colors"
+              class="w-full bg-primary text-white py-3 !rounded-button font-medium hover:bg-red-600 transition-colors whitespace-nowrap"
             >
-              Log in
-            </button>
-            <div class="relative flex items-center justify-center">
-              <div class="flex-grow border-t border-gray-300"></div>
-              <span class="flex-shrink mx-4 text-gray-500">or</span>
-              <div class="flex-grow border-t border-gray-300"></div>
-            </div>
-            <button
-              type="button"
-              class="w-full flex items-center justify-center bg-white border border-gray-300 py-3 !rounded-button font-medium hover:bg-gray-50 transition-colors"
-            >
-              <i class="ri-google-fill text-[#4285F4] mr-3 ri-lg"></i>
-              Sign in with Google Workspace
-            </button>
-            <button
-              type="button"
-              class="w-full flex items-center justify-center bg-white border border-gray-300 py-3 !rounded-button font-medium hover:bg-gray-50 transition-colors"
-            >
-              <i class="ri-microsoft-fill text-[#00A4EF] mr-3 ri-lg"></i>
-              Sign in with Microsoft 365
+              Reset Password
             </button>
           </form>
-          <div class="mt-8 text-center">
-            <p class="text-gray-700">
-              New to our platform?
-              <a
-                href="User-Registration-Page.html"
-                data-readdy="true"
-                class="text-primary font-medium hover:text-red-700"
-                >Create Account</a
-              >
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Footer -->
-    <footer class="bg-gray-100 pt-16 pb-8 mt-16">
-      <div class="container mx-auto px-4">
-        <div class="grid md:grid-cols-3 gap-8 mb-12">
-          <div>
-            <div class="mb-4">
-              <img
-                src="https://static.readdy.ai/image/783dd8c3d2d1f38f9648f46144ac17f1/6f160ab9798415c319a5bce439242a7f.jpeg"
-                alt="Verify Logo"
-                class="h-8"
-              />
-            </div>
-            <p class="text-gray-600 mb-4">
-              Verify connects qualified workers with employers by verifying
-              documents, ensuring safety and trust.
-            </p>
-          </div>
-          <div>
-            <div class="flex justify-between items-center mb-4">
-              <h3 class="font-bold text-lg">Contact Us</h3>
-            </div>
-            <ul class="space-y-2">
-              <li class="flex items-start">
-                <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
-                  <i class="ri-mail-line text-primary"></i>
-                </div>
-                <span class="text-gray-600">support@verify.co.za</span>
-              </li>
-              <li class="flex items-start">
-                <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
-                  <i class="ri-phone-line text-primary"></i>
-                </div>
-                <span class="text-gray-600">087 123 4567</span>
-              </li>
-              <li class="flex items-start">
-                <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
-                  <i class="ri-map-pin-line text-primary"></i>
-                </div>
-                <span class="text-gray-600"
-                  >Cape Town, Johannesburg, Durban</span
-                >
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="border-t border-gray-300 pt-8">
-          <div class="flex flex-col md:flex-row justify-between items-center">
-            <div class="flex items-center">
-              <p class="text-gray-600 mb-4 md:mb-0">
-                &copy; 2025 Verify. All rights reserved. South African platform
-                only.
-              </p>
-              <div class="hidden md:flex space-x-4 ml-8">
-                <a
-                  href="#"
-                  class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors"
-                >
-                  <i class="ri-facebook-fill"></i>
-                </a>
-                <a
-                  href="#"
-                  class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors"
-                >
-                  <i class="ri-twitter-x-fill"></i>
-                </a>
-                <a
-                  href="#"
-                  class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors"
-                >
-                  <i class="ri-instagram-line"></i>
-                </a>
-                <a
-                  href="#"
-                  class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors"
-                >
-                  <i class="ri-linkedin-fill"></i>
-                </a>
+          <div class="text-center mt-6">
+            <a
+              href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/98b54cfc-77fc-4734-8d05-abb5a1bcb728"
+              data-readdy="true"
+              class="flex items-center justify-center text-gray-600 hover:text-primary transition-colors"
+            >
+              <div class="w-4 h-4 flex items-center justify-center mr-1">
+                <i class="ri-arrow-left-line"></i>
               </div>
-            </div>
+              <span>Back to Login</span>
+            </a>
+          </div>
+        </div>
+      </main>
+      <!-- Footer -->
+      <footer class="bg-white py-6 border-t border-gray-200">
+        <div class="container mx-auto px-4">
+          <div class="flex flex-col md:flex-row justify-between items-center">
+            <p class="text-gray-600 text-sm mb-4 md:mb-0">
+              &copy; 2025 Verify. All rights reserved.
+            </p>
             <div class="flex space-x-6">
               <a
+                href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/3233044f-99eb-41ac-bd74-920688dc7868"
+                class="text-gray-600 text-sm hover:text-primary"
+                >Privacy Policy</a
+              >
+              <a
                 href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/b702023a-972e-4cea-889b-f4fdf76a1641"
-                data-readdy="true"
-                class="text-gray-600 hover:text-primary"
+                class="text-gray-600 text-sm hover:text-primary"
                 >Terms of Service</a
               >
-              <a href="#" class="text-gray-600 hover:text-primary"
-                >Cookie Policy</a
+              <a
+                href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/2c1cbec1-7285-4089-86bf-7e001c81c559"
+                class="text-gray-600 text-sm hover:text-primary"
+                >Help Center</a
               >
             </div>
           </div>
         </div>
-      </div>
-    </footer>
-    <script id="login-interactions">
+      </footer>
+    </div>
+    <script id="form-validation-script">
       document.addEventListener("DOMContentLoaded", function () {
-        const togglePassword = document.getElementById("toggle-password");
-        const passwordInput = document.getElementById("password");
-        const passwordIcon = document.getElementById("password-icon");
-        const jobSeekerBtn = document.getElementById("job-seeker-btn");
-        const employerBtn = document.getElementById("employer-btn");
-        const loginForm = document.getElementById("login-form");
+        const form = document.getElementById("resetPasswordForm");
         const emailInput = document.getElementById("email");
-        const testCredentials = {
-          email: "sarah.williams@gmail.com",
-          password: "Test123!@#",
-        };
-        emailInput.value = testCredentials.email;
-        passwordInput.value = testCredentials.password;
-        togglePassword.addEventListener("click", function () {
-          const type =
-            passwordInput.getAttribute("type") === "password" ? "text" : "password";
-          passwordInput.setAttribute("type", type);
-          if (type === "text") {
-            passwordIcon.classList.remove("ri-eye-line");
-            passwordIcon.classList.add("ri-eye-off-line");
-          } else {
-            passwordIcon.classList.remove("ri-eye-off-line");
-            passwordIcon.classList.add("ri-eye-line");
-          }
-        });
-        jobSeekerBtn.addEventListener("click", function () {
-          jobSeekerBtn.classList.add("bg-primary", "text-white");
-          jobSeekerBtn.classList.remove("text-gray-700");
-          employerBtn.classList.remove("bg-primary", "text-white");
-          employerBtn.classList.add("text-gray-700");
-        });
-        employerBtn.addEventListener("click", function () {
-          employerBtn.classList.add("bg-primary", "text-white");
-          employerBtn.classList.remove("text-gray-700");
-          jobSeekerBtn.classList.remove("bg-primary", "text-white");
-          jobSeekerBtn.classList.add("text-gray-700");
-        });
-        function showMessage(message, isError = false) {
-          const messageDiv = document.createElement("div");
-          messageDiv.className = isError
-            ? "text-red-500 text-sm mt-2"
-            : "text-green-500 text-sm mt-2";
-          messageDiv.textContent = message;
-          loginForm.appendChild(messageDiv);
-          setTimeout(() => messageDiv.remove(), 5000);
-        }
+        const emailError = document.getElementById("emailError");
         function validateEmail(email) {
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          return emailRegex.test(email);
+          const re =
+            /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          return re.test(String(email).toLowerCase());
         }
-        loginForm.addEventListener("submit", function (e) {
+        function showError() {
+          emailInput.classList.add("border-primary");
+          emailInput.classList.remove("border-gray-300");
+          emailError.classList.add("show");
+        }
+        function hideError() {
+          emailInput.classList.remove("border-primary");
+          emailInput.classList.add("border-gray-300");
+          emailError.classList.remove("show");
+        }
+        function showMessage(message, isSuccess = true) {
+          const messageDiv = document.createElement("div");
+          messageDiv.className = `fixed top-4 right-4 ${isSuccess ? "bg-green-500" : "bg-red-500"} text-white px-6 py-3 rounded shadow-lg`;
+          messageDiv.textContent = message;
+          document.body.appendChild(messageDiv);
+          setTimeout(() => {
+            messageDiv.remove();
+          }, 3000);
+        }
+        emailInput.addEventListener("input", function () {
+          if (validateEmail(this.value)) {
+            hideError();
+          }
+        });
+        form.addEventListener("submit", async function (e) {
           e.preventDefault();
-          const email = emailInput.value.trim();
-          const password = passwordInput.value;
-          const rememberMe = document.getElementById("remember-me").checked;
-          const userType = jobSeekerBtn.classList.contains("bg-primary")
-            ? "jobseeker"
-            : "employer";
-          if (!email || !password) {
-            showMessage("Please fill in all fields", true);
+          if (!validateEmail(emailInput.value)) {
+            showError();
             return;
           }
-          if (!validateEmail(email)) {
-            showMessage("Please enter a valid email address", true);
-            return;
-          }
-          if (password.length < 6) {
-            showMessage("Password must be at least 6 characters long", true);
-            return;
-          }
-          const formData = new FormData();
-          formData.append("email", email);
-          formData.append("password", password);
-          formData.append("remember_me", rememberMe);
-          formData.append("user_type", userType);
-          fetch(loginForm.action, {
-            method: "POST",
-            body: new URLSearchParams(formData),
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-          })
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error("Network response was not ok");
-              }
-              showMessage("Login successful! Redirecting...");
-              setTimeout(() => {
-                if (userType === "jobseeker") {
-                  window.location.href =
-                    "https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/jobseeker-dashboard";
-                } else {
-                  window.location.href =
-                    "https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/employer-dashboard";
-                }
-              }, 2000);
-            })
-            .catch((error) => {
-              showMessage("Login failed. Please try again.", true);
-              console.error("Error:", error);
+          const submitButton = form.querySelector('button[type="submit"]');
+          submitButton.disabled = true;
+          submitButton.innerHTML =
+            '<i class="ri-loader-4-line animate-spin"></i> Sending...';
+          try {
+            const formData = new URLSearchParams();
+            formData.append("email", emailInput.value);
+            const response = await fetch(form.action, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+              },
+              body: formData,
             });
+            if (response.ok) {
+              showMessage("Password reset link sent to your email!");
+              form.reset();
+            } else {
+              showMessage("Failed to send reset link. Please try again.", false);
+            }
+          } catch (error) {
+            showMessage("An error occurred. Please try again later.", false);
+          } finally {
+            submitButton.disabled = false;
+            submitButton.innerHTML = "Reset Password";
+          }
         });
       });
-    </script>
-    <script id="mobile-nav-interactions">
-      document.addEventListener("DOMContentLoaded", function () {
-        // Mobile navigation
-        const mobileMenuButton = document.getElementById("mobile-menu-button");
-        const mobileMenuClose = document.getElementById("mobile-menu-close");
-        const mobileNav = document.getElementById("mobile-nav");
-        if (mobileMenuButton && mobileMenuClose && mobileNav) {
-          const mobileNavLinks = mobileNav.querySelectorAll("a");
-          function toggleMobileMenu() {
-            const isOpen = mobileNav.classList.contains("translate-x-0");
-            mobileNav.classList.toggle("translate-x-0");
-            mobileNav.classList.toggle("translate-x-full");
-            document.body.style.overflow = isOpen ? "" : "hidden";
-          }
-          mobileMenuButton.addEventListener("click", toggleMobileMenu);
-          mobileMenuClose.addEventListener("click", toggleMobileMenu);
-          mobileNavLinks.forEach((link) => {
-            link.addEventListener("click", toggleMobileMenu);
-          });
-          const backHomeBtn = document.getElementById("back-home-btn");
-          if (backHomeBtn) {
-            backHomeBtn.addEventListener("click", () => {
-              window.location.href =
-                "https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/0c4af476-1405-4543-b628-417302d1465c";
-            });
-          }
-        }
-      });
-<script src="/app.js"></script>
     </script>
   </body>
 </html>
+<script src="/app.js"></script>  });
+    </script>
+
+  <!-- Load your front-end logic -->
+  <script src="/app.js"></script>
+</body>
+</html>
+
