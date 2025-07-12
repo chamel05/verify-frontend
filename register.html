@@ -324,6 +324,13 @@
           </div>
         </div>
       </header>
+      
+      <!-- Testing Mode Indicator -->
+      <div id="testingModeIndicator" class="bg-yellow-400 text-yellow-900 px-4 py-2 text-center text-sm font-medium border-b border-yellow-500" style="display: none;">
+        <i class="ri-tools-line mr-2"></i>
+        <strong>TESTING MODE ENABLED</strong> - Skip payment options available for development
+      </div>
+      
       <!-- Main Content -->
       <main class="flex-grow flex items-center justify-center px-4 py-12">
         <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-3xl">
@@ -2481,6 +2488,12 @@
     </div>
 
     <script>
+      // Configuration - Set to false for production
+      // Configuration for testing/development mode
+      // Set to true for development/testing (enables skip payment option)
+      // Set to false for production deployment (removes all testing features)
+      const TESTING_MODE = true; // Change to false for production deployment
+      
       // Modal functions
       function openModal(modalId) {
         document.getElementById(modalId).classList.remove('hidden');
@@ -2494,22 +2507,26 @@
       
       // Payment Portal Functions
       function openPaymentPortal() {
+        console.log('openPaymentPortal called');
+        
         // Detect user type based on which form is visible
-        const seekerForm = document.getElementById('seekerRegistration');
-        const employerForm = document.getElementById('employerRegistration');
+        const jobSeekerForm = document.getElementById('jobSeekerForm');
+        const employerForm = document.getElementById('employerForm');
+        
+        console.log('jobSeekerForm:', jobSeekerForm);
+        console.log('employerForm:', employerForm);
         
         let userType = 'seeker';
         if (employerForm && !employerForm.classList.contains('hidden')) {
           userType = 'employer';
         }
         
-        // Validate form first
-        const form = document.querySelector('form');
-        if (validateRegistrationForm(form)) {
-          updatePaymentPortal(userType);
-          openModal('paymentModal');
-          generateQRCode();
-        }
+        console.log('Detected user type:', userType);
+        
+        // Update payment portal and open modal
+        updatePaymentPortal(userType);
+        openModal('paymentModal');
+        generateQRCode();
       }
       
       function updatePaymentPortal(userType) {
@@ -2656,26 +2673,24 @@
               </div>
             </div>
 
+            ${TESTING_MODE ? `
             <!-- Testing Skip Payment Option -->
-            <div class="border-2 border-yellow-300 bg-yellow-50 rounded-lg p-4">
-              <div class="flex items-center mb-3">
-                <i class="ri-tools-line text-2xl text-yellow-600 mr-3"></i>
-                <div>
-                  <div class="font-semibold text-gray-900">Skip Payment (Testing Mode)</div>
-                  <div class="text-sm text-yellow-700">For development and testing purposes only</div>
+            <button id="skipPaymentBtn" class="w-full border-2 border-yellow-300 bg-yellow-50 rounded-lg p-4 hover:bg-yellow-100 transition-colors text-left">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                  <i class="ri-tools-line text-2xl text-yellow-600 mr-3"></i>
+                  <div>
+                    <div class="font-semibold text-gray-900">Skip Payment (Testing Mode)</div>
+                    <div class="text-sm text-yellow-700">For development and testing purposes only</div>
+                  </div>
                 </div>
+                <span class="bg-yellow-500 text-white px-2 py-1 rounded text-xs font-medium">TEST ONLY</span>
               </div>
-              <!-- now submits the jobSeeker form directly -->
-<button
-  id="skipPayment"
-  type="submit"
-  form="jobSeekerRegistrationForm"
-  class="…"
->
-  Skip Payment & Create Account
-</button>
-
-          // Job seeker payment options (existing)
+            </button>
+            ` : ''}
+          `;
+        } else {
+          // Job seeker payment options
           orderSummary.innerHTML = `
             <div class="flex justify-between items-center mb-2">
               <span>Bronze Verification Package</span>
@@ -2773,30 +2788,49 @@
               </div>
             </div>
 
+            ${TESTING_MODE ? `
             <!-- Testing Skip Payment Option -->
-            <div class="border-2 border-yellow-300 bg-yellow-50 rounded-lg p-4">
-              <div class="flex items-center mb-3">
-                <i class="ri-tools-line text-2xl text-yellow-600 mr-3"></i>
-                <div>
-                  <div class="font-semibold text-gray-900">Skip Payment (Testing Mode)</div>
-                  <div class="text-sm text-yellow-700">For development and testing purposes only</div>
+            <button id="skipPaymentBtn" class="w-full border-2 border-yellow-300 bg-yellow-50 rounded-lg p-4 hover:bg-yellow-100 transition-colors text-left">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                  <i class="ri-tools-line text-2xl text-yellow-600 mr-3"></i>
+                  <div>
+                    <div class="font-semibold text-gray-900">Skip Payment (Testing Mode)</div>
+                    <div class="text-sm text-yellow-700">For development and testing purposes only</div>
+                  </div>
                 </div>
+                <span class="bg-yellow-500 text-white px-2 py-1 rounded text-xs font-medium">TEST ONLY</span>
               </div>
-              <button id="skipPayment" class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition-colors font-medium">
-                Skip Payment & Create Account
-              </button>
-              <div class="text-xs text-yellow-700 mt-2">
-                ⚠️ This will create an account without payment verification
-              </div>
+            </button>
+            ` : ''}
+
             </div>
           `;
         }
       }
       
       function validateRegistrationForm(form) {
-        // Add your form validation logic here
-        // For now, just return true to proceed to payment
+        // For now, always return true to allow payment portal to open
+        // Add your form validation logic here if needed
         return true;
+      }
+      
+      function handleSkipPayment() {
+        if (!TESTING_MODE) {
+          alert('Skip payment is only available in testing mode.');
+          return;
+        }
+        
+        console.log('Skip payment clicked - redirecting to dashboard');
+        alert('Payment skipped for testing purposes. Redirecting to dashboard...');
+        
+        // Determine which dashboard to redirect to based on user type
+        const userType = getCurrentUserType();
+        if (userType === 'employer') {
+          window.location.href = 'dashboard/employer.html';
+        } else {
+          window.location.href = 'job seekers dash.html';
+        }
       }
       
       function generateQRCode() {
@@ -2815,12 +2849,29 @@
       
       // Payment Method Handlers
       document.addEventListener('DOMContentLoaded', function() {
+        // Show/hide testing mode indicator and log status
+        const testingIndicator = document.getElementById('testingModeIndicator');
+        if (testingIndicator) {
+          testingIndicator.style.display = TESTING_MODE ? 'block' : 'none';
+        }
+        
+        if (TESTING_MODE) {
+          console.log('🔧 TESTING MODE ENABLED - Skip payment options available');
+        } else {
+          console.log('🔒 PRODUCTION MODE - All testing features disabled');
+        }
+        
         // Event delegation for dynamically added payment buttons
         document.addEventListener('click', function(e) {
           if (e.target.id === 'payfastBtn' || e.target.closest('#payfastBtn')) {
             // Redirect to PayFast payment gateway
             console.log('Processing PayFast payment...');
             alert('Redirecting to PayFast payment gateway...');
+          }
+          
+          if (e.target.id === 'skipPaymentBtn' || e.target.closest('#skipPaymentBtn')) {
+            e.preventDefault();
+            handleSkipPayment();
           }
           
           if (e.target.id === 'ozowPay' || e.target.closest('#ozowPay')) {
