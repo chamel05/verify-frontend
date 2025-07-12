@@ -225,20 +225,56 @@
             method="POST"
             class="space-y-6"
           >
-            <div class="relative">
-              <div
-                class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none"
-              >
-                <i class="ri-user-line text-gray-400"></i>
+            <!-- Job Seeker Fields -->
+            <div id="jobseeker-fields">
+              <div class="relative">
+                <div
+                  class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none"
+                >
+                  <i class="ri-user-line text-gray-400"></i>
+                </div>
+                <input
+                  type="text"
+                  id="full-name"
+                  name="full_name"
+                  placeholder="Full Name"
+                  class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
+                />
               </div>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Company Email"
-                class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
-              />
+              <div class="relative mt-4">
+                <div
+                  class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none"
+                >
+                  <i class="ri-phone-line text-gray-400"></i>
+                </div>
+                <input
+                  type="tel"
+                  id="phone-number"
+                  name="phone_number"
+                  placeholder="Phone Number (e.g., 081 234 5678)"
+                  class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
+                />
+              </div>
             </div>
+            
+            <!-- Employer Fields -->
+            <div id="employer-fields" class="hidden">
+              <div class="relative">
+                <div
+                  class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none"
+                >
+                  <i class="ri-mail-line text-gray-400"></i>
+                </div>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Company Email"
+                  class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
+                />
+              </div>
+            </div>
+            
             <div class="relative">
               <div
                 class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none"
@@ -418,12 +454,28 @@
         const employerBtn = document.getElementById("employer-btn");
         const loginForm = document.getElementById("login-form");
         const emailInput = document.getElementById("email");
-        const testCredentials = {
-          email: "sarah.williams@gmail.com",
+        const fullNameInput = document.getElementById("full-name");
+        const phoneNumberInput = document.getElementById("phone-number");
+        const jobseekerFields = document.getElementById("jobseeker-fields");
+        const employerFields = document.getElementById("employer-fields");
+        
+        // Test credentials for job seeker
+        const testCredentialsJobSeeker = {
+          fullName: "Sarah Williams",
+          phoneNumber: "081 234 5678",
           password: "Test123!@#",
         };
-        emailInput.value = testCredentials.email;
-        passwordInput.value = testCredentials.password;
+        
+        // Test credentials for employer
+        const testCredentialsEmployer = {
+          email: "john.doe@company.com",
+          password: "Test123!@#",
+        };
+        
+        // Set default values for job seeker (default selected)
+        fullNameInput.value = testCredentialsJobSeeker.fullName;
+        phoneNumberInput.value = testCredentialsJobSeeker.phoneNumber;
+        passwordInput.value = testCredentialsJobSeeker.password;
         togglePassword.addEventListener("click", function () {
           const type =
             passwordInput.getAttribute("type") === "password" ? "text" : "password";
@@ -441,12 +493,30 @@
           jobSeekerBtn.classList.remove("text-gray-700");
           employerBtn.classList.remove("bg-primary", "text-white");
           employerBtn.classList.add("text-gray-700");
+          
+          // Show job seeker fields, hide employer fields
+          jobseekerFields.classList.remove("hidden");
+          employerFields.classList.add("hidden");
+          
+          // Set test credentials for job seeker
+          fullNameInput.value = testCredentialsJobSeeker.fullName;
+          phoneNumberInput.value = testCredentialsJobSeeker.phoneNumber;
+          passwordInput.value = testCredentialsJobSeeker.password;
         });
+        
         employerBtn.addEventListener("click", function () {
           employerBtn.classList.add("bg-primary", "text-white");
           employerBtn.classList.remove("text-gray-700");
           jobSeekerBtn.classList.remove("bg-primary", "text-white");
           jobSeekerBtn.classList.add("text-gray-700");
+          
+          // Show employer fields, hide job seeker fields
+          employerFields.classList.remove("hidden");
+          jobseekerFields.classList.add("hidden");
+          
+          // Set test credentials for employer
+          emailInput.value = testCredentialsEmployer.email;
+          passwordInput.value = testCredentialsEmployer.password;
         });
         function showMessage(message, isError = false) {
           const messageDiv = document.createElement("div");
@@ -461,31 +531,85 @@
           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
           return emailRegex.test(email);
         }
+        
+        function validatePhoneNumber(phone) {
+          // South African phone number validation (basic)
+          const phoneRegex = /^(\+27|0)[6-8][0-9]{8}$|^[0-9]{3}\s[0-9]{3}\s[0-9]{4}$/;
+          return phoneRegex.test(phone.replace(/\s/g, ''));
+        }
+        
+        function validateName(name) {
+          return name.trim().length >= 2 && /^[a-zA-Z\s]+$/.test(name);
+        }
+        
         loginForm.addEventListener("submit", function (e) {
           e.preventDefault();
-          const email = emailInput.value.trim();
           const password = passwordInput.value;
           const rememberMe = document.getElementById("remember-me").checked;
           const userType = jobSeekerBtn.classList.contains("bg-primary")
             ? "jobseeker"
             : "employer";
-          if (!email || !password) {
-            showMessage("Please fill in all fields", true);
-            return;
+          
+          let identifier, identifierType;
+          
+          if (userType === "jobseeker") {
+            const fullName = fullNameInput.value.trim();
+            const phoneNumber = phoneNumberInput.value.trim();
+            
+            if (!fullName || !phoneNumber || !password) {
+              showMessage("Please fill in all fields", true);
+              return;
+            }
+            
+            if (!validateName(fullName)) {
+              showMessage("Please enter a valid full name (letters only)", true);
+              return;
+            }
+            
+            if (!validatePhoneNumber(phoneNumber)) {
+              showMessage("Please enter a valid South African phone number", true);
+              return;
+            }
+            
+            identifier = `${fullName}|${phoneNumber}`;
+            identifierType = "name_phone";
+          } else {
+            const email = emailInput.value.trim();
+            
+            if (!email || !password) {
+              showMessage("Please fill in all fields", true);
+              return;
+            }
+            
+            if (!validateEmail(email)) {
+              showMessage("Please enter a valid email address", true);
+              return;
+            }
+            
+            identifier = email;
+            identifierType = "email";
           }
-          if (!validateEmail(email)) {
-            showMessage("Please enter a valid email address", true);
-            return;
-          }
+          
           if (password.length < 6) {
             showMessage("Password must be at least 6 characters long", true);
             return;
           }
+          
           const formData = new FormData();
-          formData.append("email", email);
+          formData.append("identifier", identifier);
+          formData.append("identifier_type", identifierType);
           formData.append("password", password);
           formData.append("remember_me", rememberMe);
           formData.append("user_type", userType);
+          
+          // For job seekers, also send individual fields
+          if (userType === "jobseeker") {
+            formData.append("full_name", fullNameInput.value.trim());
+            formData.append("phone_number", phoneNumberInput.value.trim());
+          } else {
+            formData.append("email", emailInput.value.trim());
+          }
+          
           fetch(loginForm.action, {
             method: "POST",
             body: new URLSearchParams(formData),
