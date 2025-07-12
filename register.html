@@ -40,12 +40,80 @@
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <script id="supabase-config">
       // Initialize Supabase client
-      // TODO: Replace with your actual Supabase URL and anon key
-      // You can find these in your Supabase project settings
-      const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-      const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+      // Supabase project configuration
+      const SUPABASE_URL = 'https://dvbbvjlwmkqqyfqdbupg.supabase.co';
+      const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2YmJ2amx3bWtxcXlmcWRidXBnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAzNjI0OTYsImV4cCI6MjA2NTkzODQ5Nn0.Zpkj5G3mTngZD2lMCo7Yr6PeyEJ3X6jHndHrvDgPylA';
       
-      const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+      // Initialize Supabase client using the global supabase object from CDN
+      const supabaseClient = window.supabase?.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      
+      if (!supabaseClient) {
+        console.error('❌ Failed to initialize Supabase client - CDN may not be loaded');
+      } else {
+        console.log('✅ Supabase client initialized successfully');
+        console.log('🔗 Connected to:', SUPABASE_URL);
+      }
+      
+      // Helper function to guide Supabase setup
+      function showSupabaseSetupGuide() {
+        // Since credentials are now configured, check for database tables
+        if (supabaseClient) {
+          console.group('📋 Supabase Database Setup');
+          console.log('✅ Supabase client connected successfully');
+          console.log('📊 Next step: Ensure database tables exist');
+          console.log('');
+          console.log('🔧 Run this SQL in your Supabase SQL Editor:');
+          console.log('https://supabase.com/dashboard/project/dvbbvjlwmkqqyfqdbupg/sql');
+          console.log('');
+          console.log('Copy the schema from supabase-config.js file');
+          console.groupEnd();
+        } else {
+          console.group('📋 Supabase Setup Issue');
+          console.log('❌ Supabase client failed to initialize');
+          console.log('Check that the Supabase CDN is loaded properly');
+          console.groupEnd();
+        }
+      }
+      
+      // Test database connection and tables
+      async function testDatabaseConnection() {
+        if (!supabaseClient) {
+          console.log('❌ Cannot test database - Supabase client not initialized');
+          return;
+        }
+        
+        try {
+          console.log('🔍 Testing database connection...');
+          
+          // Test basic connection by checking auth
+          const { data: { user } } = await supabaseClient.auth.getUser();
+          console.log('✅ Supabase auth connection successful');
+          
+          // Test if job_seekers table exists
+          const { data, error } = await supabaseClient
+            .from('job_seekers')
+            .select('count')
+            .limit(1);
+            
+          if (error) {
+            if (error.message.includes('relation "public.job_seekers" does not exist')) {
+              console.log('❌ Database tables not created yet');
+              console.log('📋 Please run the SQL schema from supabase-config.js');
+              
+              // Show user-friendly message
+              setTimeout(() => {
+                alert('⚠️ Database tables not found!\n\nPlease run the SQL schema in your Supabase dashboard.\nCheck the console for instructions.');
+              }, 500);
+            } else {
+              console.log('❌ Database error:', error.message);
+            }
+          } else {
+            console.log('✅ Database tables exist and accessible');
+          }
+        } catch (error) {
+          console.error('❌ Database test failed:', error);
+        }
+      }
       
       /*
       DATABASE SCHEMA NEEDED FOR THIS REGISTRATION FORM:
@@ -105,28 +173,38 @@
       const SupabaseAuth = {
         async signUp(email, password, userData) {
           try {
-            const { data, error } = await supabase.auth.signUp({
+            if (!supabaseClient) {
+              throw new Error('Supabase client not initialized');
+            }
+            console.log('🔄 Attempting to sign up user:', email);
+            const { data, error } = await supabaseClient.auth.signUp({
               email: email,
               password: password,
               options: {
                 data: userData
               }
-            })
-            return { data, error }
+            });
+            console.log('📤 Sign up response:', { data, error });
+            return { data, error };
           } catch (error) {
-            return { data: null, error }
+            console.error('❌ Sign up error:', error);
+            return { data: null, error };
           }
         },
         
         async signIn(email, password) {
           try {
-            const { data, error } = await supabase.auth.signInWithPassword({
+            if (!supabaseClient) {
+              throw new Error('Supabase client not initialized');
+            }
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
               email: email,
               password: password
-            })
-            return { data, error }
+            });
+            return { data, error };
           } catch (error) {
-            return { data: null, error }
+            console.error('❌ Sign in error:', error);
+            return { data: null, error };
           }
         }
       }
@@ -134,36 +212,54 @@
       const SupabaseDB = {
         async insertJobSeeker(userData) {
           try {
-            const { data, error } = await supabase
+            if (!supabaseClient) {
+              throw new Error('Supabase client not initialized');
+            }
+            console.log('🔄 Inserting job seeker data:', userData);
+            const { data, error } = await supabaseClient
               .from('job_seekers')
               .insert([userData])
-              .select()
-            return { data, error }
+              .select();
+            console.log('📤 Job seeker insert response:', { data, error });
+            return { data, error };
           } catch (error) {
-            return { data: null, error }
+            console.error('❌ Job seeker insert error:', error);
+            return { data: null, error };
           }
         },
         
         async insertEmployer(userData) {
           try {
-            const { data, error } = await supabase
+            if (!supabaseClient) {
+              throw new Error('Supabase client not initialized');
+            }
+            console.log('🔄 Inserting employer data:', userData);
+            const { data, error } = await supabaseClient
               .from('employers')
               .insert([userData])
-              .select()
-            return { data, error }
+              .select();
+            console.log('📤 Employer insert response:', { data, error });
+            return { data, error };
           } catch (error) {
-            return { data: null, error }
+            console.error('❌ Employer insert error:', error);
+            return { data: null, error };
           }
         },
         
         async uploadFile(bucket, filePath, file) {
           try {
-            const { data, error } = await supabase.storage
+            if (!supabaseClient) {
+              throw new Error('Supabase client not initialized');
+            }
+            console.log('🔄 Uploading file:', filePath);
+            const { data, error } = await supabaseClient.storage
               .from(bucket)
-              .upload(filePath, file)
-            return { data, error }
+              .upload(filePath, file);
+            console.log('📤 File upload response:', { data, error });
+            return { data, error };
           } catch (error) {
-            return { data: null, error }
+            console.error('❌ File upload error:', error);
+            return { data: null, error };
           }
         }
       }
@@ -1810,6 +1906,14 @@
         async function handleFormSubmit(event) {
           event.preventDefault();
           const form = event.target;
+          
+          // Check if Supabase is configured
+          if (!supabaseClient) {
+            showNotification('❌ Database not configured. Please check console for setup instructions.', 'error');
+            showSupabaseSetupGuide();
+            return;
+          }
+          
           const validation = validateForm(form);
           if (!validation.isValid) {
             validation.errorMessages.forEach((message) => showNotification(message));
@@ -2849,6 +2953,12 @@
       
       // Payment Method Handlers
       document.addEventListener('DOMContentLoaded', function() {
+        // Show Supabase setup guide if not configured
+        showSupabaseSetupGuide();
+        
+        // Test database connection
+        testDatabaseConnection();
+        
         // Show/hide testing mode indicator and log status
         const testingIndicator = document.getElementById('testingModeIndicator');
         if (testingIndicator) {
