@@ -1055,11 +1055,11 @@
                       <div class="checkbox-custom mt-1"></div>
                       <span class="ml-2 text-sm text-gray-700"
                         >I agree to the
-                        <a href="Terms-of-Service.html" class="text-primary hover:underline"
+                        <a href="#" onclick="openModal('termsModal')" class="text-primary hover:underline"
                           >Terms of Service</a
                         >
                         and
-                        <a href="Privacy-Policy-Overview.html" class="text-primary hover:underline"
+                        <a href="#" onclick="openModal('privacyModal')" class="text-primary hover:underline"
                           >Privacy Policy</a
                         ></span
                       >
@@ -1388,11 +1388,11 @@
                       <div class="checkbox-custom mt-1"></div>
                       <span class="ml-2 text-sm text-gray-700"
                         >I agree to the
-                        <a href="Terms-of-Service.html" class="text-primary hover:underline"
+                        <a href="#" onclick="openModal('termsModal')" class="text-primary hover:underline"
                           >Terms of Service</a
                         >
                         and
-                        <a href="Privacy-Policy-Overview.html" class="text-primary hover:underline"
+                        <a href="#" onclick="openModal('privacyModal')" class="text-primary hover:underline"
                           >Privacy Policy</a
                         ></span
                       >
@@ -1452,10 +1452,10 @@
               &copy; 2025 Verify. All rights reserved.
             </p>
             <div class="flex space-x-6">
-              <a href="Privacy-Policy-Overview.html" class="text-gray-600 text-sm hover:text-primary"
+              <a href="#" onclick="openModal('privacyModal')" class="text-gray-600 text-sm hover:text-primary"
                 >Privacy Policy</a
               >
-              <a href="Terms-of-Service.html" class="text-gray-600 text-sm hover:text-primary"
+              <a href="#" onclick="openModal('termsModal')" class="text-gray-600 text-sm hover:text-primary"
                 >Terms of Service</a
               >
               <a href="#" class="text-gray-600 text-sm hover:text-primary"
@@ -2343,6 +2343,117 @@
         });
       });
     </script>
+
+    <!-- Terms of Service Modal -->
+    <div id="termsModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+      <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden">
+        <div class="flex justify-between items-center p-6 border-b">
+          <h2 class="text-2xl font-bold">Terms of Service</h2>
+          <button onclick="closeModal('termsModal')" class="text-gray-500 hover:text-gray-700">
+            <i class="ri-close-line text-2xl"></i>
+          </button>
+        </div>
+        <div class="p-6 overflow-y-auto max-h-[70vh]">
+          <div class="prose max-w-none">
+            <h3>1. Acceptance of Terms</h3>
+            <p>By accessing and using Verify's services, you accept and agree to be bound by the terms and provision of this agreement.</p>
+            
+            <h3>2. Service Description</h3>
+            <p>Verify provides document verification services to connect job seekers with potential employers in South Africa.</p>
+            
+            <h3>3. User Responsibilities</h3>
+            <p>Users must provide accurate information and maintain the confidentiality of their account credentials.</p>
+            
+            <h3>4. Privacy and Data Protection</h3>
+            <p>We collect and process personal information in accordance with our Privacy Policy and applicable data protection laws.</p>
+            
+            <h3>5. Payment Terms</h3>
+            <p>All fees for verification services are clearly stated and must be paid in advance.</p>
+            
+            <h3>6. Limitation of Liability</h3>
+            <p>Verify's liability is limited to the extent permitted by law.</p>
+            
+            <h3>7. Termination</h3>
+            <p>Either party may terminate this agreement with appropriate notice.</p>
+            
+            <h3>8. Governing Law</h3>
+            <p>These terms are governed by the laws of South Africa.</p>
+          </div>
+        </div>
+        <div class="flex justify-end p-6 border-t bg-gray-50">
+          <button onclick="closeModal('termsModal')" class="bg-primary text-white px-6 py-2 rounded-button hover:bg-red-600">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacyModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+      <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden">
+        <div class="flex justify-between items-center p-6 border-b">
+          <h2 class="text-2xl font-bold">Privacy Policy</h2>
+          <button onclick="closeModal('privacyModal')" class="text-gray-500 hover:text-gray-700">
+            <i class="ri-close-line text-2xl"></i>
+          </button>
+        </div>
+        <div class="p-6 overflow-y-auto max-h-[70vh]">
+          <div class="prose max-w-none">
+            <h3>Information We Collect</h3>
+            <p>We collect personal information including name, contact details, identity documents, and employment history for verification purposes.</p>
+            
+            <h3>How We Use Your Information</h3>
+            <p>Your information is used to verify your identity and qualifications, connect you with employers, and improve our services.</p>
+            
+            <h3>Information Sharing</h3>
+            <p>We share verified information with potential employers only with your consent. We do not sell personal information to third parties.</p>
+            
+            <h3>Data Security</h3>
+            <p>We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.</p>
+            
+            <h3>Your Rights</h3>
+            <p>You have the right to access, update, or delete your personal information. Contact us to exercise these rights.</p>
+            
+            <h3>Data Retention</h3>
+            <p>We retain your information for as long as necessary to provide our services or as required by law.</p>
+            
+            <h3>Contact Information</h3>
+            <p>For privacy-related questions, contact us at privacy@verify.co.za</p>
+          </div>
+        </div>
+        <div class="flex justify-end p-6 border-t bg-gray-50">
+          <button onclick="closeModal('privacyModal')" class="bg-primary text-white px-6 py-2 rounded-button hover:bg-red-600">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Modal functions
+      function openModal(modalId) {
+        document.getElementById(modalId).classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+      
+      function closeModal(modalId) {
+        document.getElementById(modalId).classList.add('hidden');
+        document.body.style.overflow = 'auto';
+      }
+      
+      // Close modal when clicking outside
+      window.addEventListener('click', function(e) {
+        if (e.target.classList.contains('bg-black') && e.target.classList.contains('bg-opacity-50')) {
+          const modals = ['termsModal', 'privacyModal'];
+          modals.forEach(modalId => {
+            if (!document.getElementById(modalId).classList.contains('hidden')) {
+              closeModal(modalId);
+            }
+          });
+        }
+      });
+    </script>
+
 <script src="/app.js"></script>
   </body>
 </html>
