@@ -36,6 +36,138 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
     />
+    <!-- Supabase -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script id="supabase-config">
+      // Initialize Supabase client
+      // TODO: Replace with your actual Supabase URL and anon key
+      // You can find these in your Supabase project settings
+      const SUPABASE_URL = 'YOUR_SUPABASE_URL'
+      const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'
+      
+      const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+      
+      /*
+      DATABASE SCHEMA NEEDED FOR THIS REGISTRATION FORM:
+      
+      1. Create these tables in your Supabase database:
+      
+      -- Job Seekers Table
+      CREATE TABLE job_seekers (
+        id UUID PRIMARY KEY REFERENCES auth.users(id),
+        email TEXT NOT NULL,
+        username TEXT UNIQUE NOT NULL,
+        first_name TEXT,
+        surname TEXT,
+        location TEXT,
+        phone TEXT,
+        professional_title TEXT,
+        travel_distance TEXT,
+        willing_to_relocate TEXT,
+        years_experience TEXT,
+        industry TEXT,
+        subscription_tier TEXT,
+        selected_jobs TEXT[], -- Array of job types
+        skills TEXT[], -- Array of skills
+        reference_1_name TEXT,
+        reference_1_phone TEXT,
+        reference_2_name TEXT,
+        reference_2_phone TEXT,
+        created_at TIMESTAMP DEFAULT NOW(),
+        updated_at TIMESTAMP DEFAULT NOW()
+      );
+      
+      -- Employers Table
+      CREATE TABLE employers (
+        id UUID PRIMARY KEY REFERENCES auth.users(id),
+        email TEXT NOT NULL,
+        username TEXT UNIQUE NOT NULL,
+        full_name TEXT,
+        position_title TEXT,
+        phone TEXT,
+        employer_type TEXT CHECK (employer_type IN ('business', 'individual')),
+        company_name TEXT,
+        company_website TEXT,
+        industry TEXT,
+        company_size TEXT,
+        created_at TIMESTAMP DEFAULT NOW(),
+        updated_at TIMESTAMP DEFAULT NOW()
+      );
+      
+      2. Create storage buckets for file uploads:
+      - job-seeker-files (for resumes, certificates)
+      - employer-files (for company logos)
+      
+      3. Set up Row Level Security (RLS) policies as needed
+      */
+      
+      // Utility functions for Supabase operations
+      const SupabaseAuth = {
+        async signUp(email, password, userData) {
+          try {
+            const { data, error } = await supabase.auth.signUp({
+              email: email,
+              password: password,
+              options: {
+                data: userData
+              }
+            })
+            return { data, error }
+          } catch (error) {
+            return { data: null, error }
+          }
+        },
+        
+        async signIn(email, password) {
+          try {
+            const { data, error } = await supabase.auth.signInWithPassword({
+              email: email,
+              password: password
+            })
+            return { data, error }
+          } catch (error) {
+            return { data: null, error }
+          }
+        }
+      }
+      
+      const SupabaseDB = {
+        async insertJobSeeker(userData) {
+          try {
+            const { data, error } = await supabase
+              .from('job_seekers')
+              .insert([userData])
+              .select()
+            return { data, error }
+          } catch (error) {
+            return { data: null, error }
+          }
+        },
+        
+        async insertEmployer(userData) {
+          try {
+            const { data, error } = await supabase
+              .from('employers')
+              .insert([userData])
+              .select()
+            return { data, error }
+          } catch (error) {
+            return { data: null, error }
+          }
+        },
+        
+        async uploadFile(bucket, filePath, file) {
+          try {
+            const { data, error } = await supabase.storage
+              .from(bucket)
+              .upload(filePath, file)
+            return { data, error }
+          } catch (error) {
+            return { data: null, error }
+          }
+        }
+      }
+    </script>
     <style>
       :where([class^="ri-"])::before { content: "\f3c2"; }
       @import url('https://fonts.googleapis.com/css2?family=Futura:wght@400;500;700&display=swap');
@@ -106,6 +238,18 @@
       border-color: #d1d5db;
       background-color: #f9fafb;
       }
+      .employer-type-card {
+      transition: all 0.3s ease;
+      cursor: pointer;
+      }
+      .employer-type-card.selected {
+      border-color: #F50302;
+      background-color: rgba(245, 3, 2, 0.05);
+      }
+      .employer-type-card:hover:not(.selected) {
+      border-color: #d1d5db;
+      background-color: #f9fafb;
+      }
       .password-strength-meter {
       height: 4px;
       border-radius: 2px;
@@ -160,7 +304,7 @@
           class="container mx-auto px-4 py-4 flex justify-between items-center"
         >
           <a
-            href="home-page.html"
+            href="login.html"
             class="flex items-center text-gray-800 hover:text-primary"
           >
             <div class="w-6 h-6 flex items-center justify-center mr-2">
@@ -240,18 +384,17 @@
             <!-- Job Seeker Registration Form -->
             <div id="jobSeekerForm" class="block">
               <form
-                action="https://readdy.ai/api/form/d1fe2dheus6kik1r0i10"
                 method="POST"
-                id="jobSeekerForm"
+                id="jobSeekerRegistrationForm"
               >
                 <div class="mb-8">
-                  <h3 class="text-lg font-medium text-gray-900 mb-4">
+                  <h3 class="text-lg font-medium text-gray-900 mb-4 text-center">
                     Choose Your Verification Tier
                   </h3>
                   <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <!-- Bronze Card -->
                     <div
-                      class="border border-gray-200 rounded-lg p-6 hover:border-primary cursor-pointer transition-all category-card bg-white"
+                      class="border border-gray-200 rounded-lg p-6 hover:border-primary cursor-pointer transition-all category-card bg-white flex flex-col"
                     >
                       <div class="flex flex-col items-center text-center mb-8">
                         <div
@@ -271,7 +414,7 @@
                           Contact us for pricing
                         </p>
                       </div>
-                      <ul class="space-y-4 mb-6">
+                      <ul class="space-y-4 mb-6 flex-grow">
                         <li class="flex items-center text-sm text-gray-600">
                           <i
                             class="ri-checkbox-circle-fill text-[#CD7F32] mr-2"
@@ -290,8 +433,9 @@
                           ></i>
                           <span>Polygraph Test</span>
                         </li>
+                        <li class="h-6"></li>
                       </ul>
-                      <label class="flex items-center justify-center mt-4">
+                      <label class="flex items-center justify-center mt-auto">
                         <input
                           type="radio"
                           name="subscription"
@@ -311,16 +455,8 @@
                     </div>
                     <!-- Silver Card -->
                     <div
-                      class="border-2 border-gray-200 rounded-lg p-6 hover:border-primary cursor-pointer transition-all relative category-card bg-white"
+                      class="border-2 border-gray-200 rounded-lg p-6 hover:border-primary cursor-pointer transition-all category-card bg-white flex flex-col"
                     >
-                      <div
-                        class="absolute -top-3 left-1/2 transform -translate-x-1/2"
-                      >
-                        <span
-                          class="bg-primary text-white text-xs font-medium px-3 py-1 rounded-full"
-                          >Recommended</span
-                        >
-                      </div>
                       <div class="flex flex-col items-center text-center mb-8">
                         <div
                           class="w-16 h-16 flex items-center justify-center bg-[#C0C0C0] rounded-full mb-4"
@@ -341,7 +477,7 @@
                           Contact us for pricing
                         </p>
                       </div>
-                      <ul class="space-y-4 mb-6">
+                      <ul class="space-y-4 mb-6 flex-grow">
                         <li class="flex items-center text-sm text-gray-600">
                           <i
                             class="ri-checkbox-circle-fill text-[#C0C0C0] mr-2"
@@ -361,10 +497,10 @@
                           <span>Polygraph Test</span>
                         </li>
                       </ul>
-                      <p class="text-xs text-gray-500 mt-2">
+                      <p class="text-xs text-gray-500 mb-4">
                         Police clearance must be supplied by the job seeker
                       </p>
-                      <label class="flex items-center justify-center mt-4">
+                      <label class="flex items-center justify-center mt-auto">
                         <input
                           type="radio"
                           name="subscription"
@@ -383,7 +519,7 @@
                     </div>
                     <!-- Gold Card -->
                     <div
-                      class="border-2 border-gray-200 rounded-lg p-6 hover:border-primary cursor-pointer transition-all category-card bg-white"
+                      class="border-2 border-gray-200 rounded-lg p-6 hover:border-primary cursor-pointer transition-all category-card bg-white flex flex-col"
                     >
                       <div class="flex flex-col items-center text-center mb-8">
                         <div
@@ -405,7 +541,7 @@
                           Contact us for pricing
                         </p>
                       </div>
-                      <ul class="space-y-4 mb-6">
+                      <ul class="space-y-4 mb-6 flex-grow">
                         <li class="flex items-center text-sm text-gray-600">
                           <i
                             class="ri-checkbox-circle-fill text-[#FFD700] mr-2"
@@ -425,11 +561,11 @@
                           <span>Polygraph Test</span>
                         </li>
                       </ul>
-                      <p class="text-xs text-gray-500 mt-2">
+                      <p class="text-xs text-gray-500 mb-4">
                         Police clearance & polygraph must be supplied by the job
                         seeker
                       </p>
-                      <label class="flex items-center justify-center mt-4">
+                      <label class="flex items-center justify-center mt-auto">
                         <input
                           type="radio"
                           name="subscription"
@@ -685,27 +821,27 @@
                       >
                         <i class="ri-building-4-line"></i>
                       </div>
-                       <select>
-  id="industrySelect"
-  name="industry"
-  required
-  class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary text-sm pl-10 pr-8 appearance-none"
->
-  <option value="">Select an Industry Sector</option>
-  <option value="drivers">Drivers</option>
-  <option value="domestic_workers">Domestic Workers</option>
-  <option value="child_elder_care">Child & Elder Care</option>
-  <option value="security">Security Services</option>
-  <option value="trades">Skilled Trades</option>
-  <option value="construction">Construction</option>
-  <option value="retail_hospitality">Retail & Hospitality</option>
-  <option value="admin">Administrative & Office</option>
-  <option value="warehouse">Warehouse & Logistics</option>
-  <option value="event_staff">Event Staff</option>
-  <option value="mechanics">Truck & Vehicle Mechanics</option>
-  <option value="agriculture_farm_work">Agriculture & Farm Work</option>
-</select>
-
+                      <select
+                        id="industrySelect"
+                        name="industry"
+                        required
+                        class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary text-sm pl-10 pr-8 appearance-none"
+                      >
+                        <option value="">Select an Industry Sector</option>
+                        <option value="drivers">Drivers</option>
+                        <option value="domestic_workers">Domestic Workers</option>
+                        <option value="child_elder_care">Child & Elder Care</option>
+                        <option value="security">Security Services</option>
+                        <option value="trades">Skilled Trades</option>
+                        <option value="construction">Construction</option>
+                        <option value="retail_hospitality">Retail & Hospitality</option>
+                        <option value="admin">Administrative & Office</option>
+                        <option value="warehouse">Warehouse & Logistics</option>
+                        <option value="event_staff">Event Staff</option>
+                        <option value="mechanics">Truck & Vehicle Mechanics</option>
+                        <option value="agriculture_farm_work">Agriculture & Farm Work</option>
+                      </select>
+                      <div
                         class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none"
                       >
                         <i class="ri-arrow-down-s-line"></i>
@@ -919,7 +1055,7 @@
                       <div class="checkbox-custom mt-1"></div>
                       <span class="ml-2 text-sm text-gray-700"
                         >I agree to the
-                        <a href="#" class="text-primary hover:underline"
+                        <a href="Terms-of-Service.html" class="text-primary hover:underline"
                           >Terms of Service</a
                         >
                         and
@@ -982,94 +1118,137 @@
                   >
                 </button>
               </div>
+              
+              <!-- Job Seeker Login Link -->
+              <div class="text-center mt-6">
+                <p class="text-gray-600">
+                  Already have an account?
+                  <a href="login.html" class="text-primary hover:underline">Log in</a>
+                </p>
+              </div>
             </div>
+            
             <!-- Employer Registration Form -->
             <div id="employerForm" class="hidden">
               <form
-                action="https://readdy.ai/api/form/d1bb8k31l6bcigtll6vg"
                 method="POST"
-                id="employerForm"
+                id="employerRegistrationForm"
               >
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
-                  <div class="input-container">
-                    <div class="icon w-5 h-5 flex items-center justify-center">
-                      <i class="ri-building-line"></i>
+                <div class="mb-6">
+                  <h3 class="text-lg font-medium text-gray-900 mb-4">
+                    Account Type
+                  </h3>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="border rounded-lg p-4 cursor-pointer hover:border-primary transition-colors employer-type-card" data-type="business">
+                      <div class="flex items-center mb-2">
+                        <div class="w-4 h-4 border-2 border-gray-300 rounded-full mr-3 radio-indicator"></div>
+                        <h4 class="font-medium">Business/Company</h4>
+                      </div>
+                      <p class="text-sm text-gray-500">Register as a business entity with company details</p>
                     </div>
-                    <input
-                      type="text"
-                      placeholder="Company Name"
-                      class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
-                    />
+                    <div class="border rounded-lg p-4 cursor-pointer hover:border-primary transition-colors employer-type-card selected" data-type="individual">
+                      <div class="flex items-center mb-2">
+                        <div class="w-4 h-4 border-2 border-primary bg-primary rounded-full mr-3 radio-indicator flex items-center justify-center">
+                          <div class="w-2 h-2 bg-white rounded-full"></div>
+                        </div>
+                        <h4 class="font-medium">Private Individual</h4>
+                      </div>
+                      <p class="text-sm text-gray-500">Register as a private person looking to hire</p>
+                    </div>
                   </div>
+                </div>
+                
+                <!-- Business Details Section (Optional) -->
+                <div id="businessDetailsSection" class="mb-6 hidden">
+                  <h3 class="text-md font-medium text-gray-700 mb-3">
+                    Business Details <span class="text-gray-500 text-sm">(Optional for businesses)</span>
+                  </h3>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-4">
+                    <div class="input-container">
+                      <div class="icon w-5 h-5 flex items-center justify-center">
+                        <i class="ri-building-line"></i>
+                      </div>
+                      <input
+                        type="text"
+                        placeholder="Company Name (Optional)"
+                        class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                      />
+                    </div>
+                    <div class="input-container">
+                      <div class="icon w-5 h-5 flex items-center justify-center">
+                        <i class="ri-global-line"></i>
+                      </div>
+                      <input
+                        type="url"
+                        placeholder="Company Website (Optional)"
+                        class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                      />
+                    </div>
+                    <div class="input-container">
+                      <div class="icon w-5 h-5 flex items-center justify-center">
+                        <i class="ri-building-4-line"></i>
+                      </div>
+                      <select
+                        id="industry"
+                        name="industry"
+                        class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm pl-10 pr-8 appearance-none"
+                      >
+                        <option value="">Select an Industry Sector (Optional)</option>
+                        <option value="drivers">Drivers</option>
+                        <option value="domestic_workers">Domestic Workers</option>
+                        <option value="child_elder_care">Child & Elder Care</option>
+                        <option value="security">Security</option>
+                        <option value="trades">Trades</option>
+                        <option value="construction">Construction</option>
+                        <option value="retail_hospitality">Retail & Hospitality</option>
+                        <option value="admin">Admin</option>
+                        <option value="warehouse">Warehouse</option>
+                        <option value="event_staff">Event Staff</option>
+                        <option value="truck_mechanics">Truck Mechanics</option>
+                        <option value="agriculture_farm_work">Agriculture &amp; Farm Work</option>
+                      </select>
+                      <div
+                        class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none"
+                      >
+                        <i class="ri-arrow-down-s-line"></i>
+                      </div>
+                    </div>
+                    <div class="input-container">
+                      <div class="icon w-5 h-5 flex items-center justify-center">
+                        <i class="ri-team-line"></i>
+                      </div>
+                      <select
+                        class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm pl-10 pr-8 appearance-none"
+                      >
+                        <option value="">Company Size (Optional)</option>
+                        <option value="1-10">1-10 employees</option>
+                        <option value="11-50">11-50 employees</option>
+                        <option value="51-200">51-200 employees</option>
+                        <option value="201-500">201-500 employees</option>
+                        <option value="501-1000">501-1000 employees</option>
+                        <option value="1001+">1001+ employees</option>
+                      </select>
+                      <div
+                        class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none"
+                      >
+                        <i class="ri-arrow-down-s-line"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Primary Contact Details -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
                   <div class="input-container">
                     <div class="icon w-5 h-5 flex items-center justify-center">
                       <i class="ri-mail-line"></i>
                     </div>
                     <input
                       type="email"
-                      placeholder="Business Email"
+                      placeholder="Email Address"
+                      required
                       class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
                     />
-                  </div>
-                  <div class="input-container">
-                    <div class="icon w-5 h-5 flex items-center justify-center">
-                      <i class="ri-global-line"></i>
-                    </div>
-                    <input
-                      type="url"
-                      placeholder="Company Website"
-                      class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
-                    />
-                  </div>
-                  <div class="input-container">
-                    <div class="icon w-5 h-5 flex items-center justify-center">
-                      <i class="ri-building-4-line"></i>
-                    </div>
-                    <select
-                      class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm pl-10 pr-8 appearance-none"
-                    >
-<label for="industry">Industry Sector</label>
-<select id="industry" name="industry" required>
-  <option value="">Select an Industry Sector</option>
-  <option value="drivers">Drivers</option>
-  <option value="domestic_workers">Domestic Workers</option>
-  <option value="child_elder_care">Child & Elder Care</option>
-  <option value="security">Security</option>
-  <option value="trades">Trades</option>
-  <option value="construction">Construction</option>
-  <option value="retail_hospitality">Retail & Hospitality</option>
-  <option value="admin">Admin</option>
-  <option value="warehouse">Warehouse</option>
-  <option value="event_staff">Event Staff</option>
-  <option value="truck_mechanics">Truck Mechanics</option>
-  <option value="agriculture_farm_work">Agriculture &amp; Farm Work</option>
-</select>
-                    <div
-                      class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none"
-                    >
-                      <i class="ri-arrow-down-s-line"></i>
-                    </div>
-                  </div>
-                  <div class="input-container">
-                    <div class="icon w-5 h-5 flex items-center justify-center">
-                      <i class="ri-team-line"></i>
-                    </div>
-                    <select
-                      class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm pl-10 pr-8 appearance-none"
-                    >
-                      <option value="">Company Size</option>
-                      <option value="1-10">1-10 employees</option>
-                      <option value="11-50">11-50 employees</option>
-                      <option value="51-200">51-200 employees</option>
-                      <option value="201-500">201-500 employees</option>
-                      <option value="501-1000">501-1000 employees</option>
-                      <option value="1001+">1001+ employees</option>
-                    </select>
-                    <div
-                      class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none"
-                    >
-                      <i class="ri-arrow-down-s-line"></i>
-                    </div>
                   </div>
                   <div class="input-container">
                     <div class="icon w-5 h-5 flex items-center justify-center">
@@ -1078,10 +1257,12 @@
                     <input
                       type="text"
                       placeholder="Username"
+                      required
                       class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
                     />
                   </div>
                 </div>
+                
                 <div class="mb-6">
                   <h3 class="text-md font-medium text-gray-700 mb-3">
                     Contact Person Details
@@ -1207,7 +1388,7 @@
                       <div class="checkbox-custom mt-1"></div>
                       <span class="ml-2 text-sm text-gray-700"
                         >I agree to the
-                        <a href="#" class="text-primary hover:underline"
+                        <a href="Terms-of-Service.html" class="text-primary hover:underline"
                           >Terms of Service</a
                         >
                         and
@@ -1251,18 +1432,15 @@
                   >
                 </button>
               </div>
+              
+              <!-- Employer Login Link -->
+              <div class="text-center mt-6">
+                <p class="text-gray-600">
+                  Already have an account?
+                  <a href="login.html" class="text-primary hover:underline">Log in</a>
+                </p>
+              </div>
             </div>
-          </div>
-          <div class="text-center mt-8">
-            <p class="text-gray-600">
-              Already have an account?
-              <a
-                href="Login-Page-for-Verify-Platform.html"
-                data-readdy="true"
-                class="text-primary font-medium hover:underline"
-                >Log in</a
-              >
-            </p>
           </div>
         </div>
       </main>
@@ -1292,16 +1470,16 @@
       document.addEventListener("DOMContentLoaded", function () {
         const jobSeekerCard = document.getElementById("jobSeekerCard");
         const employerCard = document.getElementById("employerCard");
-        const jobSeekerForm = document.getElementById("jobSeekerForm");
-        const employerForm = document.getElementById("employerForm");
-        if (jobSeekerCard && employerCard && jobSeekerForm && employerForm) {
+        const jobSeekerFormDiv = document.getElementById("jobSeekerForm");
+        const employerFormDiv = document.getElementById("employerForm");
+        if (jobSeekerCard && employerCard && jobSeekerFormDiv && employerFormDiv) {
           jobSeekerCard.addEventListener("click", function () {
             jobSeekerCard.classList.add("selected");
             employerCard.classList.remove("selected");
-            jobSeekerForm.classList.remove("hidden");
-            jobSeekerForm.classList.add("block");
-            employerForm.classList.add("hidden");
-            employerForm.classList.remove("block");
+            jobSeekerFormDiv.classList.remove("hidden");
+            jobSeekerFormDiv.classList.add("block");
+            employerFormDiv.classList.add("hidden");
+            employerFormDiv.classList.remove("block");
             // Update icon colors
             const jobSeekerIcon = jobSeekerCard.querySelector(".w-8.h-8");
             const employerIcon = employerCard.querySelector(".w-8.h-8");
@@ -1324,10 +1502,10 @@
           employerCard.addEventListener("click", function () {
             employerCard.classList.add("selected");
             jobSeekerCard.classList.remove("selected");
-            employerForm.classList.remove("hidden");
-            employerForm.classList.add("block");
-            jobSeekerForm.classList.add("hidden");
-            jobSeekerForm.classList.remove("block");
+            employerFormDiv.classList.remove("hidden");
+            employerFormDiv.classList.add("block");
+            jobSeekerFormDiv.classList.add("hidden");
+            jobSeekerFormDiv.classList.remove("block");
             // Update icon colors
             const jobSeekerIcon = jobSeekerCard.querySelector(".w-8.h-8");
             const employerIcon = employerCard.querySelector(".w-8.h-8");
@@ -1509,10 +1687,44 @@
         updateSubscriptionSelection();
       });
     </script>
+    <script id="employer-type-toggle-script">
+      document.addEventListener("DOMContentLoaded", function () {
+        const employerTypeCards = document.querySelectorAll(".employer-type-card");
+        const businessDetailsSection = document.getElementById("businessDetailsSection");
+        
+        employerTypeCards.forEach((card) => {
+          card.addEventListener("click", function() {
+            // Remove selected class from all cards
+            employerTypeCards.forEach((c) => {
+              c.classList.remove("selected");
+              const indicator = c.querySelector(".radio-indicator");
+              indicator.classList.remove("border-primary", "bg-primary");
+              indicator.classList.add("border-gray-300");
+              indicator.innerHTML = "";
+            });
+            
+            // Add selected class to clicked card
+            this.classList.add("selected");
+            const indicator = this.querySelector(".radio-indicator");
+            indicator.classList.remove("border-gray-300");
+            indicator.classList.add("border-primary", "bg-primary");
+            indicator.innerHTML = '<div class="w-2 h-2 bg-white rounded-full"></div>';
+            
+            // Show/hide business details based on selection
+            const employerType = this.getAttribute("data-type");
+            if (employerType === "business") {
+              businessDetailsSection.classList.remove("hidden");
+            } else {
+              businessDetailsSection.classList.add("hidden");
+            }
+          });
+        });
+      });
+    </script>
     <script id="form-submission-script">
       document.addEventListener("DOMContentLoaded", function () {
-        const jobSeekerForm = document.getElementById("jobSeekerForm");
-        const employerForm = document.getElementById("employerForm");
+        const jobSeekerFormDiv = document.getElementById("jobSeekerForm");
+        const employerFormDiv = document.getElementById("employerForm");
         const cleanRecordBtn = document.getElementById("cleanRecordBtn");
         const cleanRecordModal = document.getElementById("cleanRecordModal");
         const closeModal = document.getElementById("closeModal");
@@ -1586,7 +1798,7 @@
           document.body.appendChild(notification);
           setTimeout(() => notification.remove(), 3000);
         }
-        function handleFormSubmit(event) {
+        async function handleFormSubmit(event) {
           event.preventDefault();
           const form = event.target;
           const validation = validateForm(form);
@@ -1595,126 +1807,178 @@
             return;
           }
 
-          const formData = new URLSearchParams();
+          // Show loading state
+          const submitButton = form.querySelector('button[type="submit"], button[type="button"]:last-of-type');
+          const originalText = submitButton.textContent;
+          submitButton.disabled = true;
+          submitButton.innerHTML = '<i class="ri-loader-line animate-spin mr-2"></i>Creating Account...';
 
-          // Add subscription tier
-          const selectedTier = form.querySelector(
-            'input[name="subscription"]:checked',
-          );
-          if (selectedTier) {
-            formData.append("subscription", selectedTier.value);
-          }
+          try {
+            // Determine if this is job seeker or employer form
+            const isJobSeekerForm = form.id === 'jobSeekerRegistrationForm';
+            const isEmployerForm = form.id === 'employerRegistrationForm';
 
-          // Add basic information
-          const firstName = form.querySelector('[name="firstName"]');
-          const surname = form.querySelector('[name="surname"]');
-          const email = form.querySelector('input[type="email"]');
-          const phone = form.querySelector('input[type="tel"]');
-          const username = form.querySelector('input[placeholder="Username"]');
-          const location = form.querySelector(
-            'input[placeholder="Current Location (City, Province)"]',
-          );
-          const travelDistance = form.querySelector(
-            'select[placeholder="Maximum Travel Distance"]',
-          );
-          const relocation = form.querySelector(
-            'select[placeholder="Willing to Relocate?"]',
-          );
-          const professionalTitle = form.querySelector(
-            'input[placeholder="Professional Title"]',
-          );
-          const experience = form.querySelector(
-            'select[placeholder="Years of Experience"]',
-          );
+            // Get common form data
+            const email = form.querySelector('input[type="email"]').value;
+            const password = form.querySelector(isJobSeekerForm ? '#seekerPassword' : '#employerPassword').value;
+            const username = form.querySelector('input[placeholder="Username"]').value;
 
-          if (firstName) formData.append("firstName", firstName.value);
-          if (surname) formData.append("surname", surname.value);
-          if (email) formData.append("email", email.value);
-          if (phone) formData.append("phone", phone.value);
-          if (username) formData.append("username", username.value);
-          if (location) formData.append("location", location.value);
-          if (travelDistance) formData.append("travelDistance", travelDistance.value);
-          if (relocation) formData.append("relocation", relocation.value);
-          if (professionalTitle)
-            formData.append("professionalTitle", professionalTitle.value);
-          if (experience) formData.append("experience", experience.value);
-
-          // Add selected jobs
-          const selectedJobs = Array.from(
-            document.querySelectorAll("#selectedJobs .bg-gray-100"),
-          ).map((tag) => tag.textContent.trim().replace(/✕$/, "").trim());
-          if (selectedJobs.length > 0) {
-            formData.append("selectedJobs", selectedJobs.join(","));
-          }
-
-          // Add skills
-          const selectedSkills = Array.from(
-            document.querySelectorAll("#skillTags .bg-gray-100"),
-          ).map((tag) => tag.textContent.trim().replace(/✕$/, "").trim());
-          if (selectedSkills.length > 0) {
-            formData.append("skills", selectedSkills.join(","));
-          }
-
-          // Add references
-          const reference1Name = form.querySelector('[name="reference1_name"]');
-          const reference1Phone = form.querySelector('[name="reference1_phone"]');
-          const reference2Name = form.querySelector('[name="reference2_name"]');
-          const reference2Phone = form.querySelector('[name="reference2_phone"]');
-
-          if (reference1Name && reference1Name.value)
-            formData.append("reference1Name", reference1Name.value);
-          if (reference1Phone && reference1Phone.value)
-            formData.append("reference1Phone", reference1Phone.value);
-          if (reference2Name && reference2Name.value)
-            formData.append("reference2Name", reference2Name.value);
-          if (reference2Phone && reference2Phone.value)
-            formData.append("reference2Phone", reference2Phone.value);
-
-          // Add password
-          const password = form.querySelector("#seekerPassword");
-          if (password) formData.append("password", password.value);
-
-          // File uploads will be marked as Uncollectable
-          const fileInputs = form.querySelectorAll('input[type="file"]');
-          fileInputs.forEach((input) => {
-            if (input.files.length > 0) {
-              formData.append(input.name || "file", "Uncollectable");
-            }
-          });
-          // Submit form
-          fetch(form.action, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body: formData.toString(),
-          })
-            .then((response) => {
-              if (response.ok) {
-                showNotification(
-                  "Your registration has been submitted successfully!",
-                  "success",
-                );
-                setTimeout(() => {
-                  window.location.href =
-                    "https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/d75ce9b6-d6a6-4e5c-9dea-a70df2e13263";
-                }, 2000);
-              } else {
-                throw new Error("Form submission failed");
-              }
-            })
-            .catch((error) => {
-              showNotification(
-                "An error occurred while submitting your registration. Please try again.",
-              );
+            // Create auth user first
+            const { data: authData, error: authError } = await SupabaseAuth.signUp(email, password, {
+              username: username,
+              user_type: isJobSeekerForm ? 'job_seeker' : 'employer'
             });
+
+            if (authError) {
+              throw new Error(`Authentication failed: ${authError.message}`);
+            }
+
+            const userId = authData.user?.id;
+            if (!userId) {
+              throw new Error('Failed to create user account');
+            }
+
+            // Prepare user data based on form type
+            let userData = {
+              id: userId,
+              email: email,
+              username: username,
+              created_at: new Date().toISOString()
+            };
+
+            if (isJobSeekerForm) {
+              // Job Seeker specific data
+              const firstName = form.querySelector('[name="firstName"]')?.value;
+              const surname = form.querySelector('[name="surname"]')?.value;
+              const location = form.querySelector('input[placeholder="Current Location (City, Province)"]')?.value;
+              const phone = form.querySelector('input[type="tel"]')?.value;
+              const professionalTitle = form.querySelector('input[placeholder="Professional Title"]')?.value;
+              const travelDistance = form.querySelector('select option:checked')?.value;
+              const relocation = form.querySelector('select:nth-of-type(2) option:checked')?.value;
+              const experience = form.querySelector('select:last-of-type option:checked')?.value;
+              const industry = form.querySelector('#industrySelect')?.value;
+              
+              // Get subscription tier
+              const selectedTier = form.querySelector('input[name="subscription"]:checked')?.value;
+              
+              // Get selected jobs
+              const selectedJobs = Array.from(document.querySelectorAll("#selectedJobs .bg-gray-100"))
+                .map((tag) => tag.textContent.trim().replace(/✕$/, "").trim());
+              
+              // Get skills
+              const selectedSkills = Array.from(document.querySelectorAll("#skillTags .bg-gray-100"))
+                .map((tag) => tag.textContent.trim().replace(/✕$/, "").trim());
+              
+              // Get references
+              const reference1Name = form.querySelector('[name="reference1_name"]')?.value;
+              const reference1Phone = form.querySelector('[name="reference1_phone"]')?.value;
+              const reference2Name = form.querySelector('[name="reference2_name"]')?.value;
+              const reference2Phone = form.querySelector('[name="reference2_phone"]')?.value;
+
+              userData = {
+                ...userData,
+                first_name: firstName,
+                surname: surname,
+                location: location,
+                phone: phone,
+                professional_title: professionalTitle,
+                travel_distance: travelDistance,
+                willing_to_relocate: relocation,
+                years_experience: experience,
+                industry: industry,
+                subscription_tier: selectedTier,
+                selected_jobs: selectedJobs,
+                skills: selectedSkills,
+                reference_1_name: reference1Name,
+                reference_1_phone: reference1Phone,
+                reference_2_name: reference2Name,
+                reference_2_phone: reference2Phone
+              };
+
+              // Insert job seeker data
+              const { data: dbData, error: dbError } = await SupabaseDB.insertJobSeeker(userData);
+              if (dbError) {
+                throw new Error(`Database error: ${dbError.message}`);
+              }
+
+            } else if (isEmployerForm) {
+              // Employer specific data
+              const fullName = form.querySelector('input[placeholder="Full Name"]')?.value;
+              const position = form.querySelector('input[placeholder="Position/Title"]')?.value;
+              const phone = form.querySelector('input[type="tel"]')?.value;
+              
+              // Get employer type
+              const employerType = document.querySelector('.employer-type-card.selected')?.getAttribute('data-type') || 'individual';
+              
+              // Get business details (if business type)
+              let companyName, companyWebsite, industry, companySize;
+              if (employerType === 'business') {
+                companyName = form.querySelector('input[placeholder="Company Name (Optional)"]')?.value;
+                companyWebsite = form.querySelector('input[placeholder="Company Website (Optional)"]')?.value;
+                industry = form.querySelector('#industry')?.value;
+                companySize = form.querySelector('select option:checked')?.value;
+              }
+
+              userData = {
+                ...userData,
+                full_name: fullName,
+                position_title: position,
+                phone: phone,
+                employer_type: employerType,
+                company_name: companyName,
+                company_website: companyWebsite,
+                industry: industry,
+                company_size: companySize
+              };
+
+              // Insert employer data
+              const { data: dbData, error: dbError } = await SupabaseDB.insertEmployer(userData);
+              if (dbError) {
+                throw new Error(`Database error: ${dbError.message}`);
+              }
+            }
+
+            // Handle file uploads if any
+            const fileInputs = form.querySelectorAll('input[type="file"]');
+            for (const input of fileInputs) {
+              if (input.files.length > 0) {
+                const file = input.files[0];
+                const fileName = `${userId}/${Date.now()}_${file.name}`;
+                const bucket = isJobSeekerForm ? 'job-seeker-files' : 'employer-files';
+                
+                const { data: fileData, error: fileError } = await SupabaseDB.uploadFile(bucket, fileName, file);
+                if (fileError) {
+                  console.warn('File upload failed:', fileError.message);
+                  // Don't fail the entire registration for file upload issues
+                }
+              }
+            }
+
+            // Success!
+            showNotification(
+              "Your registration has been submitted successfully! Please check your email to verify your account.",
+              "success"
+            );
+
+            // Redirect after success
+            setTimeout(() => {
+              window.location.href = "login.html";
+            }, 2000);
+
+          } catch (error) {
+            console.error('Registration error:', error);
+            showNotification(
+              `Registration failed: ${error.message}. Please try again.`,
+              "error"
+            );
+          } finally {
+            // Restore button state
+            submitButton.disabled = false;
+            submitButton.innerHTML = originalText;
+          }
         }
-        if (jobSeekerForm) {
-          jobSeekerForm.addEventListener("submit", handleFormSubmit);
-        }
-        if (employerForm) {
-          employerForm.addEventListener("submit", handleFormSubmit);
-        }
+        const jobSeekerForm = document.getElementById("jobSeekerRegistrationForm");
+        const employerForm = document.getElementById("employerRegistrationForm");
         if (jobSeekerForm) {
           jobSeekerForm.addEventListener("submit", handleFormSubmit);
         }
@@ -1737,7 +2001,7 @@
             "Traffic Rules",
             "Delivery Tracking",
           ],
-          domestic: [
+          domestic_workers: [
             "Cleaning",
             "Cooking",
             "Laundry",
@@ -1747,7 +2011,7 @@
             "Child Care",
             "Safety Awareness",
           ],
-          care: [
+          child_elder_care: [
             "Patient Care",
             "First Aid",
             "Basic Medical Knowledge",
@@ -1787,7 +2051,7 @@
             "Material Handling",
             "Equipment Operation",
           ],
-          retail: [
+          retail_hospitality: [
             "Customer Service",
             "Cash Handling",
             "Stock Management",
@@ -1817,7 +2081,7 @@
             "Equipment Operation",
             "Team Work",
           ],
-          events: [
+          event_staff: [
             "Customer Service",
             "Physical Fitness",
             "Team Work",
@@ -1837,7 +2101,7 @@
             "Quality Control",
             "Equipment Maintenance",
           ],
-          agriculture: [
+          agriculture_farm_work: [
             "Physical Fitness",
             "Equipment Operation",
             "Safety Awareness",
@@ -1898,17 +2162,17 @@
         });
         const jobPrices = {
           drivers: 285,
-          domestic: 99,
-          care: 99,
+          domestic_workers: 99,
+          child_elder_care: 99,
           security: 199,
           trades: 199,
           construction: 199,
-          retail: 99,
+          retail_hospitality: 99,
           admin: 199,
           warehouse: 99,
-          events: 199,
+          event_staff: 199,
           mechanics: 285,
-          agriculture: 99,
+          agriculture_farm_work: 99,
         };
         const jobsByIndustry = {
           drivers: [
@@ -1921,7 +2185,7 @@
             "Fleet Driver",
             "Moving Van Driver",
           ],
-          domestic: [
+          domestic_workers: [
             "House Cleaner",
             "Housekeeper",
             "Domestic Helper",
@@ -1930,7 +2194,7 @@
             "Cook",
             "House Manager",
           ],
-          care: [
+          child_elder_care: [
             "Childcare Worker",
             "Elder Care Assistant",
             "Babysitter",
@@ -1967,7 +2231,7 @@
             "Equipment Operator",
             "Site Worker",
           ],
-          retail: [
+          retail_hospitality: [
             "Sales Associate",
             "Cashier",
             "Store Clerk",
@@ -1994,7 +2258,7 @@
             "Loading Dock Worker",
             "Stock Handler",
           ],
-          events: [
+          event_staff: [
             "Event Staff",
             "Banquet Server",
             "Setup Crew",
@@ -2012,7 +2276,7 @@
             "Service Technician",
             "Repair Specialist",
           ],
-          agriculture: [
+          agriculture_farm_work: [
             "Farm Worker",
             "Field Hand",
             "Harvester",

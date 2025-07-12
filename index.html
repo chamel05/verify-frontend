@@ -4,8 +4,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Verify - Empowering Opportunities</title>
-<script src="https://cdn.tailwindcss.com/3.4.16"></script>
-<script>tailwind.config={theme:{extend:{colors:{primary:'#F50302',secondary:'#4D4D4D'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<script src="https://cdn.tailwindcss.com/3.4.16">
+</script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: { primary: "#F50302", secondary: "#4D4D4D" },
+      borderRadius: {
+        none: "0px",
+        sm: "4px",
+        DEFAULT: "8px",
+        md: "12px",
+        lg: "16px",
+        xl: "20px",
+        "2xl": "24px",
+        "3xl": "32px",
+        full: "9999px",
+        button: "8px",
+      },
+    },
+  },
+};
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
@@ -32,29 +53,9 @@ margin: 0;
 <img src="https://static.readdy.ai/image/783dd8c3d2d1f38f9648f46144ac17f1/bc2b69f3a823a0bfcee48284d9c2d098.jpeg" alt="Verify Logo" class="h-12">
 </div>
 </div>
-<nav class="hidden md:flex space-x-8 items-center" id="desktop-nav">
-<a href="User-Registration-Page.html" class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600 whitespace-nowrap inline-block">Register</a>
-</nav>
-<button class="md:hidden w-10 h-10 flex items-center justify-center" id="mobile-menu-button" aria-label="Toggle menu">
-<i class="ri-menu-line text-gray-800 ri-2x"></i>
-</button>
-<div id="mobile-nav" class="fixed inset-0 bg-white z-50 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden">
-<div class="h-full flex flex-col">
-<div class="flex justify-between items-center p-4 border-b">
-<div class="text-xl font-bold">Menu</div>
-<button class="w-10 h-10 flex items-center justify-center" id="mobile-menu-close">
-<i class="ri-close-line text-gray-800 ri-2x"></i>
-</button>
-</div>
-<div class="flex flex-col space-y-4 p-4">
-<a href="#job-categories" class="text-gray-800 hover:text-primary font-medium py-2">Job Categories</a>
-<a href="#pricing" class="text-gray-800 hover:text-primary font-medium py-2">Pricing</a>
-<a href="#faq" class="text-gray-800 hover:text-primary font-medium py-2">FAQ</a>
-<a href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/blog" data-readdy="true" class="text-gray-800 hover:text-primary font-medium py-2">Blog</a>
-<a href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/d75ce9b6-d6a6-4e5c-9dea-a70df2e13263" data-readdy="true" class="bg-white text-primary border border-primary px-4 py-2 !rounded-button hover:bg-gray-50 whitespace-nowrap text-center">Log in</a>
-<a href="User-Registration-Page.html" class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600 whitespace-nowrap w-full">Register</a>
-</div>
-</div>
+<div class="flex items-center space-x-4">
+<a href="login.html" class="bg-white text-primary border border-primary px-4 py-2 !rounded-button hover:bg-gray-50 whitespace-nowrap">Log in</a>
+<a href="register.html" class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600 whitespace-nowrap">Register</a>
 </div>
 </div>
 </header>
@@ -80,32 +81,32 @@ margin: 0;
 </div>
 </section>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-
-// Verification timeframes dropdown handler
-const verificationSelect = document.getElementById('verificationSelect');
-const timeframeResult = document.getElementById('timeframeResult');
-const selectedTimeframe = document.getElementById('selectedTimeframe');
-if (verificationSelect) {
-verificationSelect.addEventListener('change', function() {
-const selectedValue = this.value;
-if (selectedValue) {
-selectedTimeframe.textContent = selectedValue;
-timeframeResult.classList.remove('hidden');
-} else {
-timeframeResult.classList.add('hidden');
-}
-});
-}
-// Job Seeker Form Handler
-const jobSeekerForm = document.getElementById('jobSeekerForm');
-if (jobSeekerForm) {
-jobSeekerForm.addEventListener('submit', function(e) {
-e.preventDefault();
-const formData = new FormData(jobSeekerForm);
-const modal = document.createElement('div');
-modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-modal.innerHTML = `
+document.addEventListener("DOMContentLoaded", function () {
+  // Verification timeframes dropdown handler
+  const verificationSelect = document.getElementById("verificationSelect");
+  const timeframeResult = document.getElementById("timeframeResult");
+  const selectedTimeframe = document.getElementById("selectedTimeframe");
+  if (verificationSelect) {
+    verificationSelect.addEventListener("change", function () {
+      const selectedValue = this.value;
+      if (selectedValue) {
+        selectedTimeframe.textContent = selectedValue;
+        timeframeResult.classList.remove("hidden");
+      } else {
+        timeframeResult.classList.add("hidden");
+      }
+    });
+  }
+  // Job Seeker Form Handler
+  const jobSeekerForm = document.getElementById("jobSeekerForm");
+  if (jobSeekerForm) {
+    jobSeekerForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const formData = new FormData(jobSeekerForm);
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
 <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
 <div class="flex justify-between items-center mb-4">
 <h3 class="text-xl font-bold">Registration Submitted</h3>
@@ -119,86 +120,94 @@ modal.innerHTML = `
 </div>
 </div>
 `;
-document.body.appendChild(modal);
-jobSeekerForm.reset();
-});
-}
-// Category cards functionality
-const categoryCards = document.querySelectorAll('.category-card');
-function updateApplicantCount(element) {
-if (!element || !element.dataset) return;
-const min = parseInt(element.dataset.min) || 0;
-const max = parseInt(element.dataset.max) || 100;
-const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
-element.textContent = `${randomCount} Applicants`;
-}
-function updateSubcategoryCount(element) {
-if (!element || !element.closest('.subcategory-item')) return;
-const item = element.closest('.subcategory-item');
-const min = parseInt(item.dataset.min) || 0;
-const max = parseInt(item.dataset.max) || 100;
-const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
-element.textContent = `${randomCount}`;
-}
-function initializeCounts() {
-document.querySelectorAll('.applicant-count').forEach(updateApplicantCount);
-document.querySelectorAll('.subcategory-count').forEach(updateSubcategoryCount);
-}
-function updateAllCounts() {
-document.querySelectorAll('.applicant-count').forEach(element => {
-if (!element || !element.dataset) return;
-const currentCount = parseInt(element.textContent) || 0;
-const min = parseInt(element.dataset.min) || 0;
-const max = parseInt(element.dataset.max) || 100;
-const change = Math.floor(Math.random() * 3) - 1;
-const newCount = Math.min(Math.max(currentCount + change, min), max);
-element.textContent = `${newCount} Applicants`;
-});
-document.querySelectorAll('.subcategory-count').forEach(element => {
-if (!element || !element.closest('.subcategory-item')) return;
-const item = element.closest('.subcategory-item');
-const currentCount = parseInt(element.textContent) || 0;
-const min = parseInt(item.dataset.min) || 0;
-const max = parseInt(item.dataset.max) || 100;
-const change = Math.floor(Math.random() * 3) - 1;
-const newCount = Math.min(Math.max(currentCount + change, min), max);
-element.textContent = `${newCount}`;
-});
-}
-// Category card click handlers
-if (categoryCards) {
-categoryCards.forEach(card => {
-if (!card) return;
-card.addEventListener('click', function() {
-const content = this.querySelector('.category-content');
-if (content) {
-const isExpanded = !content.classList.contains('hidden');
-document.querySelectorAll('.category-content').forEach(c => {
-if (c !== content) {
-c.classList.add('hidden');
-c.closest('.category-card')?.classList.remove('shadow-lg', 'bg-gray-50');
-}
-});
-content.classList.toggle('hidden');
-this.classList.toggle('shadow-lg');
-this.classList.toggle('bg-gray-50');
-if (!isExpanded) {
-this.scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
-}
-});
-});
-}
-// Subcategory item click handlers
-document.querySelectorAll('.subcategory-item').forEach(item => {
-if (!item) return;
-item.addEventListener('click', function(e) {
-e.stopPropagation();
-const categoryName = this.querySelector('.font-medium')?.textContent || 'Category';
-const applicants = this.querySelector('.subcategory-count')?.textContent || '0';
-const modal = document.createElement('div');
-modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-modal.innerHTML = `
+      document.body.appendChild(modal);
+      jobSeekerForm.reset();
+    });
+  }
+  // Category cards functionality
+  const categoryCards = document.querySelectorAll(".category-card");
+  function updateApplicantCount(element) {
+    if (!element || !element.dataset) return;
+    const min = parseInt(element.dataset.min) || 0;
+    const max = parseInt(element.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount} Applicants`;
+  }
+  function updateSubcategoryCount(element) {
+    if (!element || !element.closest(".subcategory-item")) return;
+    const item = element.closest(".subcategory-item");
+    const min = parseInt(item.dataset.min) || 0;
+    const max = parseInt(item.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount}`;
+  }
+  function initializeCounts() {
+    document.querySelectorAll(".applicant-count").forEach(updateApplicantCount);
+    document
+      .querySelectorAll(".subcategory-count")
+      .forEach(updateSubcategoryCount);
+  }
+  function updateAllCounts() {
+    document.querySelectorAll(".applicant-count").forEach((element) => {
+      if (!element || !element.dataset) return;
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(element.dataset.min) || 0;
+      const max = parseInt(element.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount} Applicants`;
+    });
+    document.querySelectorAll(".subcategory-count").forEach((element) => {
+      if (!element || !element.closest(".subcategory-item")) return;
+      const item = element.closest(".subcategory-item");
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(item.dataset.min) || 0;
+      const max = parseInt(item.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount}`;
+    });
+  }
+  // Category card click handlers
+  if (categoryCards) {
+    categoryCards.forEach((card) => {
+      if (!card) return;
+      card.addEventListener("click", function () {
+        const content = this.querySelector(".category-content");
+        if (content) {
+          const isExpanded = !content.classList.contains("hidden");
+          document.querySelectorAll(".category-content").forEach((c) => {
+            if (c !== content) {
+              c.classList.add("hidden");
+              c.closest(".category-card")?.classList.remove(
+                "shadow-lg",
+                "bg-gray-50",
+              );
+            }
+          });
+          content.classList.toggle("hidden");
+          this.classList.toggle("shadow-lg");
+          this.classList.toggle("bg-gray-50");
+          if (!isExpanded) {
+            this.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+        }
+      });
+    });
+  }
+  // Subcategory item click handlers
+  document.querySelectorAll(".subcategory-item").forEach((item) => {
+    if (!item) return;
+    item.addEventListener("click", function (e) {
+      e.stopPropagation();
+      const categoryName =
+        this.querySelector(".font-medium")?.textContent || "Category";
+      const applicants =
+        this.querySelector(".subcategory-count")?.textContent || "0";
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
 <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
 <div class="flex justify-between items-center mb-4">
 <h3 class="text-xl font-bold">${categoryName}</h3>
@@ -212,55 +221,57 @@ modal.innerHTML = `
 </div>
 </div>
 `;
-document.body.appendChild(modal);
-});
-});
-// Mobile navigation
-const mobileMenuButton = document.getElementById('mobile-menu-button');
-const mobileMenuClose = document.getElementById('mobile-menu-close');
-const mobileNav = document.getElementById('mobile-nav');
-if (mobileMenuButton && mobileMenuClose && mobileNav) {
-const mobileNavLinks = mobileNav.querySelectorAll('a');
-function toggleMobileMenu() {
-const isOpen = mobileNav.classList.contains('translate-x-0');
-mobileNav.classList.toggle('translate-x-0');
-mobileNav.classList.toggle('translate-x-full');
-document.body.style.overflow = isOpen ? '' : 'hidden';
-}
-mobileMenuButton.addEventListener('click', toggleMobileMenu);
-mobileMenuClose.addEventListener('click', toggleMobileMenu);
-if (mobileNavLinks) {
-mobileNavLinks.forEach(link => {
-if (!link) return;
-link.addEventListener('click', toggleMobileMenu);
-});
-}
-}
-// FAQ toggles
-const faqToggles = document.querySelectorAll('.faq-toggle');
-if (faqToggles) {
-faqToggles.forEach(toggle => {
-if (!toggle) return;
-toggle.addEventListener('click', function(e) {
-e.preventDefault();
-const content = this.nextElementSibling;
-const icon = this.querySelector('.faq-icon');
-if (content && icon) {
-content.classList.toggle('hidden');
-const isExpanded = !content.classList.contains('hidden');
-icon.className = isExpanded ? 'faq-icon ri-arrow-up-s-line' : 'faq-icon ri-arrow-down-s-line';
-this.setAttribute('aria-expanded', isExpanded);
-}
-});
-});
-}
-// Initialize counts and start updates
-initializeCounts();
-const updateInterval = setInterval(updateAllCounts, 5000);
-// Clean up interval on page unload
-window.addEventListener('unload', () => {
-clearInterval(updateInterval);
-});
+      document.body.appendChild(modal);
+    });
+  });
+  // Mobile navigation
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenuClose = document.getElementById("mobile-menu-close");
+  const mobileNav = document.getElementById("mobile-nav");
+  if (mobileMenuButton && mobileMenuClose && mobileNav) {
+    const mobileNavLinks = mobileNav.querySelectorAll("a");
+    function toggleMobileMenu() {
+      const isOpen = mobileNav.classList.contains("translate-x-0");
+      mobileNav.classList.toggle("translate-x-0");
+      mobileNav.classList.toggle("translate-x-full");
+      document.body.style.overflow = isOpen ? "" : "hidden";
+    }
+    mobileMenuButton.addEventListener("click", toggleMobileMenu);
+    mobileMenuClose.addEventListener("click", toggleMobileMenu);
+    if (mobileNavLinks) {
+      mobileNavLinks.forEach((link) => {
+        if (!link) return;
+        link.addEventListener("click", toggleMobileMenu);
+      });
+    }
+  }
+  // FAQ toggles
+  const faqToggles = document.querySelectorAll(".faq-toggle");
+  if (faqToggles) {
+    faqToggles.forEach((toggle) => {
+      if (!toggle) return;
+      toggle.addEventListener("click", function (e) {
+        e.preventDefault();
+        const content = this.nextElementSibling;
+        const icon = this.querySelector(".faq-icon");
+        if (content && icon) {
+          content.classList.toggle("hidden");
+          const isExpanded = !content.classList.contains("hidden");
+          icon.className = isExpanded
+            ? "faq-icon ri-arrow-up-s-line"
+            : "faq-icon ri-arrow-down-s-line";
+          this.setAttribute("aria-expanded", isExpanded);
+        }
+      });
+    });
+  }
+  // Initialize counts and start updates
+  initializeCounts();
+  const updateInterval = setInterval(updateAllCounts, 5000);
+  // Clean up interval on page unload
+  window.addEventListener("unload", () => {
+    clearInterval(updateInterval);
+  });
 });
 </script>
 <!-- Announcement Bar with Categories Carousel -->
@@ -406,7 +417,7 @@ animation-play-state: paused;
 </div>
 </div>
 <div class="mt-10">
-<a href="User-Registration-Page.html" class="w-full bg-primary text-white px-6 py-4 !rounded-button font-bold hover:bg-red-600 transition-colors flex items-center justify-center gap-2">
+<a href="register.html" class="w-full bg-primary text-white px-6 py-4 !rounded-button font-bold hover:bg-red-600 transition-colors flex items-center justify-center gap-2">
 <span>Register as Job Seeker</span>
 <i class="ri-arrow-right-line"></i>
 </a>
@@ -449,7 +460,7 @@ animation-play-state: paused;
 </div>
 </div>
 <div class="mt-10">
-<a href="User-Registration-Page.html" class="w-full bg-black text-white px-6 py-4 !rounded-button font-bold hover:bg-gray-800 transition-colors flex items-center justify-center gap-2">
+<a href="register.html" class="w-full bg-black text-white px-6 py-4 !rounded-button font-bold hover:bg-gray-800 transition-colors flex items-center justify-center gap-2">
 <span>Register as Employer</span>
 <i class="ri-arrow-right-line"></i>
 </a>
@@ -460,32 +471,32 @@ animation-play-state: paused;
 </div>
 </section>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-
-// Verification timeframes dropdown handler
-const verificationSelect = document.getElementById('verificationSelect');
-const timeframeResult = document.getElementById('timeframeResult');
-const selectedTimeframe = document.getElementById('selectedTimeframe');
-if (verificationSelect) {
-verificationSelect.addEventListener('change', function() {
-const selectedValue = this.value;
-if (selectedValue) {
-selectedTimeframe.textContent = selectedValue;
-timeframeResult.classList.remove('hidden');
-} else {
-timeframeResult.classList.add('hidden');
-}
-});
-}
-// Job Seeker Form Handler
-const jobSeekerForm = document.getElementById('jobSeekerForm');
-if (jobSeekerForm) {
-jobSeekerForm.addEventListener('submit', function(e) {
-e.preventDefault();
-const formData = new FormData(jobSeekerForm);
-const modal = document.createElement('div');
-modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-modal.innerHTML = `
+document.addEventListener("DOMContentLoaded", function () {
+  // Verification timeframes dropdown handler
+  const verificationSelect = document.getElementById("verificationSelect");
+  const timeframeResult = document.getElementById("timeframeResult");
+  const selectedTimeframe = document.getElementById("selectedTimeframe");
+  if (verificationSelect) {
+    verificationSelect.addEventListener("change", function () {
+      const selectedValue = this.value;
+      if (selectedValue) {
+        selectedTimeframe.textContent = selectedValue;
+        timeframeResult.classList.remove("hidden");
+      } else {
+        timeframeResult.classList.add("hidden");
+      }
+    });
+  }
+  // Job Seeker Form Handler
+  const jobSeekerForm = document.getElementById("jobSeekerForm");
+  if (jobSeekerForm) {
+    jobSeekerForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const formData = new FormData(jobSeekerForm);
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
 <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
 <div class="flex justify-between items-center mb-4">
 <h3 class="text-xl font-bold">Registration Submitted</h3>
@@ -499,86 +510,94 @@ modal.innerHTML = `
 </div>
 </div>
 `;
-document.body.appendChild(modal);
-jobSeekerForm.reset();
-});
-}
-// Category cards functionality
-const categoryCards = document.querySelectorAll('.category-card');
-function updateApplicantCount(element) {
-if (!element || !element.dataset) return;
-const min = parseInt(element.dataset.min) || 0;
-const max = parseInt(element.dataset.max) || 100;
-const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
-element.textContent = `${randomCount} Applicants`;
-}
-function updateSubcategoryCount(element) {
-if (!element || !element.closest('.subcategory-item')) return;
-const item = element.closest('.subcategory-item');
-const min = parseInt(item.dataset.min) || 0;
-const max = parseInt(item.dataset.max) || 100;
-const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
-element.textContent = `${randomCount}`;
-}
-function initializeCounts() {
-document.querySelectorAll('.applicant-count').forEach(updateApplicantCount);
-document.querySelectorAll('.subcategory-count').forEach(updateSubcategoryCount);
-}
-function updateAllCounts() {
-document.querySelectorAll('.applicant-count').forEach(element => {
-if (!element || !element.dataset) return;
-const currentCount = parseInt(element.textContent) || 0;
-const min = parseInt(element.dataset.min) || 0;
-const max = parseInt(element.dataset.max) || 100;
-const change = Math.floor(Math.random() * 3) - 1;
-const newCount = Math.min(Math.max(currentCount + change, min), max);
-element.textContent = `${newCount} Applicants`;
-});
-document.querySelectorAll('.subcategory-count').forEach(element => {
-if (!element || !element.closest('.subcategory-item')) return;
-const item = element.closest('.subcategory-item');
-const currentCount = parseInt(element.textContent) || 0;
-const min = parseInt(item.dataset.min) || 0;
-const max = parseInt(item.dataset.max) || 100;
-const change = Math.floor(Math.random() * 3) - 1;
-const newCount = Math.min(Math.max(currentCount + change, min), max);
-element.textContent = `${newCount}`;
-});
-}
-// Category card click handlers
-if (categoryCards) {
-categoryCards.forEach(card => {
-if (!card) return;
-card.addEventListener('click', function() {
-const content = this.querySelector('.category-content');
-if (content) {
-const isExpanded = !content.classList.contains('hidden');
-document.querySelectorAll('.category-content').forEach(c => {
-if (c !== content) {
-c.classList.add('hidden');
-c.closest('.category-card')?.classList.remove('shadow-lg', 'bg-gray-50');
-}
-});
-content.classList.toggle('hidden');
-this.classList.toggle('shadow-lg');
-this.classList.toggle('bg-gray-50');
-if (!isExpanded) {
-this.scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
-}
-});
-});
-}
-// Subcategory item click handlers
-document.querySelectorAll('.subcategory-item').forEach(item => {
-if (!item) return;
-item.addEventListener('click', function(e) {
-e.stopPropagation();
-const categoryName = this.querySelector('.font-medium')?.textContent || 'Category';
-const applicants = this.querySelector('.subcategory-count')?.textContent || '0';
-const modal = document.createElement('div');
-modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-modal.innerHTML = `
+      document.body.appendChild(modal);
+      jobSeekerForm.reset();
+    });
+  }
+  // Category cards functionality
+  const categoryCards = document.querySelectorAll(".category-card");
+  function updateApplicantCount(element) {
+    if (!element || !element.dataset) return;
+    const min = parseInt(element.dataset.min) || 0;
+    const max = parseInt(element.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount} Applicants`;
+  }
+  function updateSubcategoryCount(element) {
+    if (!element || !element.closest(".subcategory-item")) return;
+    const item = element.closest(".subcategory-item");
+    const min = parseInt(item.dataset.min) || 0;
+    const max = parseInt(item.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount}`;
+  }
+  function initializeCounts() {
+    document.querySelectorAll(".applicant-count").forEach(updateApplicantCount);
+    document
+      .querySelectorAll(".subcategory-count")
+      .forEach(updateSubcategoryCount);
+  }
+  function updateAllCounts() {
+    document.querySelectorAll(".applicant-count").forEach((element) => {
+      if (!element || !element.dataset) return;
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(element.dataset.min) || 0;
+      const max = parseInt(element.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount} Applicants`;
+    });
+    document.querySelectorAll(".subcategory-count").forEach((element) => {
+      if (!element || !element.closest(".subcategory-item")) return;
+      const item = element.closest(".subcategory-item");
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(item.dataset.min) || 0;
+      const max = parseInt(item.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount}`;
+    });
+  }
+  // Category card click handlers
+  if (categoryCards) {
+    categoryCards.forEach((card) => {
+      if (!card) return;
+      card.addEventListener("click", function () {
+        const content = this.querySelector(".category-content");
+        if (content) {
+          const isExpanded = !content.classList.contains("hidden");
+          document.querySelectorAll(".category-content").forEach((c) => {
+            if (c !== content) {
+              c.classList.add("hidden");
+              c.closest(".category-card")?.classList.remove(
+                "shadow-lg",
+                "bg-gray-50",
+              );
+            }
+          });
+          content.classList.toggle("hidden");
+          this.classList.toggle("shadow-lg");
+          this.classList.toggle("bg-gray-50");
+          if (!isExpanded) {
+            this.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+        }
+      });
+    });
+  }
+  // Subcategory item click handlers
+  document.querySelectorAll(".subcategory-item").forEach((item) => {
+    if (!item) return;
+    item.addEventListener("click", function (e) {
+      e.stopPropagation();
+      const categoryName =
+        this.querySelector(".font-medium")?.textContent || "Category";
+      const applicants =
+        this.querySelector(".subcategory-count")?.textContent || "0";
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
 <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
 <div class="flex justify-between items-center mb-4">
 <h3 class="text-xl font-bold">${categoryName}</h3>
@@ -592,55 +611,57 @@ modal.innerHTML = `
 </div>
 </div>
 `;
-document.body.appendChild(modal);
-});
-});
-// Mobile navigation
-const mobileMenuButton = document.getElementById('mobile-menu-button');
-const mobileMenuClose = document.getElementById('mobile-menu-close');
-const mobileNav = document.getElementById('mobile-nav');
-if (mobileMenuButton && mobileMenuClose && mobileNav) {
-const mobileNavLinks = mobileNav.querySelectorAll('a');
-function toggleMobileMenu() {
-const isOpen = mobileNav.classList.contains('translate-x-0');
-mobileNav.classList.toggle('translate-x-0');
-mobileNav.classList.toggle('translate-x-full');
-document.body.style.overflow = isOpen ? '' : 'hidden';
-}
-mobileMenuButton.addEventListener('click', toggleMobileMenu);
-mobileMenuClose.addEventListener('click', toggleMobileMenu);
-if (mobileNavLinks) {
-mobileNavLinks.forEach(link => {
-if (!link) return;
-link.addEventListener('click', toggleMobileMenu);
-});
-}
-}
-// FAQ toggles
-const faqToggles = document.querySelectorAll('.faq-toggle');
-if (faqToggles) {
-faqToggles.forEach(toggle => {
-if (!toggle) return;
-toggle.addEventListener('click', function(e) {
-e.preventDefault();
-const content = this.nextElementSibling;
-const icon = this.querySelector('.faq-icon');
-if (content && icon) {
-content.classList.toggle('hidden');
-const isExpanded = !content.classList.contains('hidden');
-icon.className = isExpanded ? 'faq-icon ri-arrow-up-s-line' : 'faq-icon ri-arrow-down-s-line';
-this.setAttribute('aria-expanded', isExpanded);
-}
-});
-});
-}
-// Initialize counts and start updates
-initializeCounts();
-const updateInterval = setInterval(updateAllCounts, 5000);
-// Clean up interval on page unload
-window.addEventListener('unload', () => {
-clearInterval(updateInterval);
-});
+      document.body.appendChild(modal);
+    });
+  });
+  // Mobile navigation
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenuClose = document.getElementById("mobile-menu-close");
+  const mobileNav = document.getElementById("mobile-nav");
+  if (mobileMenuButton && mobileMenuClose && mobileNav) {
+    const mobileNavLinks = mobileNav.querySelectorAll("a");
+    function toggleMobileMenu() {
+      const isOpen = mobileNav.classList.contains("translate-x-0");
+      mobileNav.classList.toggle("translate-x-0");
+      mobileNav.classList.toggle("translate-x-full");
+      document.body.style.overflow = isOpen ? "" : "hidden";
+    }
+    mobileMenuButton.addEventListener("click", toggleMobileMenu);
+    mobileMenuClose.addEventListener("click", toggleMobileMenu);
+    if (mobileNavLinks) {
+      mobileNavLinks.forEach((link) => {
+        if (!link) return;
+        link.addEventListener("click", toggleMobileMenu);
+      });
+    }
+  }
+  // FAQ toggles
+  const faqToggles = document.querySelectorAll(".faq-toggle");
+  if (faqToggles) {
+    faqToggles.forEach((toggle) => {
+      if (!toggle) return;
+      toggle.addEventListener("click", function (e) {
+        e.preventDefault();
+        const content = this.nextElementSibling;
+        const icon = this.querySelector(".faq-icon");
+        if (content && icon) {
+          content.classList.toggle("hidden");
+          const isExpanded = !content.classList.contains("hidden");
+          icon.className = isExpanded
+            ? "faq-icon ri-arrow-up-s-line"
+            : "faq-icon ri-arrow-down-s-line";
+          this.setAttribute("aria-expanded", isExpanded);
+        }
+      });
+    });
+  }
+  // Initialize counts and start updates
+  initializeCounts();
+  const updateInterval = setInterval(updateAllCounts, 5000);
+  // Clean up interval on page unload
+  window.addEventListener("unload", () => {
+    clearInterval(updateInterval);
+  });
 });
 </script>
 <!-- Verification Tiers -->
@@ -797,7 +818,7 @@ clearInterval(updateInterval);
 </li>
 </ul>
 <div class="text-center">
-<a href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/d75ce9b6-d6a6-4e5c-9dea-a70df2e13263" data-readdy="true" class="bg-black text-white px-6 py-3 !rounded-button inline-block font-bold hover:bg-gray-800 w-full whitespace-nowrap">Buy Small Bundle</a>
+<a href="register.html" class="bg-black text-white px-6 py-3 !rounded-button inline-block font-bold hover:bg-gray-800 w-full whitespace-nowrap">Buy Small Bundle</a>
 </div>
 </div>
 </div>
@@ -832,7 +853,7 @@ clearInterval(updateInterval);
 </li>
 </ul>
 <div class="text-center">
-<a href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/d75ce9b6-d6a6-4e5c-9dea-a70df2e13263" data-readdy="true" class="bg-black text-white px-6 py-3 !rounded-button inline-block font-bold hover:bg-gray-800 w-full whitespace-nowrap">Buy Medium Bundle</a>
+<a href="register.html" class="bg-black text-white px-6 py-3 !rounded-button inline-block font-bold hover:bg-gray-800 w-full whitespace-nowrap">Buy Medium Bundle</a>
 </div>
 </div>
 </div>
@@ -867,7 +888,7 @@ clearInterval(updateInterval);
 </li>
 </ul>
 <div class="text-center">
-<a href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/d75ce9b6-d6a6-4e5c-9dea-a70df2e13263" data-readdy="true" class="bg-black text-white px-6 py-3 !rounded-button inline-block font-bold hover:bg-gray-800 w-full whitespace-nowrap">Buy Large Bundle</a>
+<a href="register.html" class="bg-black text-white px-6 py-3 !rounded-button inline-block font-bold hover:bg-gray-800 w-full whitespace-nowrap">Buy Large Bundle</a>
 </div>
 </div>
 </div>
@@ -876,32 +897,32 @@ clearInterval(updateInterval);
 </div>
 </section>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-
-// Verification timeframes dropdown handler
-const verificationSelect = document.getElementById('verificationSelect');
-const timeframeResult = document.getElementById('timeframeResult');
-const selectedTimeframe = document.getElementById('selectedTimeframe');
-if (verificationSelect) {
-verificationSelect.addEventListener('change', function() {
-const selectedValue = this.value;
-if (selectedValue) {
-selectedTimeframe.textContent = selectedValue;
-timeframeResult.classList.remove('hidden');
-} else {
-timeframeResult.classList.add('hidden');
-}
-});
-}
-// Job Seeker Form Handler
-const jobSeekerForm = document.getElementById('jobSeekerForm');
-if (jobSeekerForm) {
-jobSeekerForm.addEventListener('submit', function(e) {
-e.preventDefault();
-const formData = new FormData(jobSeekerForm);
-const modal = document.createElement('div');
-modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-modal.innerHTML = `
+document.addEventListener("DOMContentLoaded", function () {
+  // Verification timeframes dropdown handler
+  const verificationSelect = document.getElementById("verificationSelect");
+  const timeframeResult = document.getElementById("timeframeResult");
+  const selectedTimeframe = document.getElementById("selectedTimeframe");
+  if (verificationSelect) {
+    verificationSelect.addEventListener("change", function () {
+      const selectedValue = this.value;
+      if (selectedValue) {
+        selectedTimeframe.textContent = selectedValue;
+        timeframeResult.classList.remove("hidden");
+      } else {
+        timeframeResult.classList.add("hidden");
+      }
+    });
+  }
+  // Job Seeker Form Handler
+  const jobSeekerForm = document.getElementById("jobSeekerForm");
+  if (jobSeekerForm) {
+    jobSeekerForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const formData = new FormData(jobSeekerForm);
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
 <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
 <div class="flex justify-between items-center mb-4">
 <h3 class="text-xl font-bold">Registration Submitted</h3>
@@ -915,86 +936,94 @@ modal.innerHTML = `
 </div>
 </div>
 `;
-document.body.appendChild(modal);
-jobSeekerForm.reset();
-});
-}
-// Category cards functionality
-const categoryCards = document.querySelectorAll('.category-card');
-function updateApplicantCount(element) {
-if (!element || !element.dataset) return;
-const min = parseInt(element.dataset.min) || 0;
-const max = parseInt(element.dataset.max) || 100;
-const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
-element.textContent = `${randomCount} Applicants`;
-}
-function updateSubcategoryCount(element) {
-if (!element || !element.closest('.subcategory-item')) return;
-const item = element.closest('.subcategory-item');
-const min = parseInt(item.dataset.min) || 0;
-const max = parseInt(item.dataset.max) || 100;
-const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
-element.textContent = `${randomCount}`;
-}
-function initializeCounts() {
-document.querySelectorAll('.applicant-count').forEach(updateApplicantCount);
-document.querySelectorAll('.subcategory-count').forEach(updateSubcategoryCount);
-}
-function updateAllCounts() {
-document.querySelectorAll('.applicant-count').forEach(element => {
-if (!element || !element.dataset) return;
-const currentCount = parseInt(element.textContent) || 0;
-const min = parseInt(element.dataset.min) || 0;
-const max = parseInt(element.dataset.max) || 100;
-const change = Math.floor(Math.random() * 3) - 1;
-const newCount = Math.min(Math.max(currentCount + change, min), max);
-element.textContent = `${newCount} Applicants`;
-});
-document.querySelectorAll('.subcategory-count').forEach(element => {
-if (!element || !element.closest('.subcategory-item')) return;
-const item = element.closest('.subcategory-item');
-const currentCount = parseInt(element.textContent) || 0;
-const min = parseInt(item.dataset.min) || 0;
-const max = parseInt(item.dataset.max) || 100;
-const change = Math.floor(Math.random() * 3) - 1;
-const newCount = Math.min(Math.max(currentCount + change, min), max);
-element.textContent = `${newCount}`;
-});
-}
-// Category card click handlers
-if (categoryCards) {
-categoryCards.forEach(card => {
-if (!card) return;
-card.addEventListener('click', function() {
-const content = this.querySelector('.category-content');
-if (content) {
-const isExpanded = !content.classList.contains('hidden');
-document.querySelectorAll('.category-content').forEach(c => {
-if (c !== content) {
-c.classList.add('hidden');
-c.closest('.category-card')?.classList.remove('shadow-lg', 'bg-gray-50');
-}
-});
-content.classList.toggle('hidden');
-this.classList.toggle('shadow-lg');
-this.classList.toggle('bg-gray-50');
-if (!isExpanded) {
-this.scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
-}
-});
-});
-}
-// Subcategory item click handlers
-document.querySelectorAll('.subcategory-item').forEach(item => {
-if (!item) return;
-item.addEventListener('click', function(e) {
-e.stopPropagation();
-const categoryName = this.querySelector('.font-medium')?.textContent || 'Category';
-const applicants = this.querySelector('.subcategory-count')?.textContent || '0';
-const modal = document.createElement('div');
-modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-modal.innerHTML = `
+      document.body.appendChild(modal);
+      jobSeekerForm.reset();
+    });
+  }
+  // Category cards functionality
+  const categoryCards = document.querySelectorAll(".category-card");
+  function updateApplicantCount(element) {
+    if (!element || !element.dataset) return;
+    const min = parseInt(element.dataset.min) || 0;
+    const max = parseInt(element.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount} Applicants`;
+  }
+  function updateSubcategoryCount(element) {
+    if (!element || !element.closest(".subcategory-item")) return;
+    const item = element.closest(".subcategory-item");
+    const min = parseInt(item.dataset.min) || 0;
+    const max = parseInt(item.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount}`;
+  }
+  function initializeCounts() {
+    document.querySelectorAll(".applicant-count").forEach(updateApplicantCount);
+    document
+      .querySelectorAll(".subcategory-count")
+      .forEach(updateSubcategoryCount);
+  }
+  function updateAllCounts() {
+    document.querySelectorAll(".applicant-count").forEach((element) => {
+      if (!element || !element.dataset) return;
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(element.dataset.min) || 0;
+      const max = parseInt(element.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount} Applicants`;
+    });
+    document.querySelectorAll(".subcategory-count").forEach((element) => {
+      if (!element || !element.closest(".subcategory-item")) return;
+      const item = element.closest(".subcategory-item");
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(item.dataset.min) || 0;
+      const max = parseInt(item.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount}`;
+    });
+  }
+  // Category card click handlers
+  if (categoryCards) {
+    categoryCards.forEach((card) => {
+      if (!card) return;
+      card.addEventListener("click", function () {
+        const content = this.querySelector(".category-content");
+        if (content) {
+          const isExpanded = !content.classList.contains("hidden");
+          document.querySelectorAll(".category-content").forEach((c) => {
+            if (c !== content) {
+              c.classList.add("hidden");
+              c.closest(".category-card")?.classList.remove(
+                "shadow-lg",
+                "bg-gray-50",
+              );
+            }
+          });
+          content.classList.toggle("hidden");
+          this.classList.toggle("shadow-lg");
+          this.classList.toggle("bg-gray-50");
+          if (!isExpanded) {
+            this.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+        }
+      });
+    });
+  }
+  // Subcategory item click handlers
+  document.querySelectorAll(".subcategory-item").forEach((item) => {
+    if (!item) return;
+    item.addEventListener("click", function (e) {
+      e.stopPropagation();
+      const categoryName =
+        this.querySelector(".font-medium")?.textContent || "Category";
+      const applicants =
+        this.querySelector(".subcategory-count")?.textContent || "0";
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
 <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
 <div class="flex justify-between items-center mb-4">
 <h3 class="text-xl font-bold">${categoryName}</h3>
@@ -1008,55 +1037,773 @@ modal.innerHTML = `
 </div>
 </div>
 `;
-document.body.appendChild(modal);
+      document.body.appendChild(modal);
+    });
+  });
+  // Mobile navigation
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenuClose = document.getElementById("mobile-menu-close");
+  const mobileNav = document.getElementById("mobile-nav");
+  if (mobileMenuButton && mobileMenuClose && mobileNav) {
+    const mobileNavLinks = mobileNav.querySelectorAll("a");
+    function toggleMobileMenu() {
+      const isOpen = mobileNav.classList.contains("translate-x-0");
+      mobileNav.classList.toggle("translate-x-0");
+      mobileNav.classList.toggle("translate-x-full");
+      document.body.style.overflow = isOpen ? "" : "hidden";
+    }
+    mobileMenuButton.addEventListener("click", toggleMobileMenu);
+    mobileMenuClose.addEventListener("click", toggleMobileMenu);
+    if (mobileNavLinks) {
+      mobileNavLinks.forEach((link) => {
+        if (!link) return;
+        link.addEventListener("click", toggleMobileMenu);
+      });
+    }
+  }
+  // FAQ toggles
+  const faqToggles = document.querySelectorAll(".faq-toggle");
+  if (faqToggles) {
+    faqToggles.forEach((toggle) => {
+      if (!toggle) return;
+      toggle.addEventListener("click", function (e) {
+        e.preventDefault();
+        const content = this.nextElementSibling;
+        const icon = this.querySelector(".faq-icon");
+        if (content && icon) {
+          content.classList.toggle("hidden");
+          const isExpanded = !content.classList.contains("hidden");
+          icon.className = isExpanded
+            ? "faq-icon ri-arrow-up-s-line"
+            : "faq-icon ri-arrow-down-s-line";
+          this.setAttribute("aria-expanded", isExpanded);
+        }
+      });
+    });
+  }
+  // Initialize counts and start updates
+  initializeCounts();
+  const updateInterval = setInterval(updateAllCounts, 5000);
+  // Clean up interval on page unload
+  window.addEventListener("unload", () => {
+    clearInterval(updateInterval);
+  });
 });
-});
-// Mobile navigation
-const mobileMenuButton = document.getElementById('mobile-menu-button');
-const mobileMenuClose = document.getElementById('mobile-menu-close');
-const mobileNav = document.getElementById('mobile-nav');
-if (mobileMenuButton && mobileMenuClose && mobileNav) {
-const mobileNavLinks = mobileNav.querySelectorAll('a');
-function toggleMobileMenu() {
-const isOpen = mobileNav.classList.contains('translate-x-0');
-mobileNav.classList.toggle('translate-x-0');
-mobileNav.classList.toggle('translate-x-full');
-document.body.style.overflow = isOpen ? '' : 'hidden';
-}
-mobileMenuButton.addEventListener('click', toggleMobileMenu);
-mobileMenuClose.addEventListener('click', toggleMobileMenu);
-if (mobileNavLinks) {
-mobileNavLinks.forEach(link => {
-if (!link) return;
-link.addEventListener('click', toggleMobileMenu);
-});
-}
-}
-// FAQ toggles
-const faqToggles = document.querySelectorAll('.faq-toggle');
-if (faqToggles) {
-faqToggles.forEach(toggle => {
-if (!toggle) return;
-toggle.addEventListener('click', function(e) {
-e.preventDefault();
-const content = this.nextElementSibling;
-const icon = this.querySelector('.faq-icon');
-if (content && icon) {
-content.classList.toggle('hidden');
-const isExpanded = !content.classList.contains('hidden');
-icon.className = isExpanded ? 'faq-icon ri-arrow-up-s-line' : 'faq-icon ri-arrow-down-s-line';
-this.setAttribute('aria-expanded', isExpanded);
-}
-});
-});
-}
-// Initialize counts and start updates
-initializeCounts();
-const updateInterval = setInterval(updateAllCounts, 5000);
-// Clean up interval on page unload
-window.addEventListener('unload', () => {
-clearInterval(updateInterval);
-});
+</script>
+<!-- Job Categories -->
+<section id="job-categories" class="py-16 bg-gray-50">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl font-bold text-center mb-4">Job Categories</h2>
+<p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">Find verified workers across these key sectors</p>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8" id="job-categories-grid">
+<div class="category-card bg-white rounded-lg shadow-sm p-6 hover:shadow-lg transition-all duration-300">
+<details class="group">
+<summary class="flex flex-col items-center text-center cursor-pointer list-none">
+<div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/10 transition-colors">
+<i class="ri-steering-2-line text-primary ri-2x"></i>
+</div>
+<h3 class="text-lg font-bold mb-3">Drivers</h3>
+<p class="text-sm text-gray-600 leading-relaxed">Code 8–14, PDP, Forklift</p>
+</summary>
+<div class="mt-6 pt-4 border-t border-gray-200">
+<ul class="text-left space-y-4">
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Truck Drivers (Code 14)</p>
+<p class="text-sm text-gray-500">Long-haul, containers, heavy vehicles</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Delivery Drivers (Code 10)</p>
+<p class="text-sm text-gray-500">Local deliveries, courier/cargo</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Forklift Operators</p>
+<p class="text-sm text-gray-500">Loading/unloading, stock control</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Taxi Drivers (Code 8)</p>
+<p class="text-sm text-gray-500">Ride-hailing, private hire</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Bus Drivers (PDP)</p>
+<p class="text-sm text-gray-500">Public transit, school/tour buses</p>
+</div>
+</li>
+</ul>
+</div>
+</details>
+</div>
+<!-- Domestic Workers -->
+<div class="category-card bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow">
+<details class="group">
+<summary class="flex flex-col items-center text-center cursor-pointer list-none">
+<div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/10 transition-colors">
+<i class="ri-home-gear-line text-primary ri-2x"></i>
+</div>
+<h3 class="font-bold mb-2">Domestic Workers</h3>
+<p class="text-sm text-gray-600">Housekeepers, Gardeners, Cleaners</p>
+</summary>
+<div class="mt-6 pt-4 border-t border-gray-200">
+<ul class="text-left space-y-4">
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 ri-lg"></i>
+<div>
+<p class="font-medium">Live-in Housekeepers</p>
+<p class="text-sm text-gray-500">Full household management, cleaning, cooking</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 ri-lg"></i>
+<div>
+<p class="font-medium">Part-time Cleaners</p>
+<p class="text-sm text-gray-500">Regular house cleaning, laundry services</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 ri-lg"></i>
+<div>
+<p class="font-medium">Gardeners</p>
+<p class="text-sm text-gray-500">Garden maintenance, landscaping</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 ri-lg"></i>
+<div>
+<p class="font-medium">House Maintenance</p>
+<p class="text-sm text-gray-500">Basic repairs, property upkeep</p>
+</div>
+</li>
+</ul>
+</div>
+</details>
+</div>
+<!-- Child & Elder Care -->
+<div class="category-card bg-white rounded-lg shadow-sm p-6 hover:shadow-lg transition-all duration-300">
+<details class="group">
+<summary class="flex flex-col items-center text-center cursor-pointer list-none">
+<div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/10 transition-colors">
+<i class="ri-parent-line text-primary ri-2x"></i>
+</div>
+<h3 class="text-lg font-bold mb-3">Child & Elder Care</h3>
+<p class="text-sm text-gray-600 leading-relaxed">Nannies, Au Pairs, Carers</p>
+</summary>
+<div class="mt-6 pt-4 border-t border-gray-200">
+<ul class="text-left space-y-4">
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Nanny</p>
+<p class="text-sm text-gray-500">Childcare, meals, activities, homework (exp req)</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Au Pair</p>
+<p class="text-sm text-gray-500">Part-time care & driving (licence, clean record)</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Elder Care Assistant</p>
+<p class="text-sm text-gray-500">Daily aid & basic medical (health exp pref)</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Special Needs Carer</p>
+<p class="text-sm text-gray-500">Support for disabilities (qualifications)</p>
+</div>
+</li>
+</ul>
+</div>
+</details>
+</div>
+<div class="category-card bg-white rounded-lg shadow-sm p-6 hover:shadow-lg transition-all duration-300">
+<details class="group">
+<summary class="flex flex-col items-center text-center cursor-pointer list-none">
+<div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/10 transition-colors">
+<i class="ri-shield-check-line text-primary ri-2x"></i>
+</div>
+<h3 class="text-lg font-bold mb-3">Security</h3>
+<p class="text-sm text-gray-600 leading-relaxed">PSIRA guards</p>
+</summary>
+<div class="mt-6 pt-4 border-t border-gray-200">
+<ul class="text-left space-y-4">
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Armed Response Officers</p>
+<p class="text-sm text-gray-500">Armed security, emergency response, patrol duties</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Retail Security Guards</p>
+<p class="text-sm text-gray-500">Store security, loss prevention, customer screening</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Access Control Officers</p>
+<p class="text-sm text-gray-500">Building security, visitor management, surveillance</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Event Security Personnel</p>
+<p class="text-sm text-gray-500">Crowd control, VIP protection, event safety</p>
+</div>
+</li>
+</ul>
+</div>
+</details>
+</div>
+<div class="category-card bg-white rounded-lg shadow-sm p-6 hover:shadow-lg transition-all duration-300">
+<details class="group">
+<summary class="flex flex-col items-center text-center cursor-pointer list-none">
+<div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/10 transition-colors">
+<i class="ri-tools-line text-primary ri-2x"></i>
+</div>
+<h3 class="text-lg font-bold mb-3">Trades</h3>
+<p class="text-sm text-gray-600 leading-relaxed">Plumbers, Electricians, Welders</p>
+</summary>
+<div class="mt-6 pt-4 border-t border-gray-200">
+<ul class="text-left space-y-4">
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Plumber</p>
+<p class="text-sm text-gray-500">Install & repair plumbing (trade cert req)</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Electrician</p>
+<p class="text-sm text-gray-500">Electrical install & maintenance (wireman licence)</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Welder</p>
+<p class="text-sm text-gray-500">Metal fabrication & welding (cert & exp req)</p>
+</div>
+</li>
+</ul>
+</div>
+</details>
+</div>
+<div class="category-card bg-white rounded-lg shadow-sm p-6 hover:shadow-lg transition-all duration-300">
+<details class="group">
+<summary class="flex flex-col items-center text-center cursor-pointer list-none">
+<div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/10 transition-colors">
+<i class="ri-hard-hat-line text-primary ri-2x"></i>
+</div>
+<h3 class="text-lg font-bold mb-3">Construction</h3>
+<p class="text-sm text-gray-600 leading-relaxed">Tilers, Labourers, Bricklayers & Painters</p>
+</summary>
+<div class="mt-6 pt-4 border-t border-gray-200">
+<ul class="text-left space-y-4">
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Tiler</p>
+<p class="text-sm text-gray-500">Floor & wall tiling (res & comm)</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Construction Labourer</p>
+<p class="text-sm text-gray-500">Site help, materials, groundwork</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Bricklayer</p>
+<p class="text-sm text-gray-500">Build/repair walls, chimneys, brickwork</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Painter</p>
+<p class="text-sm text-gray-500">Int & ext painting, prep, finish</p>
+</div>
+</li>
+</ul>
+</div>
+</details>
+</div>
+<!-- Retail & Hospitality -->
+<div class="category-card bg-white rounded-lg shadow-sm p-6 hover:shadow-lg transition-all duration-300">
+<details class="group">
+<summary class="flex flex-col items-center text-center cursor-pointer list-none">
+<div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/10 transition-colors">
+<i class="ri-store-2-line text-primary ri-2x"></i>
+</div>
+<h3 class="text-lg font-bold mb-3">Retail & Hospitality</h3>
+<p class="text-sm text-gray-600 leading-relaxed">Cashiers, Kitchen Staff, Waiter/Waitress, Store Assistant</p>
+</summary>
+<div class="mt-6 pt-4 border-t border-gray-200">
+<ul class="text-left space-y-4">
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Cashier</p>
+<p class="text-sm text-gray-500">Operate tills & payments (math skills)</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Kitchen Staff</p>
+<p class="text-sm text-gray-500">Food prep & kitchen aid (food safety)</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Waiter/Waitress</p>
+<p class="text-sm text-gray-500">Table service, customer care (exp pref)</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Store Assistant</p>
+<p class="text-sm text-gray-500">Stock mgmt & customer service (retail exp)</p>
+</div>
+</li>
+</ul>
+</div>
+</details>
+</div>
+<div class="category-card bg-white rounded-lg shadow-sm p-6 hover:shadow-lg transition-all duration-300">
+<details class="group">
+<summary class="flex flex-col items-center text-center cursor-pointer list-none">
+<div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/10 transition-colors">
+<i class="ri-file-list-3-line text-primary ri-2x"></i>
+</div>
+<h3 class="text-lg font-bold mb-3">Admin</h3>
+<p class="text-sm text-gray-600 leading-relaxed">Receptionists, Filing Clerks, Data Entry Clerk, Office Assistant</p>
+</summary>
+<div class="mt-6 pt-4 border-t border-gray-200">
+<ul class="text-left space-y-4">
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Receptionist</p>
+<p class="text-sm text-gray-500">Front desk & visitor help (customer service req)</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Filing Clerk</p>
+<p class="text-sm text-gray-500">Document organisation (detail-oriented)</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Data Entry Clerk</p>
+<p class="text-sm text-gray-500">Accurate input, basic PC skills</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Office Assistant</p>
+<p class="text-sm text-gray-500">General office support & admin</p>
+</div>
+</li>
+</ul>
+</div>
+</details>
+</div>
+<div class="category-card bg-white rounded-lg shadow-sm p-6 hover:shadow-lg transition-all duration-300">
+<details class="group">
+<summary class="flex flex-col items-center text-center cursor-pointer list-none">
+<div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/10 transition-colors">
+<i class="ri-archive-line text-primary ri-2x"></i>
+</div>
+<h3 class="text-lg font-bold mb-3">Warehouse</h3>
+<p class="text-sm text-gray-600 leading-relaxed">Loaders, Inventory</p>
+</summary>
+<div class="mt-6 pt-4 border-t border-gray-200">
+<ul class="text-left space-y-4">
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Warehouse Loader</p>
+<p class="text-sm text-gray-500">Load & unload trucks (physical strength)</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Inventory Controller</p>
+<p class="text-sm text-gray-500">Stock mgmt & tracking (computer skills)</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Picker/Packer</p>
+<p class="text-sm text-gray-500">Order pick-pack & packaging (detail focus)</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Receiving Clerk</p>
+<p class="text-sm text-gray-500">Process incoming shipments & docs</p>
+</div>
+</li>
+</ul>
+</div>
+</details>
+</div>
+<div class="category-card bg-white rounded-lg shadow-sm p-6 hover:shadow-lg transition-all duration-300">
+<details class="group">
+<summary class="flex flex-col items-center text-center cursor-pointer list-none">
+<div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/10 transition-colors">
+<i class="ri-calendar-event-line text-primary ri-2x"></i>
+</div>
+<h3 class="text-lg font-bold mb-3">Event Staff</h3>
+<p class="text-sm text-gray-600 leading-relaxed">Ushers, Brand Ambassadors, Event Coordinator, Promotional Staff</p>
+</summary>
+<div class="mt-6 pt-4 border-t border-gray-200">
+<ul class="text-left space-y-4">
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Event Usher</p>
+<p class="text-sm text-gray-500">Guest help & seating (customer service)</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Brand Ambassador</p>
+<p class="text-sm text-gray-500">Product promo & engagement (sales exp pref)</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Event Coordinator</p>
+<p class="text-sm text-gray-500">On-site event mgmt & staff coordination</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Promotional Staff</p>
+<p class="text-sm text-gray-500">Sampling & promo activities</p>
+</div>
+</li>
+</ul>
+</div>
+</details>
+</div>
+<div class="category-card bg-white rounded-lg shadow-sm p-6 hover:shadow-lg transition-all duration-300">
+<details class="group">
+<summary class="flex flex-col items-center text-center cursor-pointer list-none">
+<div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/10 transition-colors">
+<i class="ri-truck-line text-primary ri-2x"></i>
+</div>
+<h3 class="text-lg font-bold mb-3">Truck Mechanics</h3>
+<p class="text-sm text-gray-600 leading-relaxed">Fleet, Diesel Technicians</p>
+</summary>
+<div class="mt-6 pt-4 border-t border-gray-200">
+<ul class="text-left space-y-4">
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Diesel Mechanic</p>
+<p class="text-sm text-gray-500">Heavy vehicle repair & maintenance (trade cert req)</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Fleet Technician</p>
+<p class="text-sm text-gray-500">Preventive maintenance & repairs for truck fleets</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Auto Electrician</p>
+<p class="text-sm text-gray-500">Diagnose & fix electrical systems (special cert req)</p>
+</div>
+</li>
+</ul>
+</div>
+</details>
+</div>
+<!-- Agriculture & Farm Work -->
+<div class="category-card bg-white rounded-lg shadow-sm p-6 hover:shadow-lg transition-all duration-300">
+<details class="group">
+<summary class="flex flex-col items-center text-center cursor-pointer list-none">
+<div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/10 transition-colors">
+<i class="ri-plant-line text-primary ri-2x"></i>
+</div>
+<h3 class="text-lg font-bold mb-3">Agriculture & Farm Work</h3>
+<p class="text-sm text-gray-600 leading-relaxed">Seasonal Labour, Fruit Pickers, Livestock Assistants</p>
+</summary>
+<div class="mt-6 pt-4 border-t border-gray-200">
+<ul class="text-left space-y-4">
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Fruit Picker</p>
+<p class="text-sm text-gray-500">Seasonal fruit harvest (physical stamina)</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Livestock Assistant</p>
+<p class="text-sm text-gray-500">Animal care & feeding (livestock exp pref)</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Farm Worker</p>
+<p class="text-sm text-gray-500">General farm upkeep & crop care</p>
+</div>
+</li>
+<li class="flex items-center text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+<i class="ri-checkbox-circle-line text-primary mr-3 icon-small"></i>
+<div>
+<p class="font-medium">Greenhouse Worker</p>
+<p class="text-sm text-gray-500">Plant care & greenhouse maintenance</p>
+</div>
+</li>
+</ul>
+</div>
+</details>
+</div>
+</div>
+</div>
+</section>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // Verification timeframes dropdown handler
+  const verificationSelect = document.getElementById("verificationSelect");
+  const timeframeResult = document.getElementById("timeframeResult");
+  const selectedTimeframe = document.getElementById("selectedTimeframe");
+  if (verificationSelect) {
+    verificationSelect.addEventListener("change", function () {
+      const selectedValue = this.value;
+      if (selectedValue) {
+        selectedTimeframe.textContent = selectedValue;
+        timeframeResult.classList.remove("hidden");
+      } else {
+        timeframeResult.classList.add("hidden");
+      }
+    });
+  }
+  // Job Seeker Form Handler
+  const jobSeekerForm = document.getElementById("jobSeekerForm");
+  if (jobSeekerForm) {
+    jobSeekerForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const formData = new FormData(jobSeekerForm);
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">Registration Submitted</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">Thank you for registering with Verify! We'll review your information and contact you within 24-48 hours to complete your verification process.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+      document.body.appendChild(modal);
+      jobSeekerForm.reset();
+    });
+  }
+  // Category cards functionality
+  const categoryCards = document.querySelectorAll(".category-card");
+  function updateApplicantCount(element) {
+    if (!element || !element.dataset) return;
+    const min = parseInt(element.dataset.min) || 0;
+    const max = parseInt(element.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount} Applicants`;
+  }
+  function updateSubcategoryCount(element) {
+    if (!element || !element.closest(".subcategory-item")) return;
+    const item = element.closest(".subcategory-item");
+    const min = parseInt(item.dataset.min) || 0;
+    const max = parseInt(item.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount}`;
+  }
+  function initializeCounts() {
+    document.querySelectorAll(".applicant-count").forEach(updateApplicantCount);
+    document
+      .querySelectorAll(".subcategory-count")
+      .forEach(updateSubcategoryCount);
+  }
+  function updateAllCounts() {
+    document.querySelectorAll(".applicant-count").forEach((element) => {
+      if (!element || !element.dataset) return;
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(element.dataset.min) || 0;
+      const max = parseInt(element.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount} Applicants`;
+    });
+    document.querySelectorAll(".subcategory-count").forEach((element) => {
+      if (!element || !element.closest(".subcategory-item")) return;
+      const item = element.closest(".subcategory-item");
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(item.dataset.min) || 0;
+      const max = parseInt(item.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount}`;
+    });
+  }
+  // Category card click handlers
+  if (categoryCards) {
+    categoryCards.forEach((card) => {
+      if (!card) return;
+      card.addEventListener("click", function () {
+        const content = this.querySelector(".category-content");
+        if (content) {
+          const isExpanded = !content.classList.contains("hidden");
+          document.querySelectorAll(".category-content").forEach((c) => {
+            if (c !== content) {
+              c.classList.add("hidden");
+              c.closest(".category-card")?.classList.remove(
+                "shadow-lg",
+                "bg-gray-50",
+              );
+            }
+          });
+          content.classList.toggle("hidden");
+          this.classList.toggle("shadow-lg");
+          this.classList.toggle("bg-gray-50");
+          if (!isExpanded) {
+            this.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+        }
+      });
+    });
+  }
+  // Subcategory item click handlers
+  document.querySelectorAll(".subcategory-item").forEach((item) => {
+    if (!item) return;
+    item.addEventListener("click", function (e) {
+      e.stopPropagation();
+      const categoryName =
+        this.querySelector(".font-medium")?.textContent || "Category";
+      const applicants =
+        this.querySelector(".subcategory-count")?.textContent || "0";
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">${categoryName}</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">There are currently <span class="text-primary font-bold">${applicants}</span> verified applicants available for this position.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+      document.body.appendChild(modal);
+    });
+  });
+  // Mobile navigation
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenuClose = document.getElementById("mobile-menu-close");
+  const mobileNav = document.getElementById("mobile-nav");
+  if (mobileMenuButton && mobileMenuClose && mobileNav) {
+    const mobileNavLinks = mobileNav.querySelectorAll("a");
+    function toggleMobileMenu() {
+      const isOpen = mobileNav.classList.contains("translate-x-0");
+      mobileNav.classList.toggle("translate-x-0");
+      mobileNav.classList.toggle("translate-x-full");
+      document.body.style.overflow = isOpen ? "" : "hidden";
+    }
+    mobileMenuButton.addEventListener("click", toggleMobileMenu);
+    mobileMenuClose.addEventListener("click", toggleMobileMenu);
+    if (mobileNavLinks) {
+      mobileNavLinks.forEach((link) => {
+        if (!link) return;
+        link.addEventListener("click", toggleMobileMenu);
+      });
+    }
+  }
+  // FAQ toggles
+  const faqToggles = document.querySelectorAll(".faq-toggle");
+  if (faqToggles) {
+    faqToggles.forEach((toggle) => {
+      if (!toggle) return;
+      toggle.addEventListener("click", function (e) {
+        e.preventDefault();
+        const content = this.nextElementSibling;
+        const icon = this.querySelector(".faq-icon");
+        if (content && icon) {
+          content.classList.toggle("hidden");
+          const isExpanded = !content.classList.contains("hidden");
+          icon.className = isExpanded
+            ? "faq-icon ri-arrow-up-s-line"
+            : "faq-icon ri-arrow-down-s-line";
+          this.setAttribute("aria-expanded", isExpanded);
+        }
+      });
+    });
+  }
+  // Initialize counts and start updates
+  initializeCounts();
+  const updateInterval = setInterval(updateAllCounts, 5000);
+  // Clean up interval on page unload
+  window.addEventListener("unload", () => {
+    clearInterval(updateInterval);
+  });
 });
 </script>
 <!-- Blog Section -->
@@ -1067,7 +1814,7 @@ clearInterval(updateInterval);
 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 <!-- Blog Post 1 -->
 <div class="bg-white rounded-lg shadow-sm overflow-hidden group hover:shadow-lg transition-all duration-300">
-<a href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/82e001d0-e7a6-42e8-a61c-e79520528ff5" data-readdy="true" class="block">
+<a href="security-guard-success-story.html" class="block">
 <img src="https://readdy.ai/api/search-image?query=happy%2520south%2520african%2520security%2520guard%2520in%2520uniform%2520standing%2520proudly%2520at%2520workplace%2C%2520professional%2520environment%2C%2520natural%2520lighting%2C%2520genuine%2520smile&width=600&height=400&seq=blog1&orientation=landscape" alt="Security Guard Success Story" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
 <div class="p-6">
 <div class="flex items-center gap-4 mb-4">
@@ -1103,7 +1850,7 @@ Read Full Story
 </div>
 <!-- Blog Post 2 -->
 <div class="bg-white rounded-lg shadow-sm overflow-hidden group hover:shadow-lg transition-all duration-300">
-<a href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/82e001d0-e7a6-42e8-a61c-e79520528ff5" data-readdy="true" class="block">
+<a href="article-why-verified-domestic-workers.html" class="block">
 <img src="https://readdy.ai/api/search-image?query=south%2520african%2520domestic%2520worker%2520smiling%2520while%2520working%2520in%2520modern%2520kitchen%2C%2520natural%2520lighting%2C%2520professional%2520setting%2C%2520warm%2520atmosphere&width=600&height=400&seq=blog2&orientation=landscape" alt="Domestic Worker Story" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
 <div class="p-6">
 <div class="flex items-center gap-4 mb-4">
@@ -1139,7 +1886,7 @@ Read Full Story
 </div>
 <!-- Blog Post 3 -->
 <div class="bg-white rounded-lg shadow-sm overflow-hidden group hover:shadow-lg transition-all duration-300">
-<a href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/82e001d0-e7a6-42e8-a61c-e79520528ff5" data-readdy="true" class="block">
+<a href="how-verification-helped-driver-land-logistics-job.html" class="block">
 <img src="https://readdy.ai/api/search-image?query=south%2520african%2520truck%2520driver%2520standing%2520next%2520to%2520delivery%2520truck%2C%2520professional%2520setting%2C%2520daylight%2C%2520confident%2520pose&width=600&height=400&seq=blog3&orientation=landscape" alt="Driver Success Story" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
 <div class="p-6">
 <div class="flex items-center gap-4 mb-4">
@@ -1175,7 +1922,7 @@ Read Full Story
 </div>
 <!-- Blog Post 4 -->
 <div class="bg-white rounded-lg shadow-sm overflow-hidden group hover:shadow-lg transition-all duration-300">
-<a href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/82e001d0-e7a6-42e8-a61c-e79520528ff5" data-readdy="true" class="block">
+<a href="tips-for-better-job-interviews.html" class="block">
 <img src="https://readdy.ai/api/search-image?query=south%2520african%2520skilled%2520electrician%2520working%2520on%2520electrical%2520panel%2C%2520professional%2520tools%2C%2520safety%2520equipment%2C%2520focused%2520expression&width=600&height=400&seq=blog4&orientation=landscape" alt="Electrician Success Story" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
 <div class="p-6">
 <div class="flex items-center gap-4 mb-4">
@@ -1211,7 +1958,7 @@ Read Full Story
 </div>
 <!-- Blog Post 5 -->
 <div class="bg-white rounded-lg shadow-sm overflow-hidden group hover:shadow-lg transition-all duration-300">
-<a href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/82e001d0-e7a6-42e8-a61c-e79520528ff5" data-readdy="true" class="block">
+<a href="how-verify-boosted-domestic-worker-career.html" class="block">
 <img src="https://readdy.ai/api/search-image?query=south%2520african%2520childcare%2520professional%2520engaging%2520with%2520children%2520in%2520bright%2520playroom%2C%2520educational%2520toys%2C%2520safe%2520environment%2C%2520natural%2520lighting&width=600&height=400&seq=blog5&orientation=landscape" alt="Childcare Success Story" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
 <div class="p-6">
 <div class="flex items-center gap-4 mb-4">
@@ -1247,7 +1994,7 @@ Read Full Story
 </div>
 <!-- Blog Post 6 -->
 <div class="bg-white rounded-lg shadow-sm overflow-hidden group hover:shadow-lg transition-all duration-300">
-<a href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/82e001d0-e7a6-42e8-a61c-e79520528ff5" data-readdy="true" class="block">
+<a href="understanding-employment-packages-in-south-africa.html" class="block">
 <img src="https://readdy.ai/api/search-image?query=south%2520african%2520retail%2520manager%2520with%2520staff%2520in%2520modern%2520store%2C%2520professional%2520attire%2C%2520positive%2520interaction%2C%2520clean%2520environment&width=600&height=400&seq=blog6&orientation=landscape" alt="Retail Success Story" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
 <div class="p-6">
 <div class="flex items-center gap-4 mb-4">
@@ -1283,7 +2030,7 @@ Read Full Story
 </div>
 </div>
 <div class="text-center mt-12">
-<a href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/7876bb0d-5339-4a58-8094-f7bd9f989dde" data-readdy="true" class="bg-primary text-white px-8 py-3 !rounded-button inline-block font-bold hover:bg-red-600">
+<a href="register.html" class="bg-primary text-white px-8 py-3 !rounded-button inline-block font-bold hover:bg-red-600">
 Get Verified Today
 </a>
 <p class="text-gray-600 mt-4">Join thousands of workers who found good jobs through Verify</p>
@@ -1308,32 +2055,32 @@ Your browser does not support the video tag.
 </div>
 </section>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-
-// Verification timeframes dropdown handler
-const verificationSelect = document.getElementById('verificationSelect');
-const timeframeResult = document.getElementById('timeframeResult');
-const selectedTimeframe = document.getElementById('selectedTimeframe');
-if (verificationSelect) {
-verificationSelect.addEventListener('change', function() {
-const selectedValue = this.value;
-if (selectedValue) {
-selectedTimeframe.textContent = selectedValue;
-timeframeResult.classList.remove('hidden');
-} else {
-timeframeResult.classList.add('hidden');
-}
-});
-}
-// Job Seeker Form Handler
-const jobSeekerForm = document.getElementById('jobSeekerForm');
-if (jobSeekerForm) {
-jobSeekerForm.addEventListener('submit', function(e) {
-e.preventDefault();
-const formData = new FormData(jobSeekerForm);
-const modal = document.createElement('div');
-modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-modal.innerHTML = `
+document.addEventListener("DOMContentLoaded", function () {
+  // Verification timeframes dropdown handler
+  const verificationSelect = document.getElementById("verificationSelect");
+  const timeframeResult = document.getElementById("timeframeResult");
+  const selectedTimeframe = document.getElementById("selectedTimeframe");
+  if (verificationSelect) {
+    verificationSelect.addEventListener("change", function () {
+      const selectedValue = this.value;
+      if (selectedValue) {
+        selectedTimeframe.textContent = selectedValue;
+        timeframeResult.classList.remove("hidden");
+      } else {
+        timeframeResult.classList.add("hidden");
+      }
+    });
+  }
+  // Job Seeker Form Handler
+  const jobSeekerForm = document.getElementById("jobSeekerForm");
+  if (jobSeekerForm) {
+    jobSeekerForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const formData = new FormData(jobSeekerForm);
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
 <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
 <div class="flex justify-between items-center mb-4">
 <h3 class="text-xl font-bold">Registration Submitted</h3>
@@ -1347,86 +2094,94 @@ modal.innerHTML = `
 </div>
 </div>
 `;
-document.body.appendChild(modal);
-jobSeekerForm.reset();
-});
-}
-// Category cards functionality
-const categoryCards = document.querySelectorAll('.category-card');
-function updateApplicantCount(element) {
-if (!element || !element.dataset) return;
-const min = parseInt(element.dataset.min) || 0;
-const max = parseInt(element.dataset.max) || 100;
-const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
-element.textContent = `${randomCount} Applicants`;
-}
-function updateSubcategoryCount(element) {
-if (!element || !element.closest('.subcategory-item')) return;
-const item = element.closest('.subcategory-item');
-const min = parseInt(item.dataset.min) || 0;
-const max = parseInt(item.dataset.max) || 100;
-const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
-element.textContent = `${randomCount}`;
-}
-function initializeCounts() {
-document.querySelectorAll('.applicant-count').forEach(updateApplicantCount);
-document.querySelectorAll('.subcategory-count').forEach(updateSubcategoryCount);
-}
-function updateAllCounts() {
-document.querySelectorAll('.applicant-count').forEach(element => {
-if (!element || !element.dataset) return;
-const currentCount = parseInt(element.textContent) || 0;
-const min = parseInt(element.dataset.min) || 0;
-const max = parseInt(element.dataset.max) || 100;
-const change = Math.floor(Math.random() * 3) - 1;
-const newCount = Math.min(Math.max(currentCount + change, min), max);
-element.textContent = `${newCount} Applicants`;
-});
-document.querySelectorAll('.subcategory-count').forEach(element => {
-if (!element || !element.closest('.subcategory-item')) return;
-const item = element.closest('.subcategory-item');
-const currentCount = parseInt(element.textContent) || 0;
-const min = parseInt(item.dataset.min) || 0;
-const max = parseInt(item.dataset.max) || 100;
-const change = Math.floor(Math.random() * 3) - 1;
-const newCount = Math.min(Math.max(currentCount + change, min), max);
-element.textContent = `${newCount}`;
-});
-}
-// Category card click handlers
-if (categoryCards) {
-categoryCards.forEach(card => {
-if (!card) return;
-card.addEventListener('click', function() {
-const content = this.querySelector('.category-content');
-if (content) {
-const isExpanded = !content.classList.contains('hidden');
-document.querySelectorAll('.category-content').forEach(c => {
-if (c !== content) {
-c.classList.add('hidden');
-c.closest('.category-card')?.classList.remove('shadow-lg', 'bg-gray-50');
-}
-});
-content.classList.toggle('hidden');
-this.classList.toggle('shadow-lg');
-this.classList.toggle('bg-gray-50');
-if (!isExpanded) {
-this.scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
-}
-});
-});
-}
-// Subcategory item click handlers
-document.querySelectorAll('.subcategory-item').forEach(item => {
-if (!item) return;
-item.addEventListener('click', function(e) {
-e.stopPropagation();
-const categoryName = this.querySelector('.font-medium')?.textContent || 'Category';
-const applicants = this.querySelector('.subcategory-count')?.textContent || '0';
-const modal = document.createElement('div');
-modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-modal.innerHTML = `
+      document.body.appendChild(modal);
+      jobSeekerForm.reset();
+    });
+  }
+  // Category cards functionality
+  const categoryCards = document.querySelectorAll(".category-card");
+  function updateApplicantCount(element) {
+    if (!element || !element.dataset) return;
+    const min = parseInt(element.dataset.min) || 0;
+    const max = parseInt(element.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount} Applicants`;
+  }
+  function updateSubcategoryCount(element) {
+    if (!element || !element.closest(".subcategory-item")) return;
+    const item = element.closest(".subcategory-item");
+    const min = parseInt(item.dataset.min) || 0;
+    const max = parseInt(item.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount}`;
+  }
+  function initializeCounts() {
+    document.querySelectorAll(".applicant-count").forEach(updateApplicantCount);
+    document
+      .querySelectorAll(".subcategory-count")
+      .forEach(updateSubcategoryCount);
+  }
+  function updateAllCounts() {
+    document.querySelectorAll(".applicant-count").forEach((element) => {
+      if (!element || !element.dataset) return;
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(element.dataset.min) || 0;
+      const max = parseInt(element.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount} Applicants`;
+    });
+    document.querySelectorAll(".subcategory-count").forEach((element) => {
+      if (!element || !element.closest(".subcategory-item")) return;
+      const item = element.closest(".subcategory-item");
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(item.dataset.min) || 0;
+      const max = parseInt(item.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount}`;
+    });
+  }
+  // Category card click handlers
+  if (categoryCards) {
+    categoryCards.forEach((card) => {
+      if (!card) return;
+      card.addEventListener("click", function () {
+        const content = this.querySelector(".category-content");
+        if (content) {
+          const isExpanded = !content.classList.contains("hidden");
+          document.querySelectorAll(".category-content").forEach((c) => {
+            if (c !== content) {
+              c.classList.add("hidden");
+              c.closest(".category-card")?.classList.remove(
+                "shadow-lg",
+                "bg-gray-50",
+              );
+            }
+          });
+          content.classList.toggle("hidden");
+          this.classList.toggle("shadow-lg");
+          this.classList.toggle("bg-gray-50");
+          if (!isExpanded) {
+            this.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+        }
+      });
+    });
+  }
+  // Subcategory item click handlers
+  document.querySelectorAll(".subcategory-item").forEach((item) => {
+    if (!item) return;
+    item.addEventListener("click", function (e) {
+      e.stopPropagation();
+      const categoryName =
+        this.querySelector(".font-medium")?.textContent || "Category";
+      const applicants =
+        this.querySelector(".subcategory-count")?.textContent || "0";
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
 <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
 <div class="flex justify-between items-center mb-4">
 <h3 class="text-xl font-bold">${categoryName}</h3>
@@ -1440,55 +2195,57 @@ modal.innerHTML = `
 </div>
 </div>
 `;
-document.body.appendChild(modal);
-});
-});
-// Mobile navigation
-const mobileMenuButton = document.getElementById('mobile-menu-button');
-const mobileMenuClose = document.getElementById('mobile-menu-close');
-const mobileNav = document.getElementById('mobile-nav');
-if (mobileMenuButton && mobileMenuClose && mobileNav) {
-const mobileNavLinks = mobileNav.querySelectorAll('a');
-function toggleMobileMenu() {
-const isOpen = mobileNav.classList.contains('translate-x-0');
-mobileNav.classList.toggle('translate-x-0');
-mobileNav.classList.toggle('translate-x-full');
-document.body.style.overflow = isOpen ? '' : 'hidden';
-}
-mobileMenuButton.addEventListener('click', toggleMobileMenu);
-mobileMenuClose.addEventListener('click', toggleMobileMenu);
-if (mobileNavLinks) {
-mobileNavLinks.forEach(link => {
-if (!link) return;
-link.addEventListener('click', toggleMobileMenu);
-});
-}
-}
-// FAQ toggles
-const faqToggles = document.querySelectorAll('.faq-toggle');
-if (faqToggles) {
-faqToggles.forEach(toggle => {
-if (!toggle) return;
-toggle.addEventListener('click', function(e) {
-e.preventDefault();
-const content = this.nextElementSibling;
-const icon = this.querySelector('.faq-icon');
-if (content && icon) {
-content.classList.toggle('hidden');
-const isExpanded = !content.classList.contains('hidden');
-icon.className = isExpanded ? 'faq-icon ri-arrow-up-s-line' : 'faq-icon ri-arrow-down-s-line';
-this.setAttribute('aria-expanded', isExpanded);
-}
-});
-});
-}
-// Initialize counts and start updates
-initializeCounts();
-const updateInterval = setInterval(updateAllCounts, 5000);
-// Clean up interval on page unload
-window.addEventListener('unload', () => {
-clearInterval(updateInterval);
-});
+      document.body.appendChild(modal);
+    });
+  });
+  // Mobile navigation
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenuClose = document.getElementById("mobile-menu-close");
+  const mobileNav = document.getElementById("mobile-nav");
+  if (mobileMenuButton && mobileMenuClose && mobileNav) {
+    const mobileNavLinks = mobileNav.querySelectorAll("a");
+    function toggleMobileMenu() {
+      const isOpen = mobileNav.classList.contains("translate-x-0");
+      mobileNav.classList.toggle("translate-x-0");
+      mobileNav.classList.toggle("translate-x-full");
+      document.body.style.overflow = isOpen ? "" : "hidden";
+    }
+    mobileMenuButton.addEventListener("click", toggleMobileMenu);
+    mobileMenuClose.addEventListener("click", toggleMobileMenu);
+    if (mobileNavLinks) {
+      mobileNavLinks.forEach((link) => {
+        if (!link) return;
+        link.addEventListener("click", toggleMobileMenu);
+      });
+    }
+  }
+  // FAQ toggles
+  const faqToggles = document.querySelectorAll(".faq-toggle");
+  if (faqToggles) {
+    faqToggles.forEach((toggle) => {
+      if (!toggle) return;
+      toggle.addEventListener("click", function (e) {
+        e.preventDefault();
+        const content = this.nextElementSibling;
+        const icon = this.querySelector(".faq-icon");
+        if (content && icon) {
+          content.classList.toggle("hidden");
+          const isExpanded = !content.classList.contains("hidden");
+          icon.className = isExpanded
+            ? "faq-icon ri-arrow-up-s-line"
+            : "faq-icon ri-arrow-down-s-line";
+          this.setAttribute("aria-expanded", isExpanded);
+        }
+      });
+    });
+  }
+  // Initialize counts and start updates
+  initializeCounts();
+  const updateInterval = setInterval(updateAllCounts, 5000);
+  // Clean up interval on page unload
+  window.addEventListener("unload", () => {
+    clearInterval(updateInterval);
+  });
 });
 </script>
 <!-- Testimonials -->
@@ -1597,35 +2354,34 @@ Employers
 </div>
 </div>
 </div>
-</div>
-</div>
-</div>
 </section>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-// Verification timeframes dropdown handler
-const verificationSelect = document.getElementById('verificationSelect');
-const timeframeResult = document.getElementById('timeframeResult');
-const selectedTimeframe = document.getElementById('selectedTimeframe');
-if (verificationSelect) {
-verificationSelect.addEventListener('change', function() {
-const selectedValue = this.value;
-if (selectedValue) {
-selectedTimeframe.textContent = selectedValue;
-timeframeResult.classList.remove('hidden');
-} else {
-timeframeResult.classList.add('hidden');
-}
-});
-}
-// Job Seeker Form Handler
-if (jobSeekerForm) {
-jobSeekerForm.addEventListener('submit', function(e) {
-e.preventDefault();
-const formData = new FormData(jobSeekerForm);
-const modal = document.createElement('div');
-modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-modal.innerHTML = `
+document.addEventListener("DOMContentLoaded", function () {
+  // Verification timeframes dropdown handler
+  const verificationSelect = document.getElementById("verificationSelect");
+  const timeframeResult = document.getElementById("timeframeResult");
+  const selectedTimeframe = document.getElementById("selectedTimeframe");
+  if (verificationSelect) {
+    verificationSelect.addEventListener("change", function () {
+      const selectedValue = this.value;
+      if (selectedValue) {
+        selectedTimeframe.textContent = selectedValue;
+        timeframeResult.classList.remove("hidden");
+      } else {
+        timeframeResult.classList.add("hidden");
+      }
+    });
+  }
+  // Job Seeker Form Handler
+  const jobSeekerForm = document.getElementById("jobSeekerForm");
+  if (jobSeekerForm) {
+    jobSeekerForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const formData = new FormData(jobSeekerForm);
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
 <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
 <div class="flex justify-between items-center mb-4">
 <h3 class="text-xl font-bold">Registration Submitted</h3>
@@ -1639,86 +2395,94 @@ modal.innerHTML = `
 </div>
 </div>
 `;
-document.body.appendChild(modal);
-jobSeekerForm.reset();
-});
-}
-// Category cards functionality
-const categoryCards = document.querySelectorAll('.category-card');
-function updateApplicantCount(element) {
-if (!element || !element.dataset) return;
-const min = parseInt(element.dataset.min) || 0;
-const max = parseInt(element.dataset.max) || 100;
-const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
-element.textContent = `${randomCount} Applicants`;
-}
-function updateSubcategoryCount(element) {
-if (!element || !element.closest('.subcategory-item')) return;
-const item = element.closest('.subcategory-item');
-const min = parseInt(item.dataset.min) || 0;
-const max = parseInt(item.dataset.max) || 100;
-const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
-element.textContent = `${randomCount}`;
-}
-function initializeCounts() {
-document.querySelectorAll('.applicant-count').forEach(updateApplicantCount);
-document.querySelectorAll('.subcategory-count').forEach(updateSubcategoryCount);
-}
-function updateAllCounts() {
-document.querySelectorAll('.applicant-count').forEach(element => {
-if (!element || !element.dataset) return;
-const currentCount = parseInt(element.textContent) || 0;
-const min = parseInt(element.dataset.min) || 0;
-const max = parseInt(element.dataset.max) || 100;
-const change = Math.floor(Math.random() * 3) - 1;
-const newCount = Math.min(Math.max(currentCount + change, min), max);
-element.textContent = `${newCount} Applicants`;
-});
-document.querySelectorAll('.subcategory-count').forEach(element => {
-if (!element || !element.closest('.subcategory-item')) return;
-const item = element.closest('.subcategory-item');
-const currentCount = parseInt(element.textContent) || 0;
-const min = parseInt(item.dataset.min) || 0;
-const max = parseInt(item.dataset.max) || 100;
-const change = Math.floor(Math.random() * 3) - 1;
-const newCount = Math.min(Math.max(currentCount + change, min), max);
-element.textContent = `${newCount}`;
-});
-}
-// Category card click handlers
-if (categoryCards) {
-categoryCards.forEach(card => {
-if (!card) return;
-card.addEventListener('click', function() {
-const content = this.querySelector('.category-content');
-if (content) {
-const isExpanded = !content.classList.contains('hidden');
-document.querySelectorAll('.category-content').forEach(c => {
-if (c !== content) {
-c.classList.add('hidden');
-c.closest('.category-card')?.classList.remove('shadow-lg', 'bg-gray-50');
-}
-});
-content.classList.toggle('hidden');
-this.classList.toggle('shadow-lg');
-this.classList.toggle('bg-gray-50');
-if (!isExpanded) {
-this.scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
-}
-});
-});
-}
-// Subcategory item click handlers
-document.querySelectorAll('.subcategory-item').forEach(item => {
-if (!item) return;
-item.addEventListener('click', function(e) {
-e.stopPropagation();
-const categoryName = this.querySelector('.font-medium')?.textContent || 'Category';
-const applicants = this.querySelector('.subcategory-count')?.textContent || '0';
-const modal = document.createElement('div');
-modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-modal.innerHTML = `
+      document.body.appendChild(modal);
+      jobSeekerForm.reset();
+    });
+  }
+  // Category cards functionality
+  const categoryCards = document.querySelectorAll(".category-card");
+  function updateApplicantCount(element) {
+    if (!element || !element.dataset) return;
+    const min = parseInt(element.dataset.min) || 0;
+    const max = parseInt(element.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount} Applicants`;
+  }
+  function updateSubcategoryCount(element) {
+    if (!element || !element.closest(".subcategory-item")) return;
+    const item = element.closest(".subcategory-item");
+    const min = parseInt(item.dataset.min) || 0;
+    const max = parseInt(item.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount}`;
+  }
+  function initializeCounts() {
+    document.querySelectorAll(".applicant-count").forEach(updateApplicantCount);
+    document
+      .querySelectorAll(".subcategory-count")
+      .forEach(updateSubcategoryCount);
+  }
+  function updateAllCounts() {
+    document.querySelectorAll(".applicant-count").forEach((element) => {
+      if (!element || !element.dataset) return;
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(element.dataset.min) || 0;
+      const max = parseInt(element.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount} Applicants`;
+    });
+    document.querySelectorAll(".subcategory-count").forEach((element) => {
+      if (!element || !element.closest(".subcategory-item")) return;
+      const item = element.closest(".subcategory-item");
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(item.dataset.min) || 0;
+      const max = parseInt(item.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount}`;
+    });
+  }
+  // Category card click handlers
+  if (categoryCards) {
+    categoryCards.forEach((card) => {
+      if (!card) return;
+      card.addEventListener("click", function () {
+        const content = this.querySelector(".category-content");
+        if (content) {
+          const isExpanded = !content.classList.contains("hidden");
+          document.querySelectorAll(".category-content").forEach((c) => {
+            if (c !== content) {
+              c.classList.add("hidden");
+              c.closest(".category-card")?.classList.remove(
+                "shadow-lg",
+                "bg-gray-50",
+              );
+            }
+          });
+          content.classList.toggle("hidden");
+          this.classList.toggle("shadow-lg");
+          this.classList.toggle("bg-gray-50");
+          if (!isExpanded) {
+            this.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+        }
+      });
+    });
+  }
+  // Subcategory item click handlers
+  document.querySelectorAll(".subcategory-item").forEach((item) => {
+    if (!item) return;
+    item.addEventListener("click", function (e) {
+      e.stopPropagation();
+      const categoryName =
+        this.querySelector(".font-medium")?.textContent || "Category";
+      const applicants =
+        this.querySelector(".subcategory-count")?.textContent || "0";
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
 <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
 <div class="flex justify-between items-center mb-4">
 <h3 class="text-xl font-bold">${categoryName}</h3>
@@ -1732,55 +2496,57 @@ modal.innerHTML = `
 </div>
 </div>
 `;
-document.body.appendChild(modal);
-});
-});
-// Mobile navigation
-const mobileMenuButton = document.getElementById('mobile-menu-button');
-const mobileMenuClose = document.getElementById('mobile-menu-close');
-const mobileNav = document.getElementById('mobile-nav');
-if (mobileMenuButton && mobileMenuClose && mobileNav) {
-const mobileNavLinks = mobileNav.querySelectorAll('a');
-function toggleMobileMenu() {
-const isOpen = mobileNav.classList.contains('translate-x-0');
-mobileNav.classList.toggle('translate-x-0');
-mobileNav.classList.toggle('translate-x-full');
-document.body.style.overflow = isOpen ? '' : 'hidden';
-}
-mobileMenuButton.addEventListener('click', toggleMobileMenu);
-mobileMenuClose.addEventListener('click', toggleMobileMenu);
-if (mobileNavLinks) {
-mobileNavLinks.forEach(link => {
-if (!link) return;
-link.addEventListener('click', toggleMobileMenu);
-});
-}
-}
-// FAQ toggles
-const faqToggles = document.querySelectorAll('.faq-toggle');
-if (faqToggles) {
-faqToggles.forEach(toggle => {
-if (!toggle) return;
-toggle.addEventListener('click', function(e) {
-e.preventDefault();
-const content = this.nextElementSibling;
-const icon = this.querySelector('.faq-icon');
-if (content && icon) {
-content.classList.toggle('hidden');
-const isExpanded = !content.classList.contains('hidden');
-icon.className = isExpanded ? 'faq-icon ri-arrow-up-s-line' : 'faq-icon ri-arrow-down-s-line';
-this.setAttribute('aria-expanded', isExpanded);
-}
-});
-});
-}
-// Initialize counts and start updates
-initializeCounts();
-const updateInterval = setInterval(updateAllCounts, 5000);
-// Clean up interval on page unload
-window.addEventListener('unload', () => {
-clearInterval(updateInterval);
-});
+      document.body.appendChild(modal);
+    });
+  });
+  // Mobile navigation
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenuClose = document.getElementById("mobile-menu-close");
+  const mobileNav = document.getElementById("mobile-nav");
+  if (mobileMenuButton && mobileMenuClose && mobileNav) {
+    const mobileNavLinks = mobileNav.querySelectorAll("a");
+    function toggleMobileMenu() {
+      const isOpen = mobileNav.classList.contains("translate-x-0");
+      mobileNav.classList.toggle("translate-x-0");
+      mobileNav.classList.toggle("translate-x-full");
+      document.body.style.overflow = isOpen ? "" : "hidden";
+    }
+    mobileMenuButton.addEventListener("click", toggleMobileMenu);
+    mobileMenuClose.addEventListener("click", toggleMobileMenu);
+    if (mobileNavLinks) {
+      mobileNavLinks.forEach((link) => {
+        if (!link) return;
+        link.addEventListener("click", toggleMobileMenu);
+      });
+    }
+  }
+  // FAQ toggles
+  const faqToggles = document.querySelectorAll(".faq-toggle");
+  if (faqToggles) {
+    faqToggles.forEach((toggle) => {
+      if (!toggle) return;
+      toggle.addEventListener("click", function (e) {
+        e.preventDefault();
+        const content = this.nextElementSibling;
+        const icon = this.querySelector(".faq-icon");
+        if (content && icon) {
+          content.classList.toggle("hidden");
+          const isExpanded = !content.classList.contains("hidden");
+          icon.className = isExpanded
+            ? "faq-icon ri-arrow-up-s-line"
+            : "faq-icon ri-arrow-down-s-line";
+          this.setAttribute("aria-expanded", isExpanded);
+        }
+      });
+    });
+  }
+  // Initialize counts and start updates
+  initializeCounts();
+  const updateInterval = setInterval(updateAllCounts, 5000);
+  // Clean up interval on page unload
+  window.addEventListener("unload", () => {
+    clearInterval(updateInterval);
+  });
 });
 </script>
 <!-- FAQ Section -->
@@ -1873,32 +2639,32 @@ clearInterval(updateInterval);
 </div>
 </section>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-
-// Verification timeframes dropdown handler
-const verificationSelect = document.getElementById('verificationSelect');
-const timeframeResult = document.getElementById('timeframeResult');
-const selectedTimeframe = document.getElementById('selectedTimeframe');
-if (verificationSelect) {
-verificationSelect.addEventListener('change', function() {
-const selectedValue = this.value;
-if (selectedValue) {
-selectedTimeframe.textContent = selectedValue;
-timeframeResult.classList.remove('hidden');
-} else {
-timeframeResult.classList.add('hidden');
-}
-});
-}
-// Job Seeker Form Handler
-const jobSeekerForm = document.getElementById('jobSeekerForm');
-if (jobSeekerForm) {
-jobSeekerForm.addEventListener('submit', function(e) {
-e.preventDefault();
-const formData = new FormData(jobSeekerForm);
-const modal = document.createElement('div');
-modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-modal.innerHTML = `
+document.addEventListener("DOMContentLoaded", function () {
+  // Verification timeframes dropdown handler
+  const verificationSelect = document.getElementById("verificationSelect");
+  const timeframeResult = document.getElementById("timeframeResult");
+  const selectedTimeframe = document.getElementById("selectedTimeframe");
+  if (verificationSelect) {
+    verificationSelect.addEventListener("change", function () {
+      const selectedValue = this.value;
+      if (selectedValue) {
+        selectedTimeframe.textContent = selectedValue;
+        timeframeResult.classList.remove("hidden");
+      } else {
+        timeframeResult.classList.add("hidden");
+      }
+    });
+  }
+  // Job Seeker Form Handler
+  const jobSeekerForm = document.getElementById("jobSeekerForm");
+  if (jobSeekerForm) {
+    jobSeekerForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const formData = new FormData(jobSeekerForm);
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
 <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
 <div class="flex justify-between items-center mb-4">
 <h3 class="text-xl font-bold">Registration Submitted</h3>
@@ -1912,86 +2678,94 @@ modal.innerHTML = `
 </div>
 </div>
 `;
-document.body.appendChild(modal);
-jobSeekerForm.reset();
-});
-}
-// Category cards functionality
-const categoryCards = document.querySelectorAll('.category-card');
-function updateApplicantCount(element) {
-if (!element || !element.dataset) return;
-const min = parseInt(element.dataset.min) || 0;
-const max = parseInt(element.dataset.max) || 100;
-const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
-element.textContent = `${randomCount} Applicants`;
-}
-function updateSubcategoryCount(element) {
-if (!element || !element.closest('.subcategory-item')) return;
-const item = element.closest('.subcategory-item');
-const min = parseInt(item.dataset.min) || 0;
-const max = parseInt(item.dataset.max) || 100;
-const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
-element.textContent = `${randomCount}`;
-}
-function initializeCounts() {
-document.querySelectorAll('.applicant-count').forEach(updateApplicantCount);
-document.querySelectorAll('.subcategory-count').forEach(updateSubcategoryCount);
-}
-function updateAllCounts() {
-document.querySelectorAll('.applicant-count').forEach(element => {
-if (!element || !element.dataset) return;
-const currentCount = parseInt(element.textContent) || 0;
-const min = parseInt(element.dataset.min) || 0;
-const max = parseInt(element.dataset.max) || 100;
-const change = Math.floor(Math.random() * 3) - 1;
-const newCount = Math.min(Math.max(currentCount + change, min), max);
-element.textContent = `${newCount} Applicants`;
-});
-document.querySelectorAll('.subcategory-count').forEach(element => {
-if (!element || !element.closest('.subcategory-item')) return;
-const item = element.closest('.subcategory-item');
-const currentCount = parseInt(element.textContent) || 0;
-const min = parseInt(item.dataset.min) || 0;
-const max = parseInt(item.dataset.max) || 100;
-const change = Math.floor(Math.random() * 3) - 1;
-const newCount = Math.min(Math.max(currentCount + change, min), max);
-element.textContent = `${newCount}`;
-});
-}
-// Category card click handlers
-if (categoryCards) {
-categoryCards.forEach(card => {
-if (!card) return;
-card.addEventListener('click', function() {
-const content = this.querySelector('.category-content');
-if (content) {
-const isExpanded = !content.classList.contains('hidden');
-document.querySelectorAll('.category-content').forEach(c => {
-if (c !== content) {
-c.classList.add('hidden');
-c.closest('.category-card')?.classList.remove('shadow-lg', 'bg-gray-50');
-}
-});
-content.classList.toggle('hidden');
-this.classList.toggle('shadow-lg');
-this.classList.toggle('bg-gray-50');
-if (!isExpanded) {
-this.scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
-}
-});
-});
-}
-// Subcategory item click handlers
-document.querySelectorAll('.subcategory-item').forEach(item => {
-if (!item) return;
-item.addEventListener('click', function(e) {
-e.stopPropagation();
-const categoryName = this.querySelector('.font-medium')?.textContent || 'Category';
-const applicants = this.querySelector('.subcategory-count')?.textContent || '0';
-const modal = document.createElement('div');
-modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-modal.innerHTML = `
+      document.body.appendChild(modal);
+      jobSeekerForm.reset();
+    });
+  }
+  // Category cards functionality
+  const categoryCards = document.querySelectorAll(".category-card");
+  function updateApplicantCount(element) {
+    if (!element || !element.dataset) return;
+    const min = parseInt(element.dataset.min) || 0;
+    const max = parseInt(element.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount} Applicants`;
+  }
+  function updateSubcategoryCount(element) {
+    if (!element || !element.closest(".subcategory-item")) return;
+    const item = element.closest(".subcategory-item");
+    const min = parseInt(item.dataset.min) || 0;
+    const max = parseInt(item.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount}`;
+  }
+  function initializeCounts() {
+    document.querySelectorAll(".applicant-count").forEach(updateApplicantCount);
+    document
+      .querySelectorAll(".subcategory-count")
+      .forEach(updateSubcategoryCount);
+  }
+  function updateAllCounts() {
+    document.querySelectorAll(".applicant-count").forEach((element) => {
+      if (!element || !element.dataset) return;
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(element.dataset.min) || 0;
+      const max = parseInt(element.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount} Applicants`;
+    });
+    document.querySelectorAll(".subcategory-count").forEach((element) => {
+      if (!element || !element.closest(".subcategory-item")) return;
+      const item = element.closest(".subcategory-item");
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(item.dataset.min) || 0;
+      const max = parseInt(item.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount}`;
+    });
+  }
+  // Category card click handlers
+  if (categoryCards) {
+    categoryCards.forEach((card) => {
+      if (!card) return;
+      card.addEventListener("click", function () {
+        const content = this.querySelector(".category-content");
+        if (content) {
+          const isExpanded = !content.classList.contains("hidden");
+          document.querySelectorAll(".category-content").forEach((c) => {
+            if (c !== content) {
+              c.classList.add("hidden");
+              c.closest(".category-card")?.classList.remove(
+                "shadow-lg",
+                "bg-gray-50",
+              );
+            }
+          });
+          content.classList.toggle("hidden");
+          this.classList.toggle("shadow-lg");
+          this.classList.toggle("bg-gray-50");
+          if (!isExpanded) {
+            this.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+        }
+      });
+    });
+  }
+  // Subcategory item click handlers
+  document.querySelectorAll(".subcategory-item").forEach((item) => {
+    if (!item) return;
+    item.addEventListener("click", function (e) {
+      e.stopPropagation();
+      const categoryName =
+        this.querySelector(".font-medium")?.textContent || "Category";
+      const applicants =
+        this.querySelector(".subcategory-count")?.textContent || "0";
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
 <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
 <div class="flex justify-between items-center mb-4">
 <h3 class="text-xl font-bold">${categoryName}</h3>
@@ -2005,55 +2779,262 @@ modal.innerHTML = `
 </div>
 </div>
 `;
-document.body.appendChild(modal);
+      document.body.appendChild(modal);
+    });
+  });
+  // Mobile navigation
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenuClose = document.getElementById("mobile-menu-close");
+  const mobileNav = document.getElementById("mobile-nav");
+  if (mobileMenuButton && mobileMenuClose && mobileNav) {
+    const mobileNavLinks = mobileNav.querySelectorAll("a");
+    function toggleMobileMenu() {
+      const isOpen = mobileNav.classList.contains("translate-x-0");
+      mobileNav.classList.toggle("translate-x-0");
+      mobileNav.classList.toggle("translate-x-full");
+      document.body.style.overflow = isOpen ? "" : "hidden";
+    }
+    mobileMenuButton.addEventListener("click", toggleMobileMenu);
+    mobileMenuClose.addEventListener("click", toggleMobileMenu);
+    if (mobileNavLinks) {
+      mobileNavLinks.forEach((link) => {
+        if (!link) return;
+        link.addEventListener("click", toggleMobileMenu);
+      });
+    }
+  }
+  // FAQ toggles
+  const faqToggles = document.querySelectorAll(".faq-toggle");
+  if (faqToggles) {
+    faqToggles.forEach((toggle) => {
+      if (!toggle) return;
+      toggle.addEventListener("click", function (e) {
+        e.preventDefault();
+        const content = this.nextElementSibling;
+        const icon = this.querySelector(".faq-icon");
+        if (content && icon) {
+          content.classList.toggle("hidden");
+          const isExpanded = !content.classList.contains("hidden");
+          icon.className = isExpanded
+            ? "faq-icon ri-arrow-up-s-line"
+            : "faq-icon ri-arrow-down-s-line";
+          this.setAttribute("aria-expanded", isExpanded);
+        }
+      });
+    });
+  }
+  // Initialize counts and start updates
+  initializeCounts();
+  const updateInterval = setInterval(updateAllCounts, 5000);
+  // Clean up interval on page unload
+  window.addEventListener("unload", () => {
+    clearInterval(updateInterval);
+  });
 });
-});
-// Mobile navigation
-const mobileMenuButton = document.getElementById('mobile-menu-button');
-const mobileMenuClose = document.getElementById('mobile-menu-close');
-const mobileNav = document.getElementById('mobile-nav');
-if (mobileMenuButton && mobileMenuClose && mobileNav) {
-const mobileNavLinks = mobileNav.querySelectorAll('a');
-function toggleMobileMenu() {
-const isOpen = mobileNav.classList.contains('translate-x-0');
-mobileNav.classList.toggle('translate-x-0');
-mobileNav.classList.toggle('translate-x-full');
-document.body.style.overflow = isOpen ? '' : 'hidden';
-}
-mobileMenuButton.addEventListener('click', toggleMobileMenu);
-mobileMenuClose.addEventListener('click', toggleMobileMenu);
-if (mobileNavLinks) {
-mobileNavLinks.forEach(link => {
-if (!link) return;
-link.addEventListener('click', toggleMobileMenu);
-});
-}
-}
-// FAQ toggles
-const faqToggles = document.querySelectorAll('.faq-toggle');
-if (faqToggles) {
-faqToggles.forEach(toggle => {
-if (!toggle) return;
-toggle.addEventListener('click', function(e) {
-e.preventDefault();
-const content = this.nextElementSibling;
-const icon = this.querySelector('.faq-icon');
-if (content && icon) {
-content.classList.toggle('hidden');
-const isExpanded = !content.classList.contains('hidden');
-icon.className = isExpanded ? 'faq-icon ri-arrow-up-s-line' : 'faq-icon ri-arrow-down-s-line';
-this.setAttribute('aria-expanded', isExpanded);
-}
-});
-});
-}
-// Initialize counts and start updates
-initializeCounts();
-const updateInterval = setInterval(updateAllCounts, 5000);
-// Clean up interval on page unload
-window.addEventListener('unload', () => {
-clearInterval(updateInterval);
-});
+</script>
+<!-- CTA Section -->
+<section class="py-16 bg-gray-900 text-white" style="background-image: url('https://readdy.ai/api/search-image?query=abstract%2520geometric%2520pattern%2520with%2520red%2520and%2520black%2520elements%2C%2520professional%2520business%2520background%2C%2520dark%2520theme%2C%2520subtle%2520pattern%2C%2520corporate%2520aesthetic%2C%2520clean%2520design&width=1200&height=400&seq=cta1&orientation=landscape'); background-size: cover; background-position: center;">
+<div class="container mx-auto px-4 text-center">
+<h2 class="text-3xl font-bold mb-6">Ready to Get Started?</h2>
+<p class="text-xl mb-8 max-w-2xl mx-auto">Join thousands of South Africans finding safe, verified work opportunities and reliable workers.</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<a href="register.html" class="bg-primary text-white px-8 py-3 !rounded-button font-bold hover:bg-red-600 whitespace-nowrap">Register as Job Seeker</a>
+<a href="register.html" class="bg-white text-gray-900 px-8 py-3 !rounded-button font-bold hover:bg-gray-100 whitespace-nowrap">Register as Employer</a>
+</div>
+</div>
+</section>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // Verification timeframes dropdown handler
+  const verificationSelect = document.getElementById("verificationSelect");
+  const timeframeResult = document.getElementById("timeframeResult");
+  const selectedTimeframe = document.getElementById("selectedTimeframe");
+  if (verificationSelect) {
+    verificationSelect.addEventListener("change", function () {
+      const selectedValue = this.value;
+      if (selectedValue) {
+        selectedTimeframe.textContent = selectedValue;
+        timeframeResult.classList.remove("hidden");
+      } else {
+        timeframeResult.classList.add("hidden");
+      }
+    });
+  }
+  // Job Seeker Form Handler
+  const jobSeekerForm = document.getElementById("jobSeekerForm");
+  if (jobSeekerForm) {
+    jobSeekerForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const formData = new FormData(jobSeekerForm);
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">Registration Submitted</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">Thank you for registering with Verify! We'll review your information and contact you within 24-48 hours to complete your verification process.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+      document.body.appendChild(modal);
+      jobSeekerForm.reset();
+    });
+  }
+  // Category cards functionality
+  const categoryCards = document.querySelectorAll(".category-card");
+  function updateApplicantCount(element) {
+    if (!element || !element.dataset) return;
+    const min = parseInt(element.dataset.min) || 0;
+    const max = parseInt(element.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount} Applicants`;
+  }
+  function updateSubcategoryCount(element) {
+    if (!element || !element.closest(".subcategory-item")) return;
+    const item = element.closest(".subcategory-item");
+    const min = parseInt(item.dataset.min) || 0;
+    const max = parseInt(item.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount}`;
+  }
+  function initializeCounts() {
+    document.querySelectorAll(".applicant-count").forEach(updateApplicantCount);
+    document
+      .querySelectorAll(".subcategory-count")
+      .forEach(updateSubcategoryCount);
+  }
+  function updateAllCounts() {
+    document.querySelectorAll(".applicant-count").forEach((element) => {
+      if (!element || !element.dataset) return;
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(element.dataset.min) || 0;
+      const max = parseInt(element.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount} Applicants`;
+    });
+    document.querySelectorAll(".subcategory-count").forEach((element) => {
+      if (!element || !element.closest(".subcategory-item")) return;
+      const item = element.closest(".subcategory-item");
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(item.dataset.min) || 0;
+      const max = parseInt(item.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount}`;
+    });
+  }
+  // Category card click handlers
+  if (categoryCards) {
+    categoryCards.forEach((card) => {
+      if (!card) return;
+      card.addEventListener("click", function () {
+        const content = this.querySelector(".category-content");
+        if (content) {
+          const isExpanded = !content.classList.contains("hidden");
+          document.querySelectorAll(".category-content").forEach((c) => {
+            if (c !== content) {
+              c.classList.add("hidden");
+              c.closest(".category-card")?.classList.remove(
+                "shadow-lg",
+                "bg-gray-50",
+              );
+            }
+          });
+          content.classList.toggle("hidden");
+          this.classList.toggle("shadow-lg");
+          this.classList.toggle("bg-gray-50");
+          if (!isExpanded) {
+            this.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+        }
+      });
+    });
+  }
+  // Subcategory item click handlers
+  document.querySelectorAll(".subcategory-item").forEach((item) => {
+    if (!item) return;
+    item.addEventListener("click", function (e) {
+      e.stopPropagation();
+      const categoryName =
+        this.querySelector(".font-medium")?.textContent || "Category";
+      const applicants =
+        this.querySelector(".subcategory-count")?.textContent || "0";
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">${categoryName}</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">There are currently <span class="text-primary font-bold">${applicants}</span> verified applicants available for this position.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+      document.body.appendChild(modal);
+    });
+  });
+  // Mobile navigation
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenuClose = document.getElementById("mobile-menu-close");
+  const mobileNav = document.getElementById("mobile-nav");
+  if (mobileMenuButton && mobileMenuClose && mobileNav) {
+    const mobileNavLinks = mobileNav.querySelectorAll("a");
+    function toggleMobileMenu() {
+      const isOpen = mobileNav.classList.contains("translate-x-0");
+      mobileNav.classList.toggle("translate-x-0");
+      mobileNav.classList.toggle("translate-x-full");
+      document.body.style.overflow = isOpen ? "" : "hidden";
+    }
+    mobileMenuButton.addEventListener("click", toggleMobileMenu);
+    mobileMenuClose.addEventListener("click", toggleMobileMenu);
+    if (mobileNavLinks) {
+      mobileNavLinks.forEach((link) => {
+        if (!link) return;
+        link.addEventListener("click", toggleMobileMenu);
+      });
+    }
+  }
+  // FAQ toggles
+  const faqToggles = document.querySelectorAll(".faq-toggle");
+  if (faqToggles) {
+    faqToggles.forEach((toggle) => {
+      if (!toggle) return;
+      toggle.addEventListener("click", function (e) {
+        e.preventDefault();
+        const content = this.nextElementSibling;
+        const icon = this.querySelector(".faq-icon");
+        if (content && icon) {
+          content.classList.toggle("hidden");
+          const isExpanded = !content.classList.contains("hidden");
+          icon.className = isExpanded
+            ? "faq-icon ri-arrow-up-s-line"
+            : "faq-icon ri-arrow-down-s-line";
+          this.setAttribute("aria-expanded", isExpanded);
+        }
+      });
+    });
+  }
+  // Initialize counts and start updates
+  initializeCounts();
+  const updateInterval = setInterval(updateAllCounts, 5000);
+  // Clean up interval on page unload
+  window.addEventListener("unload", () => {
+    clearInterval(updateInterval);
+  });
 });
 </script>
 <!-- Footer -->
@@ -2112,14 +3093,13 @@ clearInterval(updateInterval);
 </div>
 </div>
 <div class="flex space-x-6">
-<a href="privacy-policy-overview.html" class="text-gray-600 hover:text-primary">Privacy Policy</a>
-<a href="terms-of-service.html" data-readdy="true" class="text-gray-600 hover:text-primary">Terms of Service</a>
+<a href="Privacy-Policy-Overview.html" class="text-gray-600 hover:text-primary">Privacy Policy</a>
+<a href="Terms-of-Service.html" class="text-gray-600 hover:text-primary">Terms of Service</a>
 <a href="Cookie-Policy-Page.html" class="text-gray-600 hover:text-primary">Cookie Policy</a>
 </div>
 </div>
 </div>
 </div>
 </footer>
-<script src="/app.js"></script>
 </body>
 </html>

@@ -3,3 +3,4 @@
 
 # Ignore any .txt files
 *.txt
+.DS_Store
