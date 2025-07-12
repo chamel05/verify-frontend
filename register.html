@@ -1,102 +1,2088 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Verify - Registration</title>
-  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
-  <!-- your existing Tailwind config & styles here -->
-</head>
-<body>
-  <div class="min-h-screen flex flex-col">
-    <!-- Header ... -->
-    <main class="flex-grow flex items-center justify-center px-4 py-12">
-      <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
-        <!-- User Type Toggle ... -->
-        
-        <!-- Registration Form -->
-        <form id="register-form" action="/.netlify/functions/register" method="POST" novalidate>
-          <h2 class="text-2xl font-bold mb-6">Create Your Verify Account</h2>
-          
-          <!-- Industry Dropdown -->
-          <label for="industrySelect" class="block text-sm font-medium text-gray-700 mb-2">Industry Sector</label>
-          <select id="industrySelect" name="industry" required
-                  class="w-full px-4 py-3 mb-6 border border-gray-300 rounded focus:ring-2 focus:ring-primary">
-            <option value="">Select an Industry Sector</option>
-            <option value="drivers">Drivers</option>
-            <option value="domestic_workers">Domestic Workers</option>
-            <option value="child_elder_care">Child &amp; Elder Care</option>
-            <option value="security">Security</option>
-            <option value="trades">Trades</option>
-            <option value="construction">Construction</option>
-            <option value="retail_hospitality">Retail &amp; Hospitality</option>
-            <option value="admin">Admin</option>
-            <option value="warehouse">Warehouse</option>
-            <option value="event_staff">Event Staff</option>
-            <option value="truck_mechanics">Truck Mechanics</option>
-            <option value="agriculture_farm_work">Agriculture &amp; Farm Work</option>
-          </select>
-          
-          <!-- First Name -->
-          <div class="mb-4">
-            <input type="text" name="firstName" placeholder="First Name" required
-                   class="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-primary"/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verify - Registration</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: { primary: "#F50302", secondary: "#4D4D4D" },
+            borderRadius: {
+              none: "0px",
+              sm: "4px",
+              DEFAULT: "8px",
+              md: "12px",
+              lg: "16px",
+              xl: "20px",
+              "2xl": "24px",
+              "3xl": "32px",
+              full: "9999px",
+              button: "8px",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
+    />
+    <style>
+      :where([class^="ri-"])::before { content: "\f3c2"; }
+      @import url('https://fonts.googleapis.com/css2?family=Futura:wght@400;500;700&display=swap');
+      body {
+      font-family: 'Futura', sans-serif;
+      background-color: #f9fafb;
+      }
+      .checkbox-container input[type="checkbox"] {
+      display: none;
+      }
+      .checkbox-container .checkbox-custom {
+      width: 18px;
+      height: 18px;
+      border: 2px solid #d1d5db;
+      border-radius: 4px;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      }
+      .checkbox-container input[type="checkbox"]:checked + .checkbox-custom {
+      background-color: #F50302;
+      border-color: #F50302;
+      }
+      .checkbox-container input[type="checkbox"]:checked + .checkbox-custom::after {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 2px;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+      }
+      .social-btn:hover {
+      background-color: #f3f4f6;
+      }
+      .input-container {
+      position: relative;
+      }
+      .input-container input {
+      padding-left: 40px;
+      }
+      .input-container .icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9ca3af;
+      }
+      .password-toggle {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9ca3af;
+      cursor: pointer;
+      }
+      .user-type-card {
+      transition: all 0.3s ease;
+      cursor: pointer;
+      }
+      .user-type-card.selected {
+      border-color: #F50302;
+      background-color: rgba(245, 3, 2, 0.05);
+      }
+      .user-type-card:hover:not(.selected) {
+      border-color: #d1d5db;
+      background-color: #f9fafb;
+      }
+      .password-strength-meter {
+      height: 4px;
+      border-radius: 2px;
+      margin-top: 6px;
+      display: flex;
+      overflow: hidden;
+      }
+      .password-strength-meter div {
+      height: 100%;
+      width: 25%;
+      margin-right: 2px;
+      background-color: #e5e7eb;
+      }
+      .password-strength-meter div:last-child {
+      margin-right: 0;
+      }
+      .password-strength-meter.weak div:nth-child(1) {
+      background-color: #ef4444;
+      }
+      .password-strength-meter.medium div:nth-child(1),
+      .password-strength-meter.medium div:nth-child(2) {
+      background-color: #f59e0b;
+      }
+      .password-strength-meter.strong div:nth-child(1),
+      .password-strength-meter.strong div:nth-child(2),
+      .password-strength-meter.strong div:nth-child(3) {
+      background-color: #10b981;
+      }
+      .password-strength-meter.very-strong div {
+      background-color: #10b981;
+      }
+      .file-upload-container {
+      position: relative;
+      overflow: hidden;
+      }
+      .file-upload-container input[type="file"] {
+      position: absolute;
+      top: 0;
+      right: 0;
+      min-width: 100%;
+      min-height: 100%;
+      opacity: 0;
+      cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="min-h-screen flex flex-col">
+      <!-- Header -->
+      <header class="bg-white shadow-sm">
+        <div
+          class="container mx-auto px-4 py-4 flex justify-between items-center"
+        >
+          <a
+            href="home-page.html"
+            class="flex items-center text-gray-800 hover:text-primary"
+          >
+            <div class="w-6 h-6 flex items-center justify-center mr-2">
+              <i class="ri-arrow-left-line"></i>
+            </div>
+            <span>Back to Login</span>
+          </a>
+          <div class="text-2xl font-bold tracking-tight flex items-center">
+            <img
+              src="https://static.readdy.ai/image/783dd8c3d2d1f38f9648f46144ac17f1/bc2b69f3a823a0bfcee48284d9c2d098.jpeg"
+              alt="Verify Logo"
+              class="h-10"
+            />
           </div>
-          
-          <!-- Surname -->
-          <div class="mb-4">
-            <input type="text" name="surname" placeholder="Surname" required
-                   class="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-primary"/>
+          <div class="w-24">
+            <!-- Spacer to balance the header -->
           </div>
-          
-          <!-- Email -->
-          <div class="mb-4">
-            <input type="email" name="email" placeholder="Email Address" required
-                   class="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-primary"/>
+        </div>
+      </header>
+      <!-- Main Content -->
+      <main class="flex-grow flex items-center justify-center px-4 py-12">
+        <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-3xl">
+          <div class="text-center mb-8">
+            <img
+              src="https://static.readdy.ai/image/783dd8c3d2d1f38f9648f46144ac17f1/bc2b69f3a823a0bfcee48284d9c2d098.jpeg"
+              alt="Verify Logo"
+              class="h-12 mx-auto mb-6"
+            />
+            <h1 class="text-2xl font-bold text-gray-900">
+              Create your Verify account
+            </h1>
+            <p class="text-gray-600 mt-2">
+              Choose your account type to get started
+            </p>
           </div>
-          
-          <!-- Phone -->
-          <div class="mb-4">
-            <input type="tel" name="phone" placeholder="Phone Number" required
-                   class="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-primary"/>
+          <!-- User Type Selection -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <div
+              id="jobSeekerCard"
+              class="user-type-card border-2 rounded-lg p-6 flex flex-col items-center selected"
+            >
+              <div
+                class="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mb-4"
+              >
+                <div
+                  class="w-8 h-8 flex items-center justify-center text-primary"
+                >
+                  <i class="ri-user-search-line ri-2x"></i>
+                </div>
+              </div>
+              <h3 class="text-lg font-semibold mb-2">Job Seeker</h3>
+              <p class="text-gray-500 text-center text-sm">
+                Find your dream job and connect with top employers
+              </p>
+            </div>
+            <div
+              id="employerCard"
+              class="user-type-card border-2 border-gray-200 rounded-lg p-6 flex flex-col items-center"
+            >
+              <div
+                class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-4"
+              >
+                <div
+                  class="w-8 h-8 flex items-center justify-center text-gray-500"
+                >
+                  <i class="ri-building-line ri-2x"></i>
+                </div>
+              </div>
+              <h3 class="text-lg font-semibold mb-2">Employer</h3>
+              <p class="text-gray-500 text-center text-sm">
+                Post jobs and find the perfect candidates for your company
+              </p>
+            </div>
           </div>
-          
-          <!-- Password -->
-          <div class="mb-4">
-            <input type="password" name="password" placeholder="Password (min 8 characters)" required
-                   class="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-primary"/>
+          <!-- Registration Forms Container -->
+          <div id="formContainer">
+            <!-- Job Seeker Registration Form -->
+            <div id="jobSeekerForm" class="block">
+              <form
+                action="https://readdy.ai/api/form/d1fe2dheus6kik1r0i10"
+                method="POST"
+                id="jobSeekerForm"
+              >
+                <div class="mb-8">
+                  <h3 class="text-lg font-medium text-gray-900 mb-4">
+                    Choose Your Verification Tier
+                  </h3>
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Bronze Card -->
+                    <div
+                      class="border border-gray-200 rounded-lg p-6 hover:border-primary cursor-pointer transition-all category-card bg-white"
+                    >
+                      <div class="flex flex-col items-center text-center mb-8">
+                        <div
+                          class="w-16 h-16 flex items-center justify-center bg-[#CD7F32] rounded-full mb-4"
+                        >
+                          <i
+                            class="ri-shield-check-line text-white text-2xl"
+                          ></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-gray-900">
+                          Bronze
+                        </h4>
+                        <p class="text-sm text-gray-500">Basic Verification</p>
+                      </div>
+                      <div class="text-center mb-6">
+                        <p class="text-sm text-gray-600">
+                          Contact us for pricing
+                        </p>
+                      </div>
+                      <ul class="space-y-4 mb-6">
+                        <li class="flex items-center text-sm text-gray-600">
+                          <i
+                            class="ri-checkbox-circle-fill text-[#CD7F32] mr-2"
+                          ></i>
+                          <span>CV Verification</span>
+                        </li>
+                        <li class="flex items-center text-sm text-gray-400">
+                          <i
+                            class="ri-close-circle-line text-gray-400 mr-2"
+                          ></i>
+                          <span>Police Clearance</span>
+                        </li>
+                        <li class="flex items-center text-sm text-gray-400">
+                          <i
+                            class="ri-close-circle-line text-gray-400 mr-2"
+                          ></i>
+                          <span>Polygraph Test</span>
+                        </li>
+                      </ul>
+                      <label class="flex items-center justify-center mt-4">
+                        <input
+                          type="radio"
+                          name="subscription"
+                          value="bronze"
+                          class="sr-only"
+                          checked
+                        />
+                        <div
+                          class="w-6 h-6 border-2 border-gray-300 rounded-full flex items-center justify-center mr-2"
+                        >
+                          <div
+                            class="w-3 h-3 bg-primary rounded-full hidden"
+                          ></div>
+                        </div>
+                        <span class="text-sm text-gray-700">Select Tier</span>
+                      </label>
+                    </div>
+                    <!-- Silver Card -->
+                    <div
+                      class="border-2 border-gray-200 rounded-lg p-6 hover:border-primary cursor-pointer transition-all relative category-card bg-white"
+                    >
+                      <div
+                        class="absolute -top-3 left-1/2 transform -translate-x-1/2"
+                      >
+                        <span
+                          class="bg-primary text-white text-xs font-medium px-3 py-1 rounded-full"
+                          >Recommended</span
+                        >
+                      </div>
+                      <div class="flex flex-col items-center text-center mb-8">
+                        <div
+                          class="w-16 h-16 flex items-center justify-center bg-[#C0C0C0] rounded-full mb-4"
+                        >
+                          <i
+                            class="ri-shield-check-line text-white text-2xl"
+                          ></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-gray-900">
+                          Silver
+                        </h4>
+                        <p class="text-sm text-gray-500">
+                          Enhanced Verification
+                        </p>
+                      </div>
+                      <div class="text-center mb-6">
+                        <p class="text-sm text-gray-600">
+                          Contact us for pricing
+                        </p>
+                      </div>
+                      <ul class="space-y-4 mb-6">
+                        <li class="flex items-center text-sm text-gray-600">
+                          <i
+                            class="ri-checkbox-circle-fill text-[#C0C0C0] mr-2"
+                          ></i>
+                          <span>CV Verification</span>
+                        </li>
+                        <li class="flex items-center text-sm text-gray-600">
+                          <i
+                            class="ri-checkbox-circle-fill text-[#C0C0C0] mr-2"
+                          ></i>
+                          <span>Police Clearance</span>
+                        </li>
+                        <li class="flex items-center text-sm text-gray-400">
+                          <i
+                            class="ri-close-circle-line text-gray-400 mr-2"
+                          ></i>
+                          <span>Polygraph Test</span>
+                        </li>
+                      </ul>
+                      <p class="text-xs text-gray-500 mt-2">
+                        Police clearance must be supplied by the job seeker
+                      </p>
+                      <label class="flex items-center justify-center mt-4">
+                        <input
+                          type="radio"
+                          name="subscription"
+                          value="silver"
+                          class="sr-only"
+                        />
+                        <div
+                          class="w-6 h-6 border-2 border-gray-300 rounded-full flex items-center justify-center mr-2"
+                        >
+                          <div
+                            class="w-3 h-3 bg-primary rounded-full hidden"
+                          ></div>
+                        </div>
+                        <span class="text-sm text-gray-700">Select Tier</span>
+                      </label>
+                    </div>
+                    <!-- Gold Card -->
+                    <div
+                      class="border-2 border-gray-200 rounded-lg p-6 hover:border-primary cursor-pointer transition-all category-card bg-white"
+                    >
+                      <div class="flex flex-col items-center text-center mb-8">
+                        <div
+                          class="w-16 h-16 flex items-center justify-center bg-[#FFD700] rounded-full mb-4"
+                        >
+                          <i
+                            class="ri-shield-check-line text-white text-2xl"
+                          ></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-gray-900">
+                          Gold
+                        </h4>
+                        <p class="text-sm text-gray-500">
+                          Premium Verification
+                        </p>
+                      </div>
+                      <div class="text-center mb-6">
+                        <p class="text-sm text-gray-600">
+                          Contact us for pricing
+                        </p>
+                      </div>
+                      <ul class="space-y-4 mb-6">
+                        <li class="flex items-center text-sm text-gray-600">
+                          <i
+                            class="ri-checkbox-circle-fill text-[#FFD700] mr-2"
+                          ></i>
+                          <span>CV Verification</span>
+                        </li>
+                        <li class="flex items-center text-sm text-gray-600">
+                          <i
+                            class="ri-checkbox-circle-fill text-[#FFD700] mr-2"
+                          ></i>
+                          <span>Police Clearance</span>
+                        </li>
+                        <li class="flex items-center text-sm text-gray-600">
+                          <i
+                            class="ri-checkbox-circle-fill text-[#FFD700] mr-2"
+                          ></i>
+                          <span>Polygraph Test</span>
+                        </li>
+                      </ul>
+                      <p class="text-xs text-gray-500 mt-2">
+                        Police clearance & polygraph must be supplied by the job
+                        seeker
+                      </p>
+                      <label class="flex items-center justify-center mt-4">
+                        <input
+                          type="radio"
+                          name="subscription"
+                          value="gold"
+                          class="sr-only"
+                        />
+                        <div
+                          class="w-6 h-6 border-2 border-gray-300 rounded-full flex items-center justify-center mr-2"
+                        >
+                          <div
+                            class="w-3 h-3 bg-primary rounded-full hidden"
+                          ></div>
+                        </div>
+                        <span class="text-sm text-gray-700">Select Tier</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+                  <div class="input-container">
+                    <div class="icon w-5 h-5 flex items-center justify-center">
+                      <i class="ri-user-line"></i>
+                    </div>
+                    <input
+                      type="text"
+                      name="firstName"
+                      required
+                      placeholder="First Name"
+                      class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                    />
+                  </div>
+                  <div class="input-container">
+                    <div class="icon w-5 h-5 flex items-center justify-center">
+                      <i class="ri-user-line"></i>
+                    </div>
+                    <input
+                      type="text"
+                      name="surname"
+                      required
+                      placeholder="Surname"
+                      class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                    />
+                  </div>
+                  <div class="input-container">
+                    <div class="icon w-5 h-5 flex items-center justify-center">
+                      <i class="ri-map-pin-line"></i>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Current Location (City, Province)"
+                      class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                    />
+                  </div>
+                  <div class="input-container">
+                    <div class="icon w-5 h-5 flex items-center justify-center">
+                      <i class="ri-route-line"></i>
+                    </div>
+                    <select
+                      class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm pl-10 pr-8 appearance-none"
+                    >
+                      <option value="">Maximum Travel Distance</option>
+                      <option value="5">Up to 5 km</option>
+                      <option value="10">Up to 10 km</option>
+                      <option value="20">Up to 20 km</option>
+                      <option value="30">Up to 30 km</option>
+                      <option value="50">Up to 50 km</option>
+                      <option value="100">Up to 100 km</option>
+                    </select>
+                    <div
+                      class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none"
+                    >
+                      <i class="ri-arrow-down-s-line"></i>
+                    </div>
+                  </div>
+                  <div class="input-container">
+                    <div class="icon w-5 h-5 flex items-center justify-center">
+                      <i class="ri-home-4-line"></i>
+                    </div>
+                    <select
+                      class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm pl-10 pr-8 appearance-none"
+                    >
+                      <option value="">Willing to Relocate?</option>
+                      <option value="yes">Yes, anywhere in South Africa</option>
+                      <option value="limited">Yes, within my province</option>
+                      <option value="no">No, only local opportunities</option>
+                    </select>
+                    <div
+                      class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none"
+                    >
+                      <i class="ri-arrow-down-s-line"></i>
+                    </div>
+                  </div>
+                  <div class="input-container">
+                    <div class="icon w-5 h-5 flex items-center justify-center">
+                      <i class="ri-mail-line"></i>
+                    </div>
+                    <input
+                      type="email"
+                      placeholder="Email Address"
+                      class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                    />
+                  </div>
+                  <div class="input-container">
+                    <div class="icon w-5 h-5 flex items-center justify-center">
+                      <i class="ri-phone-line"></i>
+                    </div>
+                    <input
+                      type="tel"
+                      placeholder="Phone Number (Optional)"
+                      class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                    />
+                  </div>
+                  <div class="input-container">
+                    <div class="icon w-5 h-5 flex items-center justify-center">
+                      <i class="ri-briefcase-line"></i>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Professional Title"
+                      class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                    />
+                  </div>
+                  <div class="input-container">
+                    <div class="icon w-5 h-5 flex items-center justify-center">
+                      <i class="ri-user-3-line"></i>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Username"
+                      class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                    />
+                  </div>
+                  <div class="input-container">
+                    <div class="icon w-5 h-5 flex items-center justify-center">
+                      <i class="ri-time-line"></i>
+                    </div>
+                    <select
+                      class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm pl-10 pr-8 appearance-none"
+                    >
+                      <option value="">Years of Experience</option>
+                      <option value="0-1">0-1 years</option>
+                      <option value="1-3">1-3 years</option>
+                      <option value="3-5">3-5 years</option>
+                      <option value="5-10">5-10 years</option>
+                      <option value="10+">10+ years</option>
+                    </select>
+                    <div
+                      class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none"
+                    >
+                      <i class="ri-arrow-down-s-line"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-6">
+                  <label class="block text-sm font-medium text-gray-700 mb-2"
+                    >References</label
+                  >
+                  <div class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div class="input-container">
+                        <div
+                          class="icon w-5 h-5 flex items-center justify-center"
+                        >
+                          <i class="ri-user-line"></i>
+                        </div>
+                        <input
+                          type="text"
+                          name="reference1_name"
+                          placeholder="Reference Name"
+                          class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                        />
+                      </div>
+                      <div class="input-container">
+                        <div
+                          class="icon w-5 h-5 flex items-center justify-center"
+                        >
+                          <i class="ri-phone-line"></i>
+                        </div>
+                        <input
+                          type="tel"
+                          name="reference1_phone"
+                          placeholder="Reference Phone Number"
+                          class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                        />
+                      </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div class="input-container">
+                        <div
+                          class="icon w-5 h-5 flex items-center justify-center"
+                        >
+                          <i class="ri-user-line"></i>
+                        </div>
+                        <input
+                          type="text"
+                          name="reference2_name"
+                          placeholder="Reference Name (Optional)"
+                          class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                        />
+                      </div>
+                      <div class="input-container">
+                        <div
+                          class="icon w-5 h-5 flex items-center justify-center"
+                        >
+                          <i class="ri-phone-line"></i>
+                        </div>
+                        <input
+                          type="tel"
+                          name="reference2_phone"
+                          placeholder="Reference Phone Number (Optional)"
+                          class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-6">
+                  <label class="block text-sm font-medium text-gray-700 mb-2"
+                    >Upload Resume (Optional)</label
+                  >
+                  <div
+                    class="file-upload-container flex items-center justify-center w-full border-2 border-dashed border-gray-300 rounded-lg p-6 hover:border-primary transition-colors"
+                  >
+                    <div class="text-center">
+                      <div
+                        class="w-12 h-12 mx-auto bg-gray-50 rounded-full flex items-center justify-center mb-3"
+                      >
+                        <div
+                          class="w-6 h-6 flex items-center justify-center text-gray-400"
+                        >
+                          <i class="ri-upload-2-line"></i>
+                        </div>
+                      </div>
+                      <p class="text-sm text-gray-600">
+                        Drag and drop your resume here or
+                        <span class="text-primary">browse files</span>
+                      </p>
+                      <p class="text-xs text-gray-500 mt-1">
+                        PDF, DOCX or RTF (Max 5MB)
+                      </p>
+                      <input type="file" accept=".pdf,.docx,.rtf" />
+                    </div>
+                  </div>
+                </div>
+                <div class="space-y-5 mb-6">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2"
+                      >Industry Preferences</label
+                    >
+                    <div class="input-container">
+                      <div
+                        class="icon w-5 h-5 flex items-center justify-center"
+                      >
+                        <i class="ri-building-4-line"></i>
+                      </div>
+                      <select
+                        
+                        class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm pl-10 pr-8 appearance-none"
+                      >
+                        <option value="">Select Industry</option>
+                        <option value="drivers">
+                          Drivers & Transportation
+                        </option>
+                        <option value="domestic">Domestic Workers</option>
+                        <option value="care">Child & Elder Care</option>
+                        <option value="security">Security Services</option>
+                        <option value="trades">Skilled Trades</option>
+                        <option value="construction">Construction</option>
+                        <option value="retail">Retail &id="industrySelect" Hospitality</option>
+                        <option value="admin">Administrative & Office</option>
+                        <option value="warehouse">Warehouse & Logistics</option>
+                        <option value="events">Event Staff</option>
+                        <option value="mechanics">
+                          Truck & Vehicle Mechanics
+                        </option>
+                        <option value="agriculture">
+                          Agriculture & Farm Work
+                        </option>
+                      </select>
+                      <div
+                        class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none"
+                      >
+                        <i class="ri-arrow-down-s-line"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2"
+                      >Job Positions</label
+                    >
+                    <div
+                      id="selectedJobs"
+                      class="flex flex-wrap gap-2 mb-3"
+                    ></div>
+                    <div class="input-container">
+                      <div
+                        class="icon w-5 h-5 flex items-center justify-center"
+                      >
+                        <i class="ri-briefcase-line"></i>
+                      </div>
+                      <select
+                        id="jobSelect"
+                        class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm pl-10 pr-8 appearance-none"
+                      >
+                        <option value="">Select Position</option>
+                      </select>
+                      <div
+                        class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none"
+                      >
+                        <i class="ri-arrow-down-s-line"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2"
+                      >Skills</label
+                    >
+                    <div class="border border-gray-300 rounded p-3">
+                      <div class="flex flex-wrap gap-2 mb-2" id="skillTags">
+                        <div
+                          class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm flex items-center"
+                        >
+                          Safe Driving
+                          <button
+                            type="button"
+                            class="ml-1 text-gray-500 hover:text-gray-700"
+                          >
+                            <i class="ri-close-line"></i>
+                          </button>
+                        </div>
+                        <div
+                          class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm flex items-center"
+                        >
+                          Time Management
+                          <button
+                            type="button"
+                            class="ml-1 text-gray-500 hover:text-gray-700"
+                          >
+                            <i class="ri-close-line"></i>
+                          </button>
+                        </div>
+                        <div
+                          class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm flex items-center"
+                        >
+                          Customer Service
+                          <button
+                            type="button"
+                            class="ml-1 text-gray-500 hover:text-gray-700"
+                          >
+                            <i class="ri-close-line"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <input
+                        type="text"
+                        id="skillInput"
+                        placeholder="Add relevant skills (e.g., Safe Driving, Customer Service)"
+                        class="w-full border-none focus:ring-0 text-sm p-1"
+                      />
+                    </div>
+                  </div>
+                  <div class="mb-6">
+                    <button
+                      type="button"
+                      id="cleanRecordBtn"
+                      class="w-full flex items-center justify-center py-3 px-4 border border-gray-300 !rounded-button hover:bg-gray-50 transition-colors gap-2"
+                    >
+                      <i class="ri-shield-check-line text-primary"></i>
+                      <span class="text-gray-700"
+                        >Click here to verify your clean record</span
+                      >
+                      <i class="ri-arrow-right-line text-gray-400"></i>
+                    </button>
+                    <div
+                      id="cleanRecordModal"
+                      class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+                    >
+                      <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+                        <div class="flex justify-between items-center mb-4">
+                          <h3 class="text-lg font-medium text-gray-900">
+                            Clean Record Verification
+                          </h3>
+                          <button
+                            type="button"
+                            class="text-gray-400 hover:text-gray-500"
+                            id="closeModal"
+                          >
+                            <i class="ri-close-line text-xl"></i>
+                          </button>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                          Please upload your police clearance certificate or
+                          other relevant documentation to verify your clean
+                          record.
+                        </p>
+                        <div class="file-upload-container mb-4">
+                          <div
+                            class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-primary transition-colors"
+                          >
+                            <div
+                              class="w-12 h-12 mx-auto bg-gray-50 rounded-full flex items-center justify-center mb-3"
+                            >
+                              <i
+                                class="ri-upload-2-line text-gray-400 text-xl"
+                              ></i>
+                            </div>
+                            <p class="text-sm text-gray-600">
+                              Drag and drop your documents here or
+                              <span class="text-primary">browse files</span>
+                            </p>
+                            <p class="text-xs text-gray-500 mt-1">
+                              PDF or image files (Max 5MB)
+                            </p>
+                            <input
+                              type="file"
+                              accept=".pdf,.jpg,.jpeg,.png"
+                              class="opacity-0 absolute inset-0 w-full h-full cursor-pointer"
+                            />
+                          </div>
+                        </div>
+                        <div class="flex justify-end gap-3">
+                          <button
+                            type="button"
+                            class="border border-gray-300 text-gray-700 px-4 py-2 !rounded-button hover:bg-gray-50 transition-colors"
+                            id="submitLaterBtn"
+                          >
+                            Submit Later
+                          </button>
+                          <button
+                            type="button"
+                            class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600 transition-colors"
+                          >
+                            Submit for Verification
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="space-y-5">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2"
+                      >Password</label
+                    >
+                    <div class="input-container">
+                      <div
+                        class="icon w-5 h-5 flex items-center justify-center"
+                      >
+                        <i class="ri-lock-line"></i>
+                      </div>
+                      <input
+                        type="password"
+                        id="seekerPassword"
+                        placeholder="Create a password"
+                        class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                      />
+                      <div
+                        class="password-toggle w-5 h-5 flex items-center justify-center"
+                        id="toggleSeekerPassword"
+                      >
+                        <i class="ri-eye-line"></i>
+                      </div>
+                    </div>
+                    <div
+                      class="password-strength-meter mt-2"
+                      id="seekerPasswordStrength"
+                    >
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-1">
+                      Password strength:
+                      <span id="seekerPasswordStrengthText">Weak</span>
+                    </p>
+                  </div>
+                  <div class="input-container">
+                    <div class="icon w-5 h-5 flex items-center justify-center">
+                      <i class="ri-lock-line"></i>
+                    </div>
+                    <input
+                      type="password"
+                      placeholder="Confirm password"
+                      class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                    />
+                  </div>
+                  <div class="flex items-start">
+                    <label class="flex items-start checkbox-container">
+                      <input type="checkbox" id="seekerTerms" />
+                      <div class="checkbox-custom mt-1"></div>
+                      <span class="ml-2 text-sm text-gray-700"
+                        >I agree to the
+                        <a href="#" class="text-primary hover:underline"
+                          >Terms of Service</a
+                        >
+                        and
+                        <a href="Privacy-Policy-Overview.html" class="text-primary hover:underline"
+                          >Privacy Policy</a
+                        ></span
+                      >
+                    </label>
+                  </div>
+                  <div class="space-y-3">
+                    <div class="flex items-center justify-between text-sm mb-2">
+                      <span class="font-medium text-gray-900"
+                        >Total Amount:</span
+                      >
+                      <div class="flex items-center">
+                        <span
+                          class="font-bold text-lg text-gray-900"
+                          id="totalAmount"
+                          >R 0.00</span
+                        >
+                        <span class="text-gray-500 ml-1">/monthly</span>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      class="w-full bg-primary text-white py-3 !rounded-button font-medium hover:bg-red-600 transition-colors whitespace-nowrap flex items-center justify-center"
+                    >
+                      <i class="ri-secure-payment-line mr-2"></i>
+                      Pay & Create Account
+                    </button>
+                    <p class="text-xs text-gray-500 text-center">
+                      Secure payment powered by Stripe
+                    </p>
+                  </div>
+                </div>
+              </form>
+              <div class="relative flex items-center justify-center my-6">
+                <div class="border-t border-gray-300 absolute w-full"></div>
+                <span class="bg-white px-4 text-sm text-gray-500 relative"
+                  >or</span
+                >
+              </div>
+              <div class="space-y-3">
+                <button
+                  class="social-btn w-full flex items-center justify-center py-3 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+                >
+                  <div class="w-5 h-5 flex items-center justify-center mr-3">
+                    <i class="ri-google-fill text-[#4285F4]"></i>
+                  </div>
+                  <span class="text-sm font-medium">Continue with Google</span>
+                </button>
+                <button
+                  class="social-btn w-full flex items-center justify-center py-3 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+                >
+                  <div class="w-5 h-5 flex items-center justify-center mr-3">
+                    <i class="ri-facebook-fill text-[#1877F2]"></i>
+                  </div>
+                  <span class="text-sm font-medium"
+                    >Continue with Facebook</span
+                  >
+                </button>
+              </div>
+            </div>
+            <!-- Employer Registration Form -->
+            <div id="employerForm" class="hidden">
+              <form
+                action="https://readdy.ai/api/form/d1bb8k31l6bcigtll6vg"
+                method="POST"
+                id="employerForm"
+              >
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+                  <div class="input-container">
+                    <div class="icon w-5 h-5 flex items-center justify-center">
+                      <i class="ri-building-line"></i>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Company Name"
+                      class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                    />
+                  </div>
+                  <div class="input-container">
+                    <div class="icon w-5 h-5 flex items-center justify-center">
+                      <i class="ri-mail-line"></i>
+                    </div>
+                    <input
+                      type="email"
+                      placeholder="Business Email"
+                      class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                    />
+                  </div>
+                  <div class="input-container">
+                    <div class="icon w-5 h-5 flex items-center justify-center">
+                      <i class="ri-global-line"></i>
+                    </div>
+                    <input
+                      type="url"
+                      placeholder="Company Website"
+                      class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                    />
+                  </div>
+                  <div class="input-container">
+                    <div class="icon w-5 h-5 flex items-center justify-center">
+                      <i class="ri-building-4-line"></i>
+                    </div>
+                    <select
+                      class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm pl-10 pr-8 appearance-none"
+                    >
+<label for="industry">Industry Sector</label>
+<select id="industry" name="industry" required>
+  <option value="">Select an Industry Sector</option>
+  <option value="drivers">Drivers</option>
+  <option value="domestic_workers">Domestic Workers</option>
+  <option value="child_elder_care">Child & Elder Care</option>
+  <option value="security">Security</option>
+  <option value="trades">Trades</option>
+  <option value="construction">Construction</option>
+  <option value="retail_hospitality">Retail & Hospitality</option>
+  <option value="admin">Admin</option>
+  <option value="warehouse">Warehouse</option>
+  <option value="event_staff">Event Staff</option>
+  <option value="truck_mechanics">Truck Mechanics</option>
+  <option value="agriculture_farm_work">Agriculture &amp; Farm Work</option>
+</select>
+                    <div
+                      class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none"
+                    >
+                      <i class="ri-arrow-down-s-line"></i>
+                    </div>
+                  </div>
+                  <div class="input-container">
+                    <div class="icon w-5 h-5 flex items-center justify-center">
+                      <i class="ri-team-line"></i>
+                    </div>
+                    <select
+                      class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm pl-10 pr-8 appearance-none"
+                    >
+                      <option value="">Company Size</option>
+                      <option value="1-10">1-10 employees</option>
+                      <option value="11-50">11-50 employees</option>
+                      <option value="51-200">51-200 employees</option>
+                      <option value="201-500">201-500 employees</option>
+                      <option value="501-1000">501-1000 employees</option>
+                      <option value="1001+">1001+ employees</option>
+                    </select>
+                    <div
+                      class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none"
+                    >
+                      <i class="ri-arrow-down-s-line"></i>
+                    </div>
+                  </div>
+                  <div class="input-container">
+                    <div class="icon w-5 h-5 flex items-center justify-center">
+                      <i class="ri-user-3-line"></i>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Username"
+                      class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                    />
+                  </div>
+                </div>
+                <div class="mb-6">
+                  <h3 class="text-md font-medium text-gray-700 mb-3">
+                    Contact Person Details
+                  </h3>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div class="input-container">
+                      <div
+                        class="icon w-5 h-5 flex items-center justify-center"
+                      >
+                        <i class="ri-user-line"></i>
+                      </div>
+                      <input
+                        type="text"
+                        placeholder="Full Name"
+                        class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                      />
+                    </div>
+                    <div class="input-container">
+                      <div
+                        class="icon w-5 h-5 flex items-center justify-center"
+                      >
+                        <i class="ri-briefcase-line"></i>
+                      </div>
+                      <input
+                        type="text"
+                        placeholder="Position/Title"
+                        class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                      />
+                    </div>
+                    <div class="input-container">
+                      <div
+                        class="icon w-5 h-5 flex items-center justify-center"
+                      >
+                        <i class="ri-phone-line"></i>
+                      </div>
+                      <input
+                        type="tel"
+                        placeholder="Phone Number"
+                        class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-6">
+                  <label class="block text-sm font-medium text-gray-700 mb-2"
+                    >Company Logo (Optional)</label
+                  >
+                  <div
+                    class="file-upload-container flex items-center justify-center w-full border-2 border-dashed border-gray-300 rounded-lg p-6 hover:border-primary transition-colors"
+                  >
+                    <div class="text-center">
+                      <div
+                        class="w-12 h-12 mx-auto bg-gray-50 rounded-full flex items-center justify-center mb-3"
+                      >
+                        <div
+                          class="w-6 h-6 flex items-center justify-center text-gray-400"
+                        >
+                          <i class="ri-image-line"></i>
+                        </div>
+                      </div>
+                      <p class="text-sm text-gray-600">
+                        Drag and drop your logo here or
+                        <span class="text-primary">browse files</span>
+                      </p>
+                      <p class="text-xs text-gray-500 mt-1">
+                        PNG, JPG or SVG (Max 2MB)
+                      </p>
+                      <input type="file" accept=".png,.jpg,.jpeg,.svg" />
+                    </div>
+                  </div>
+                </div>
+                <div class="space-y-5">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2"
+                      >Password</label
+                    >
+                    <div class="input-container">
+                      <div
+                        class="icon w-5 h-5 flex items-center justify-center"
+                      >
+                        <i class="ri-lock-line"></i>
+                      </div>
+                      <input
+                        type="password"
+                        id="employerPassword"
+                        placeholder="Create a password"
+                        class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                      />
+                      <div
+                        class="password-toggle w-5 h-5 flex items-center justify-center"
+                        id="toggleEmployerPassword"
+                      >
+                        <i class="ri-eye-line"></i>
+                      </div>
+                    </div>
+                    <div
+                      class="password-strength-meter mt-2"
+                      id="employerPasswordStrength"
+                    >
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-1">
+                      Password strength:
+                      <span id="employerPasswordStrengthText">Weak</span>
+                    </p>
+                  </div>
+                  <div class="input-container">
+                    <div class="icon w-5 h-5 flex items-center justify-center">
+                      <i class="ri-lock-line"></i>
+                    </div>
+                    <input
+                      type="password"
+                      placeholder="Confirm password"
+                      class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                    />
+                  </div>
+                  <div class="flex items-start">
+                    <label class="flex items-start checkbox-container">
+                      <input type="checkbox" id="employerTerms" />
+                      <div class="checkbox-custom mt-1"></div>
+                      <span class="ml-2 text-sm text-gray-700"
+                        >I agree to the
+                        <a href="#" class="text-primary hover:underline"
+                          >Terms of Service</a
+                        >
+                        and
+                        <a href="Privacy-Policy-Overview.html" class="text-primary hover:underline"
+                          >Privacy Policy</a
+                        ></span
+                      >
+                    </label>
+                  </div>
+                  <button
+                    type="submit"
+                    class="w-full bg-primary text-white py-3 !rounded-button font-medium hover:bg-red-600 transition-colors whitespace-nowrap"
+                  >
+                    Create Employer Account
+                  </button>
+                </div>
+              </form>
+              <div class="relative flex items-center justify-center my-6">
+                <div class="border-t border-gray-300 absolute w-full"></div>
+                <span class="bg-white px-4 text-sm text-gray-500 relative"
+                  >or</span
+                >
+              </div>
+              <div class="space-y-3">
+                <button
+                  class="social-btn w-full flex items-center justify-center py-3 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+                >
+                  <div class="w-5 h-5 flex items-center justify-center mr-3">
+                    <i class="ri-google-fill text-[#4285F4]"></i>
+                  </div>
+                  <span class="text-sm font-medium">Continue with Google</span>
+                </button>
+                <button
+                  class="social-btn w-full flex items-center justify-center py-3 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+                >
+                  <div class="w-5 h-5 flex items-center justify-center mr-3">
+                    <i class="ri-facebook-fill text-[#1877F2]"></i>
+                  </div>
+                  <span class="text-sm font-medium"
+                    >Continue with Facebook</span
+                  >
+                </button>
+              </div>
+            </div>
           </div>
-          
-          <!-- Terms & Conditions -->
-          <div class="flex items-center mb-6">
-            <input type="checkbox" id="terms" name="terms" required
-                   class="h-4 w-4 text-primary border-gray-300 rounded"/>
-            <label for="terms" class="ml-2 text-sm text-gray-700">
-              I agree to the 
-              <a href="/Terms-of-Service.html" target="_blank" class="text-primary hover:underline">
-                Terms of Service
-              </a>
-              and
-              <a href="/Privacy-Policy-Overview.html" target="_blank" class="text-primary hover:underline">
-                Privacy Policy
-              </a>.
-            </label>
+          <div class="text-center mt-8">
+            <p class="text-gray-600">
+              Already have an account?
+              <a
+                href="Login-Page-for-Verify-Platform.html"
+                data-readdy="true"
+                class="text-primary font-medium hover:underline"
+                >Log in</a
+              >
+            </p>
           </div>
-          
-          <!-- Submit Button -->
-          <button type="submit"
-                  class="w-full bg-primary text-white py-3 rounded hover:bg-red-600 transition">
-            Register
-          </button>
-        </form>
-        
-        <!-- Optional Social Buttons ... -->
-      </div>
-    </main>
-  </div>
-  
-  <!-- Your existing scripts, including app.js loader -->
-  <script src="/app.js"></script>
-</body>
-</html>
+        </div>
+      </main>
+      <!-- Footer -->
+      <footer class="bg-white py-6 border-t border-gray-200">
+        <div class="container mx-auto px-4">
+          <div class="flex flex-col md:flex-row justify-between items-center">
+            <p class="text-gray-600 text-sm mb-4 md:mb-0">
+              &copy; 2025 Verify. All rights reserved.
+            </p>
+            <div class="flex space-x-6">
+              <a href="Privacy-Policy-Overview.html" class="text-gray-600 text-sm hover:text-primary"
+                >Privacy Policy</a
+              >
+              <a href="Terms-of-Service.html" class="text-gray-600 text-sm hover:text-primary"
+                >Terms of Service</a
+              >
+              <a href="#" class="text-gray-600 text-sm hover:text-primary"
+                >Help Center</a
+              >
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script id="user-type-toggle-script">
+      document.addEventListener("DOMContentLoaded", function () {
+        const jobSeekerCard = document.getElementById("jobSeekerCard");
+        const employerCard = document.getElementById("employerCard");
+        const jobSeekerForm = document.getElementById("jobSeekerForm");
+        const employerForm = document.getElementById("employerForm");
+        if (jobSeekerCard && employerCard && jobSeekerForm && employerForm) {
+          jobSeekerCard.addEventListener("click", function () {
+            jobSeekerCard.classList.add("selected");
+            employerCard.classList.remove("selected");
+            jobSeekerForm.classList.remove("hidden");
+            jobSeekerForm.classList.add("block");
+            employerForm.classList.add("hidden");
+            employerForm.classList.remove("block");
+            // Update icon colors
+            const jobSeekerIcon = jobSeekerCard.querySelector(".w-8.h-8");
+            const employerIcon = employerCard.querySelector(".w-8.h-8");
+            if (jobSeekerIcon && employerIcon) {
+              jobSeekerIcon.classList.remove("text-gray-500");
+              jobSeekerIcon.classList.add("text-primary");
+              employerIcon.classList.remove("text-primary");
+              employerIcon.classList.add("text-gray-500");
+            }
+            // Update background colors
+            const jobSeekerBg = jobSeekerCard.querySelector(".w-16.h-16");
+            const employerBg = employerCard.querySelector(".w-16.h-16");
+            if (jobSeekerBg && employerBg) {
+              jobSeekerBg.classList.remove("bg-gray-50");
+              jobSeekerBg.classList.add("bg-red-50");
+              employerBg.classList.remove("bg-red-50");
+              employerBg.classList.add("bg-gray-50");
+            }
+          });
+          employerCard.addEventListener("click", function () {
+            employerCard.classList.add("selected");
+            jobSeekerCard.classList.remove("selected");
+            employerForm.classList.remove("hidden");
+            employerForm.classList.add("block");
+            jobSeekerForm.classList.add("hidden");
+            jobSeekerForm.classList.remove("block");
+            // Update icon colors
+            const jobSeekerIcon = jobSeekerCard.querySelector(".w-8.h-8");
+            const employerIcon = employerCard.querySelector(".w-8.h-8");
+            if (jobSeekerIcon && employerIcon) {
+              employerIcon.classList.remove("text-gray-500");
+              employerIcon.classList.add("text-primary");
+              jobSeekerIcon.classList.remove("text-primary");
+              jobSeekerIcon.classList.add("text-gray-500");
+            }
+            // Update background colors
+            const jobSeekerBg = jobSeekerCard.querySelector(".w-16.h-16");
+            const employerBg = employerCard.querySelector(".w-16.h-16");
+            if (jobSeekerBg && employerBg) {
+              employerBg.classList.remove("bg-gray-50");
+              employerBg.classList.add("bg-red-50");
+              jobSeekerBg.classList.remove("bg-red-50");
+              jobSeekerBg.classList.add("bg-gray-50");
+            }
+          });
+        }
+      });
+    </script>
+    <script id="password-toggle-script">
+      document.addEventListener("DOMContentLoaded", function () {
+        const toggleSeekerPassword = document.getElementById("toggleSeekerPassword");
+        const seekerPassword = document.getElementById("seekerPassword");
+        const toggleEmployerPassword = document.getElementById(
+          "toggleEmployerPassword",
+        );
+        const employerPassword = document.getElementById("employerPassword");
+        if (toggleSeekerPassword && seekerPassword) {
+          toggleSeekerPassword.addEventListener("click", function () {
+            const type =
+              seekerPassword.getAttribute("type") === "password"
+                ? "text"
+                : "password";
+            seekerPassword.setAttribute("type", type);
+            const icon = toggleSeekerPassword.querySelector("i");
+            if (icon) {
+              icon.className =
+                type === "password" ? "ri-eye-line" : "ri-eye-off-line";
+            }
+          });
+        }
+        if (toggleEmployerPassword && employerPassword) {
+          toggleEmployerPassword.addEventListener("click", function () {
+            const type =
+              employerPassword.getAttribute("type") === "password"
+                ? "text"
+                : "password";
+            employerPassword.setAttribute("type", type);
+            const icon = toggleEmployerPassword.querySelector("i");
+            if (icon) {
+              icon.className =
+                type === "password" ? "ri-eye-line" : "ri-eye-off-line";
+            }
+          });
+        }
+      });
+    </script>
+    <script id="password-strength-script">
+      document.addEventListener("DOMContentLoaded", function () {
+        const seekerPassword = document.getElementById("seekerPassword");
+        const seekerPasswordStrength = document.getElementById(
+          "seekerPasswordStrength",
+        );
+        const seekerPasswordStrengthText = document.getElementById(
+          "seekerPasswordStrengthText",
+        );
+        const employerPassword = document.getElementById("employerPassword");
+        const employerPasswordStrength = document.getElementById(
+          "employerPasswordStrength",
+        );
+        const employerPasswordStrengthText = document.getElementById(
+          "employerPasswordStrengthText",
+        );
+        function checkPasswordStrength(password) {
+          let strength = 0;
+          if (password.length >= 8) strength += 1;
+          if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength += 1;
+          if (password.match(/\d/)) strength += 1;
+          if (password.match(/[^a-zA-Z\d]/)) strength += 1;
+          return strength;
+        }
+        function updatePasswordStrengthUI(password, strengthMeter, strengthText) {
+          const strength = checkPasswordStrength(password);
+          strengthMeter.className = "password-strength-meter mt-2";
+          if (strength === 0) {
+            strengthMeter.classList.add("weak");
+            strengthText.textContent = "Weak";
+          } else if (strength === 1) {
+            strengthMeter.classList.add("weak");
+            strengthText.textContent = "Weak";
+          } else if (strength === 2) {
+            strengthMeter.classList.add("medium");
+            strengthText.textContent = "Medium";
+          } else if (strength === 3) {
+            strengthMeter.classList.add("strong");
+            strengthText.textContent = "Strong";
+          } else {
+            strengthMeter.classList.add("very-strong");
+            strengthText.textContent = "Very Strong";
+          }
+        }
+        if (seekerPassword && seekerPasswordStrength && seekerPasswordStrengthText) {
+          seekerPassword.addEventListener("input", function () {
+            updatePasswordStrengthUI(
+              this.value,
+              seekerPasswordStrength,
+              seekerPasswordStrengthText,
+            );
+          });
+        }
+        if (
+          employerPassword &&
+          employerPasswordStrength &&
+          employerPasswordStrengthText
+        ) {
+          employerPassword.addEventListener("input", function () {
+            updatePasswordStrengthUI(
+              this.value,
+              employerPasswordStrength,
+              employerPasswordStrengthText,
+            );
+          });
+        }
+      });
+    </script>
+    <script id="checkbox-script">
+      document.addEventListener("DOMContentLoaded", function () {
+        const checkboxContainers = document.querySelectorAll(".checkbox-container");
+        checkboxContainers.forEach((container) => {
+          const checkbox = container.querySelector('input[type="checkbox"]');
+          if (container && checkbox) {
+            container.addEventListener("click", function (e) {
+              if (e.target !== checkbox) {
+                checkbox.checked = !checkbox.checked;
+              }
+            });
+          }
+        });
+        const subscriptionCards = document.querySelectorAll(".category-card");
+        const subscriptionRadios = document.querySelectorAll(
+          'input[name="subscription"]',
+        );
+        if (subscriptionCards && subscriptionCards.length > 0) {
+          subscriptionCards.forEach((card, index) => {
+            if (!card) return;
+            card.addEventListener("click", () => {
+              if (subscriptionRadios && subscriptionRadios[index]) {
+                subscriptionRadios[index].checked = true;
+                updateSubscriptionSelection();
+              }
+            });
+          });
+        }
+        subscriptionRadios.forEach((radio, index) => {
+          radio.addEventListener("change", () => {
+            updateSubscriptionSelection();
+          });
+        });
+        function updateSubscriptionSelection() {
+          if (!subscriptionCards || !subscriptionRadios) return;
+          subscriptionCards.forEach((card, index) => {
+            const radio = subscriptionRadios[index];
+            const indicator = card.querySelector(".w-3.h-3");
+            if (!radio || !indicator) return;
+            if (radio.checked) {
+              card.classList.add("border-primary");
+              card.classList.add("bg-red-50");
+              indicator.classList.remove("hidden");
+            } else {
+              card.classList.remove("border-primary");
+              card.classList.remove("bg-red-50");
+              indicator.classList.add("hidden");
+            }
+          });
+        }
+        updateSubscriptionSelection();
+      });
+    </script>
+    <script id="form-submission-script">
+      document.addEventListener("DOMContentLoaded", function () {
+        const jobSeekerForm = document.getElementById("jobSeekerForm");
+        const employerForm = document.getElementById("employerForm");
+        const cleanRecordBtn = document.getElementById("cleanRecordBtn");
+        const cleanRecordModal = document.getElementById("cleanRecordModal");
+        const closeModal = document.getElementById("closeModal");
+        const submitLaterBtn = document.getElementById("submitLaterBtn");
+        if (cleanRecordBtn && cleanRecordModal && closeModal && submitLaterBtn) {
+          submitLaterBtn.addEventListener("click", function () {
+            cleanRecordModal.classList.add("hidden");
+          });
+          cleanRecordBtn.addEventListener("click", function () {
+            cleanRecordModal.classList.remove("hidden");
+          });
+          closeModal.addEventListener("click", function () {
+            cleanRecordModal.classList.add("hidden");
+          });
+          cleanRecordModal.addEventListener("click", function (e) {
+            if (e.target === cleanRecordModal) {
+              cleanRecordModal.classList.add("hidden");
+            }
+          });
+        }
+        function validateForm(form) {
+          let isValid = true;
+          const errorMessages = [];
+          // Check required fields
+          const requiredFields = form.querySelectorAll(
+            "input[required], select[required]",
+          );
+          requiredFields.forEach((field) => {
+            if (!field.value.trim()) {
+              isValid = false;
+              field.classList.add("border-red-500");
+              errorMessages.push(
+                `${field.placeholder || "Required field"} is required`,
+              );
+            } else {
+              field.classList.remove("border-red-500");
+            }
+          });
+          // Validate password
+          const passwordField = form.querySelector("#seekerPassword");
+          if (passwordField && passwordField.value.length < 8) {
+            isValid = false;
+            passwordField.classList.add("border-red-500");
+            errorMessages.push("Password must be at least 8 characters long");
+          }
+          // Validate terms acceptance
+          const termsCheckbox = form.querySelector("#seekerTerms");
+          if (termsCheckbox && !termsCheckbox.checked) {
+            isValid = false;
+            errorMessages.push("Please accept the Terms of Service");
+          }
+          // Check text length limit
+          const textInputs = form.querySelectorAll('input[type="text"], textarea');
+          textInputs.forEach((input) => {
+            if (input.value.length > 500) {
+              isValid = false;
+              input.classList.add("border-red-500");
+              errorMessages.push(
+                `${input.placeholder || "Text field"} exceeds 500 characters limit`,
+              );
+            }
+          });
+          return { isValid, errorMessages };
+        }
+        function showNotification(message, type = "error") {
+          const notification = document.createElement("div");
+          notification.className = `fixed top-4 right-4 px-6 py-3 rounded shadow-lg ${
+            type === "success" ? "bg-green-500 text-white" : "bg-red-500 text-white"
+          }`;
+          notification.textContent = message;
+          document.body.appendChild(notification);
+          setTimeout(() => notification.remove(), 3000);
+        }
+        function handleFormSubmit(event) {
+          event.preventDefault();
+          const form = event.target;
+          const validation = validateForm(form);
+          if (!validation.isValid) {
+            validation.errorMessages.forEach((message) => showNotification(message));
+            return;
+          }
 
+          const formData = new URLSearchParams();
+
+          // Add subscription tier
+          const selectedTier = form.querySelector(
+            'input[name="subscription"]:checked',
+          );
+          if (selectedTier) {
+            formData.append("subscription", selectedTier.value);
+          }
+
+          // Add basic information
+          const firstName = form.querySelector('[name="firstName"]');
+          const surname = form.querySelector('[name="surname"]');
+          const email = form.querySelector('input[type="email"]');
+          const phone = form.querySelector('input[type="tel"]');
+          const username = form.querySelector('input[placeholder="Username"]');
+          const location = form.querySelector(
+            'input[placeholder="Current Location (City, Province)"]',
+          );
+          const travelDistance = form.querySelector(
+            'select[placeholder="Maximum Travel Distance"]',
+          );
+          const relocation = form.querySelector(
+            'select[placeholder="Willing to Relocate?"]',
+          );
+          const professionalTitle = form.querySelector(
+            'input[placeholder="Professional Title"]',
+          );
+          const experience = form.querySelector(
+            'select[placeholder="Years of Experience"]',
+          );
+
+          if (firstName) formData.append("firstName", firstName.value);
+          if (surname) formData.append("surname", surname.value);
+          if (email) formData.append("email", email.value);
+          if (phone) formData.append("phone", phone.value);
+          if (username) formData.append("username", username.value);
+          if (location) formData.append("location", location.value);
+          if (travelDistance) formData.append("travelDistance", travelDistance.value);
+          if (relocation) formData.append("relocation", relocation.value);
+          if (professionalTitle)
+            formData.append("professionalTitle", professionalTitle.value);
+          if (experience) formData.append("experience", experience.value);
+
+          // Add selected jobs
+          const selectedJobs = Array.from(
+            document.querySelectorAll("#selectedJobs .bg-gray-100"),
+          ).map((tag) => tag.textContent.trim().replace(/✕$/, "").trim());
+          if (selectedJobs.length > 0) {
+            formData.append("selectedJobs", selectedJobs.join(","));
+          }
+
+          // Add skills
+          const selectedSkills = Array.from(
+            document.querySelectorAll("#skillTags .bg-gray-100"),
+          ).map((tag) => tag.textContent.trim().replace(/✕$/, "").trim());
+          if (selectedSkills.length > 0) {
+            formData.append("skills", selectedSkills.join(","));
+          }
+
+          // Add references
+          const reference1Name = form.querySelector('[name="reference1_name"]');
+          const reference1Phone = form.querySelector('[name="reference1_phone"]');
+          const reference2Name = form.querySelector('[name="reference2_name"]');
+          const reference2Phone = form.querySelector('[name="reference2_phone"]');
+
+          if (reference1Name && reference1Name.value)
+            formData.append("reference1Name", reference1Name.value);
+          if (reference1Phone && reference1Phone.value)
+            formData.append("reference1Phone", reference1Phone.value);
+          if (reference2Name && reference2Name.value)
+            formData.append("reference2Name", reference2Name.value);
+          if (reference2Phone && reference2Phone.value)
+            formData.append("reference2Phone", reference2Phone.value);
+
+          // Add password
+          const password = form.querySelector("#seekerPassword");
+          if (password) formData.append("password", password.value);
+
+          // File uploads will be marked as Uncollectable
+          const fileInputs = form.querySelectorAll('input[type="file"]');
+          fileInputs.forEach((input) => {
+            if (input.files.length > 0) {
+              formData.append(input.name || "file", "Uncollectable");
+            }
+          });
+          // Submit form
+          fetch(form.action, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: formData.toString(),
+          })
+            .then((response) => {
+              if (response.ok) {
+                showNotification(
+                  "Your registration has been submitted successfully!",
+                  "success",
+                );
+                setTimeout(() => {
+                  window.location.href =
+                    "https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/d75ce9b6-d6a6-4e5c-9dea-a70df2e13263";
+                }, 2000);
+              } else {
+                throw new Error("Form submission failed");
+              }
+            })
+            .catch((error) => {
+              showNotification(
+                "An error occurred while submitting your registration. Please try again.",
+              );
+            });
+        }
+        if (jobSeekerForm) {
+          jobSeekerForm.addEventListener("submit", handleFormSubmit);
+        }
+        if (employerForm) {
+          employerForm.addEventListener("submit", handleFormSubmit);
+        }
+        if (jobSeekerForm) {
+          jobSeekerForm.addEventListener("submit", handleFormSubmit);
+        }
+        if (employerForm) {
+          employerForm.addEventListener("submit", handleFormSubmit);
+        }
+        const industrySelect = document.getElementById("industrySelect");
+        const jobSelect = document.getElementById("jobSelect");
+        const selectedJobs = document.getElementById("selectedJobs");
+        const skillInput = document.getElementById("skillInput");
+        const skillTags = document.getElementById("skillTags");
+        const skillsByIndustry = {
+          drivers: [
+            "Safe Driving",
+            "Vehicle Maintenance",
+            "Route Planning",
+            "Time Management",
+            "Customer Service",
+            "Loading/Unloading",
+            "Traffic Rules",
+            "Delivery Tracking",
+          ],
+          domestic: [
+            "Cleaning",
+            "Cooking",
+            "Laundry",
+            "Home Organization",
+            "Time Management",
+            "Basic English",
+            "Child Care",
+            "Safety Awareness",
+          ],
+          care: [
+            "Patient Care",
+            "First Aid",
+            "Basic Medical Knowledge",
+            "Empathy",
+            "Time Management",
+            "Basic English",
+            "Safety Procedures",
+            "Emergency Response",
+          ],
+          security: [
+            "Security Procedures",
+            "Surveillance",
+            "Emergency Response",
+            "Physical Fitness",
+            "Communication",
+            "Report Writing",
+            "Access Control",
+            "Safety Protocols",
+          ],
+          trades: [
+            "Hand Tools",
+            "Power Tools",
+            "Safety Procedures",
+            "Basic Math",
+            "Problem Solving",
+            "Technical Reading",
+            "Measurement",
+            "Quality Control",
+          ],
+          construction: [
+            "Physical Strength",
+            "Safety Awareness",
+            "Basic Tools",
+            "Team Work",
+            "Following Instructions",
+            "Basic Math",
+            "Material Handling",
+            "Equipment Operation",
+          ],
+          retail: [
+            "Customer Service",
+            "Cash Handling",
+            "Stock Management",
+            "Basic Math",
+            "Communication",
+            "Basic English",
+            "Team Work",
+            "Sales",
+          ],
+          admin: [
+            "Basic Computer",
+            "Filing",
+            "Phone Etiquette",
+            "Basic English",
+            "Organization",
+            "Time Management",
+            "Customer Service",
+            "Basic Math",
+          ],
+          warehouse: [
+            "Inventory Management",
+            "Loading/Unloading",
+            "Safety Procedures",
+            "Physical Fitness",
+            "Basic Math",
+            "Stock Control",
+            "Equipment Operation",
+            "Team Work",
+          ],
+          events: [
+            "Customer Service",
+            "Physical Fitness",
+            "Team Work",
+            "Time Management",
+            "Safety Awareness",
+            "Basic English",
+            "Problem Solving",
+            "Communication",
+          ],
+          mechanics: [
+            "Vehicle Repair",
+            "Tool Knowledge",
+            "Diagnostic Skills",
+            "Safety Procedures",
+            "Problem Solving",
+            "Technical Reading",
+            "Quality Control",
+            "Equipment Maintenance",
+          ],
+          agriculture: [
+            "Physical Fitness",
+            "Equipment Operation",
+            "Safety Awareness",
+            "Basic Tools",
+            "Weather Knowledge",
+            "Crop Management",
+            "Team Work",
+            "Time Management",
+          ],
+        };
+        function updateSkillSuggestions(industry) {
+          if (industry && skillsByIndustry[industry]) {
+            const currentSkills = Array.from(skillTags.children).map((tag) =>
+              tag.textContent.trim().replace(/✕$/, "").trim(),
+            );
+            skillTags.innerHTML = "";
+            skillsByIndustry[industry]
+              .filter((skill) => !currentSkills.includes(skill))
+              .slice(0, 3)
+              .forEach((skill) => {
+                const tag = document.createElement("div");
+                tag.className =
+                  "bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm flex items-center";
+                tag.innerHTML = `
+      ${skill}
+      <button type="button" class="ml-1 text-gray-500 hover:text-gray-700">
+      <i class="ri-close-line"></i>
+      </button>
+      `;
+                skillTags.appendChild(tag);
+              });
+          }
+        }
+        industrySelect.addEventListener("change", function () {
+          updateJobSelect(this.value);
+          updateSkillSuggestions(this.value);
+          calculateTotalAmount();
+        });
+        skillTags.addEventListener("click", function (e) {
+          if (e.target.closest("button")) {
+            e.target.closest(".bg-gray-100").remove();
+          }
+        });
+        skillInput.addEventListener("keypress", function (e) {
+          if (e.key === "Enter" && this.value.trim()) {
+            const tag = document.createElement("div");
+            tag.className =
+              "bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm flex items-center";
+            tag.innerHTML = `
+      ${this.value.trim()}
+      <button type="button" class="ml-1 text-gray-500 hover:text-gray-700">
+      <i class="ri-close-line"></i>
+      </button>
+      `;
+            skillTags.appendChild(tag);
+            this.value = "";
+          }
+        });
+        const jobPrices = {
+          drivers: 285,
+          domestic: 99,
+          care: 99,
+          security: 199,
+          trades: 199,
+          construction: 199,
+          retail: 99,
+          admin: 199,
+          warehouse: 99,
+          events: 199,
+          mechanics: 285,
+          agriculture: 99,
+        };
+        const jobsByIndustry = {
+          drivers: [
+            "Delivery Driver",
+            "Truck Driver",
+            "Taxi Driver",
+            "Bus Driver",
+            "Courier",
+            "Chauffeur",
+            "Fleet Driver",
+            "Moving Van Driver",
+          ],
+          domestic: [
+            "House Cleaner",
+            "Housekeeper",
+            "Domestic Helper",
+            "Home Assistant",
+            "Laundry Worker",
+            "Cook",
+            "House Manager",
+          ],
+          care: [
+            "Childcare Worker",
+            "Elder Care Assistant",
+            "Babysitter",
+            "Nanny",
+            "Care Home Assistant",
+            "Special Needs Caregiver",
+            "Personal Care Aide",
+          ],
+        
+          security: [
+            "Security Guard",
+            "Security Officer",
+            "Night Watch",
+            "Patrol Officer",
+            "Loss Prevention Officer",
+            "Event Security",
+            "Building Security",
+          ],
+          trades: [
+            "Electrician",
+            "Plumber",
+            "Carpenter",
+            "HVAC Technician",
+            "Painter",
+            "Welder",
+            "Handyman",
+          ],
+          construction: [
+            "Construction Worker",
+            "Laborer",
+            "Bricklayer",
+            "Roofer",
+            "Concrete Worker",
+            "Equipment Operator",
+            "Site Worker",
+          ],
+          retail: [
+            "Sales Associate",
+            "Cashier",
+            "Store Clerk",
+            "Restaurant Server",
+            "Barista",
+            "Hotel Staff",
+            "Customer Service",
+          ],
+          admin: [
+            "Office Assistant",
+            "Receptionist",
+            "Data Entry Clerk",
+            "Administrative Assistant",
+            "Office Manager",
+            "Secretary",
+            "File Clerk",
+          ],
+          warehouse: [
+            "Warehouse Worker",
+            "Forklift Operator",
+            "Picker/Packer",
+            "Shipping Clerk",
+            "Inventory Clerk",
+            "Loading Dock Worker",
+            "Stock Handler",
+          ],
+          events: [
+            "Event Staff",
+            "Banquet Server",
+            "Setup Crew",
+            "Usher",
+            "Ticket Taker",
+            "Concession Worker",
+            "Stage Hand",
+          ],
+          mechanics: [
+            "Truck Mechanic",
+            "Diesel Mechanic",
+            "Fleet Mechanic",
+            "Auto Technician",
+            "Heavy Equipment Mechanic",
+            "Service Technician",
+            "Repair Specialist",
+          ],
+          agriculture: [
+            "Farm Worker",
+            "Field Hand",
+            "Harvester",
+            "Ranch Worker",
+            "Greenhouse Worker",
+            "Agricultural Laborer",
+            "Farm Equipment Operator",
+          ],
+        };
+        let selectedJobsArray = [];
+        function calculateTotalAmount() {
+          const selectedIndustry = industrySelect.value;
+          const price = jobPrices[selectedIndustry] || 0;
+          const totalAmount = document.getElementById("totalAmount");
+          totalAmount.textContent = `R ${price.toFixed(2)}`;
+        }
+        function updateJobSelect(industry) {
+          jobSelect.innerHTML = '<option value="">Select Position</option>';
+          if (industry && jobsByIndustry[industry]) {
+            jobsByIndustry[industry].forEach((job) => {
+              if (!selectedJobsArray.includes(job)) {
+                const option = document.createElement("option");
+                option.value = job;
+                option.textContent = job;
+                option.setAttribute("data-price", jobPrices[industry]);
+                jobSelect.appendChild(option);
+              }
+            });
+          }
+          calculateTotalAmount();
+        }
+        function createJobTag(job) {
+          const tag = document.createElement("div");
+          tag.className =
+            "bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm flex items-center";
+          tag.innerHTML = `
+      ${job}
+      <button type="button" class="ml-1 text-gray-500 hover:text-gray-700" data-job="${job}">
+      <i class="ri-close-line"></i>
+      </button>
+      `;
+          return tag;
+        }
+        industrySelect.addEventListener("change", function () {
+          updateJobSelect(this.value);
+        });
+        jobSelect.addEventListener("change", function () {
+          if (this.value && !selectedJobsArray.includes(this.value)) {
+            selectedJobsArray.push(this.value);
+            selectedJobs.appendChild(createJobTag(this.value));
+            this.selectedIndex = 0;
+            updateJobSelect(industrySelect.value);
+          }
+        });
+        selectedJobs.addEventListener("click", function (e) {
+          if (e.target.closest("button")) {
+            const jobToRemove = e.target.closest("button").getAttribute("data-job");
+            selectedJobsArray = selectedJobsArray.filter(
+              (job) => job !== jobToRemove,
+            );
+            e.target.closest(".bg-gray-100").remove();
+            updateJobSelect(industrySelect.value);
+          }
+        });
+      });
+    </script>
+<script src="/app.js"></script>
+  </body>
+</html>
