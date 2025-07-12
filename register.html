@@ -1081,6 +1081,7 @@
                     </div>
                     <button
                       type="button"
+                      onclick="openPaymentPortal()"
                       class="w-full bg-primary text-white py-3 !rounded-button font-medium hover:bg-red-600 transition-colors whitespace-nowrap flex items-center justify-center"
                     >
                       <i class="ri-secure-payment-line mr-2"></i>
@@ -1399,7 +1400,8 @@
                     </label>
                   </div>
                   <button
-                    type="submit"
+                    type="button"
+                    onclick="openPaymentPortal()"
                     class="w-full bg-primary text-white py-3 !rounded-button font-medium hover:bg-red-600 transition-colors whitespace-nowrap"
                   >
                     Create Employer Account
@@ -2344,6 +2346,55 @@
       });
     </script>
 
+    <!-- Payment Portal Modal -->
+    <div id="paymentModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+      <div class="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-hidden">
+        <div class="flex justify-between items-center p-6 border-b">
+          <h2 class="text-2xl font-bold">Complete Your Payment</h2>
+          <button onclick="closeModal('paymentModal')" class="text-gray-500 hover:text-gray-700">
+            <i class="ri-close-line text-2xl"></i>
+          </button>
+        </div>
+        <div class="p-6 overflow-y-auto max-h-[75vh]">
+          <!-- Order Summary -->
+          <div class="bg-gray-50 rounded-lg p-4 mb-6">
+            <h3 class="font-semibold mb-3">Order Summary</h3>
+            <div id="orderSummaryContent">
+              <div class="flex justify-between items-center mb-2">
+                <span>Bronze Verification Package</span>
+                <span class="font-semibold">R299</span>
+              </div>
+              <div class="flex justify-between items-center text-sm text-gray-600 mb-2">
+                <span>Processing Fee</span>
+                <span>R15</span>
+              </div>
+              <div class="border-t pt-2 flex justify-between items-center font-bold">
+                <span>Total</span>
+                <span class="text-primary">R314</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment Options -->
+          <h3 class="font-medium mb-4">Choose your payment method:</h3>
+          
+          <div id="paymentOptions" class="space-y-3">
+            <!-- Payment options will be dynamically inserted here -->
+          </div>
+
+          <!-- Security Notice -->
+          <div class="mt-6 p-3 bg-green-50 border border-green-200 rounded-lg">
+            <div class="flex items-start">
+              <i class="ri-shield-check-line text-green-600 mr-2 mt-1"></i>
+              <div class="text-sm text-green-800">
+                <strong>Secure Payment:</strong> All payments are processed through secure, PCI-compliant payment gateways. Your financial information is protected with bank-level security.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Terms of Service Modal -->
     <div id="termsModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
       <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden">
@@ -2441,10 +2492,381 @@
         document.body.style.overflow = 'auto';
       }
       
+      // Payment Portal Functions
+      function openPaymentPortal() {
+        // Detect user type based on which form is visible
+        const seekerForm = document.getElementById('seekerRegistration');
+        const employerForm = document.getElementById('employerRegistration');
+        
+        let userType = 'seeker';
+        if (employerForm && !employerForm.classList.contains('hidden')) {
+          userType = 'employer';
+        }
+        
+        // Validate form first
+        const form = document.querySelector('form');
+        if (validateRegistrationForm(form)) {
+          updatePaymentPortal(userType);
+          openModal('paymentModal');
+          generateQRCode();
+        }
+      }
+      
+      function updatePaymentPortal(userType) {
+        const orderSummary = document.getElementById('orderSummaryContent');
+        const paymentOptions = document.getElementById('paymentOptions');
+        
+        if (userType === 'employer') {
+          // Update order summary for employer
+          orderSummary.innerHTML = `
+            <div class="flex justify-between items-center mb-2">
+              <span>Employer Account Setup</span>
+              <span class="font-semibold">R0</span>
+            </div>
+            <div class="text-sm text-gray-600 mb-2">
+              No upfront cost - Pay per CV bundle purchased
+            </div>
+            <div class="border-t pt-2 flex justify-between items-center font-bold">
+              <span>Total</span>
+              <span class="text-primary">R0</span>
+            </div>
+          `;
+          
+          // Show premium payment options for employers
+          paymentOptions.innerHTML = `
+            <!-- PayFast (Default) -->
+            <button id="payfastBtn" class="w-full p-4 border-2 border-primary bg-primary/5 rounded-lg hover:bg-primary/10 transition-colors text-left">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                  <i class="ri-bank-card-line text-2xl text-primary mr-3"></i>
+                  <div>
+                    <div class="font-semibold text-gray-900">Pay with Card / EFT</div>
+                    <div class="text-sm text-gray-600">Visa, Mastercard, EFT (PayFast)</div>
+                  </div>
+                </div>
+                <span class="bg-primary text-white px-2 py-1 rounded text-xs font-medium">RECOMMENDED</span>
+              </div>
+            </button>
+
+            <!-- Apple Pay -->
+            <button id="applePay" class="w-full p-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-left">
+              <div class="flex items-center">
+                <i class="ri-apple-line text-2xl text-gray-800 mr-3"></i>
+                <div>
+                  <div class="font-semibold text-gray-900">Apple Pay</div>
+                  <div class="text-sm text-gray-600">Quick & secure payment with Touch ID / Face ID</div>
+                </div>
+              </div>
+            </button>
+
+            <!-- Google Pay -->
+            <button id="googlePay" class="w-full p-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-left">
+              <div class="flex items-center">
+                <i class="ri-google-line text-2xl text-blue-600 mr-3"></i>
+                <div>
+                  <div class="font-semibold text-gray-900">Google Pay</div>
+                  <div class="text-sm text-gray-600">Fast checkout with saved payment methods</div>
+                </div>
+              </div>
+            </button>
+
+            <!-- Ozow Instant EFT -->
+            <button id="ozowPay" class="w-full p-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-left">
+              <div class="flex items-center">
+                <i class="ri-bank-line text-2xl text-green-600 mr-3"></i>
+                <div>
+                  <div class="font-semibold text-gray-900">Pay with Instant EFT</div>
+                  <div class="text-sm text-gray-600">Direct bank transfer (Ozow)</div>
+                </div>
+              </div>
+            </button>
+
+            <!-- Recurring Card Billing -->
+            <div class="border border-gray-300 rounded-lg p-4">
+              <div class="flex items-center mb-3">
+                <i class="ri-refresh-line text-2xl text-purple-600 mr-3"></i>
+                <div>
+                  <div class="font-semibold text-gray-900">Recurring Card Billing</div>
+                  <div class="text-sm text-gray-600">Set up automatic payments for CV bundles</div>
+                </div>
+              </div>
+              <div class="bg-blue-50 rounded p-3 text-sm">
+                <div class="flex items-start">
+                  <i class="ri-information-line text-blue-600 mr-2 mt-1"></i>
+                  <div class="text-blue-800">
+                    <strong>Enterprise Feature:</strong> Setup recurring billing for regular CV bundle purchases. Perfect for agencies and high-volume recruiters.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Zapper QR Code -->
+            <div class="border border-gray-300 rounded-lg p-4">
+              <div class="flex items-center mb-3">
+                <i class="ri-qr-code-line text-2xl text-purple-600 mr-3"></i>
+                <div>
+                  <div class="font-semibold text-gray-900">Pay with Zapper / Wallet QR</div>
+                  <div class="text-sm text-gray-600">Scan to pay with your mobile wallet</div>
+                </div>
+              </div>
+              <div id="zapper-qr" class="flex justify-center bg-white border border-gray-200 rounded p-4">
+                <!-- QR Code placeholder -->
+                <div class="w-32 h-32 bg-gray-100 border-2 border-dashed border-gray-300 rounded flex items-center justify-center">
+                  <div class="text-center">
+                    <i class="ri-qr-code-line text-3xl text-gray-400 mb-2"></i>
+                    <div class="text-xs text-gray-500">QR Code will appear here</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Manual Bank Transfer -->
+            <div class="border border-gray-300 rounded-lg p-4">
+              <div class="flex items-center mb-3">
+                <i class="ri-building-line text-2xl text-blue-600 mr-3"></i>
+                <div>
+                  <div class="font-semibold text-gray-900">Direct Bank Transfer</div>
+                  <div class="text-sm text-gray-600">Transfer directly to our bank account</div>
+                </div>
+              </div>
+              <div class="bg-gray-50 rounded p-3 text-sm">
+                <div class="grid grid-cols-2 gap-2 mb-2">
+                  <div class="font-medium">Bank:</div>
+                  <div>First National Bank</div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 mb-2">
+                  <div class="font-medium">Account Name:</div>
+                  <div>Verify (Pty) Ltd</div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 mb-2">
+                  <div class="font-medium">Account Number:</div>
+                  <div>1234567890</div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 mb-2">
+                  <div class="font-medium">Branch Code:</div>
+                  <div>250655</div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 mb-3">
+                  <div class="font-medium">Reference:</div>
+                  <div class="font-mono bg-yellow-100 px-2 py-1 rounded">EMP-2025-001</div>
+                </div>
+                <div class="text-xs text-gray-600 border-t pt-2">
+                  <strong>Important:</strong> Please use the reference number above and email proof of payment to payments@verify.co.za
+                </div>
+              </div>
+            </div>
+
+            <!-- Testing Skip Payment Option -->
+            <div class="border-2 border-yellow-300 bg-yellow-50 rounded-lg p-4">
+              <div class="flex items-center mb-3">
+                <i class="ri-tools-line text-2xl text-yellow-600 mr-3"></i>
+                <div>
+                  <div class="font-semibold text-gray-900">Skip Payment (Testing Mode)</div>
+                  <div class="text-sm text-yellow-700">For development and testing purposes only</div>
+                </div>
+              </div>
+              <button id="skipPayment" class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition-colors font-medium">
+                Skip Payment & Create Account
+              </button>
+              <div class="text-xs text-yellow-700 mt-2">
+                ⚠️ This will create an account without payment verification
+              </div>
+            </div>
+          `;
+        } else {
+          // Job seeker payment options (existing)
+          orderSummary.innerHTML = `
+            <div class="flex justify-between items-center mb-2">
+              <span>Bronze Verification Package</span>
+              <span class="font-semibold">R299</span>
+            </div>
+            <div class="flex justify-between items-center text-sm text-gray-600 mb-2">
+              <span>Processing Fee</span>
+              <span>R15</span>
+            </div>
+            <div class="border-t pt-2 flex justify-between items-center font-bold">
+              <span>Total</span>
+              <span class="text-primary">R314</span>
+            </div>
+          `;
+          
+          paymentOptions.innerHTML = `
+            <!-- PayFast (Default) -->
+            <button id="payfastBtn" class="w-full p-4 border-2 border-primary bg-primary/5 rounded-lg hover:bg-primary/10 transition-colors text-left">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                  <i class="ri-bank-card-line text-2xl text-primary mr-3"></i>
+                  <div>
+                    <div class="font-semibold text-gray-900">Pay with Card / EFT</div>
+                    <div class="text-sm text-gray-600">Visa, Mastercard, EFT (PayFast)</div>
+                  </div>
+                </div>
+                <span class="bg-primary text-white px-2 py-1 rounded text-xs font-medium">RECOMMENDED</span>
+              </div>
+            </button>
+
+            <!-- Ozow Instant EFT -->
+            <button id="ozowPay" class="w-full p-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-left">
+              <div class="flex items-center">
+                <i class="ri-bank-line text-2xl text-green-600 mr-3"></i>
+                <div>
+                  <div class="font-semibold text-gray-900">Pay with Instant EFT</div>
+                  <div class="text-sm text-gray-600">Direct bank transfer (Ozow)</div>
+                </div>
+              </div>
+            </button>
+
+            <!-- Zapper QR Code -->
+            <div class="border border-gray-300 rounded-lg p-4">
+              <div class="flex items-center mb-3">
+                <i class="ri-qr-code-line text-2xl text-purple-600 mr-3"></i>
+                <div>
+                  <div class="font-semibold text-gray-900">Pay with Zapper / Wallet QR</div>
+                  <div class="text-sm text-gray-600">Scan to pay with your mobile wallet</div>
+                </div>
+              </div>
+              <div id="zapper-qr" class="flex justify-center bg-white border border-gray-200 rounded p-4">
+                <!-- QR Code placeholder -->
+                <div class="w-32 h-32 bg-gray-100 border-2 border-dashed border-gray-300 rounded flex items-center justify-center">
+                  <div class="text-center">
+                    <i class="ri-qr-code-line text-3xl text-gray-400 mb-2"></i>
+                    <div class="text-xs text-gray-500">QR Code will appear here</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Manual Bank Transfer -->
+            <div class="border border-gray-300 rounded-lg p-4">
+              <div class="flex items-center mb-3">
+                <i class="ri-building-line text-2xl text-blue-600 mr-3"></i>
+                <div>
+                  <div class="font-semibold text-gray-900">Direct Bank Transfer</div>
+                  <div class="text-sm text-gray-600">Transfer directly to our bank account</div>
+                </div>
+              </div>
+              <div class="bg-gray-50 rounded p-3 text-sm">
+                <div class="grid grid-cols-2 gap-2 mb-2">
+                  <div class="font-medium">Bank:</div>
+                  <div>First National Bank</div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 mb-2">
+                  <div class="font-medium">Account Name:</div>
+                  <div>Verify (Pty) Ltd</div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 mb-2">
+                  <div class="font-medium">Account Number:</div>
+                  <div>1234567890</div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 mb-2">
+                  <div class="font-medium">Branch Code:</div>
+                  <div>250655</div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 mb-3">
+                  <div class="font-medium">Reference:</div>
+                  <div class="font-mono bg-yellow-100 px-2 py-1 rounded">VER-2025-001</div>
+                </div>
+                <div class="text-xs text-gray-600 border-t pt-2">
+                  <strong>Important:</strong> Please use the reference number above and email proof of payment to payments@verify.co.za
+                </div>
+              </div>
+            </div>
+
+            <!-- Testing Skip Payment Option -->
+            <div class="border-2 border-yellow-300 bg-yellow-50 rounded-lg p-4">
+              <div class="flex items-center mb-3">
+                <i class="ri-tools-line text-2xl text-yellow-600 mr-3"></i>
+                <div>
+                  <div class="font-semibold text-gray-900">Skip Payment (Testing Mode)</div>
+                  <div class="text-sm text-yellow-700">For development and testing purposes only</div>
+                </div>
+              </div>
+              <button id="skipPayment" class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition-colors font-medium">
+                Skip Payment & Create Account
+              </button>
+              <div class="text-xs text-yellow-700 mt-2">
+                ⚠️ This will create an account without payment verification
+              </div>
+            </div>
+          `;
+        }
+      }
+      
+      function validateRegistrationForm(form) {
+        // Add your form validation logic here
+        // For now, just return true to proceed to payment
+        return true;
+      }
+      
+      function generateQRCode() {
+        // Generate QR code for Zapper payment
+        const qrContainer = document.getElementById('zapper-qr');
+        // This would integrate with your actual QR code generation service
+        qrContainer.innerHTML = `
+          <div class="w-32 h-32 bg-white border rounded flex items-center justify-center">
+            <div class="text-center">
+              <i class="ri-qr-code-line text-4xl text-purple-600 mb-1"></i>
+              <div class="text-xs text-gray-600">Scan with Zapper</div>
+            </div>
+          </div>
+        `;
+      }
+      
+      // Payment Method Handlers
+      document.addEventListener('DOMContentLoaded', function() {
+        // Event delegation for dynamically added payment buttons
+        document.addEventListener('click', function(e) {
+          if (e.target.id === 'payfastBtn' || e.target.closest('#payfastBtn')) {
+            // Redirect to PayFast payment gateway
+            console.log('Processing PayFast payment...');
+            alert('Redirecting to PayFast payment gateway...');
+          }
+          
+          if (e.target.id === 'ozowPay' || e.target.closest('#ozowPay')) {
+            // Redirect to Ozow payment gateway
+            console.log('Processing Ozow payment...');
+            alert('Redirecting to Ozow instant EFT...');
+          }
+          
+          if (e.target.id === 'applePay' || e.target.closest('#applePay')) {
+            // Apple Pay integration
+            console.log('Processing Apple Pay...');
+            alert('Redirecting to Apple Pay...');
+          }
+          
+          if (e.target.id === 'googlePay' || e.target.closest('#googlePay')) {
+            // Google Pay integration
+            console.log('Processing Google Pay...');
+            alert('Redirecting to Google Pay...');
+          }
+          
+          if (e.target.id === 'skipPayment' || e.target.closest('#skipPayment')) {
+            // Skip payment for testing
+            handleSkipPayment();
+          }
+        });
+      });
+      
+      function handleSkipPayment() {
+        // Show confirmation dialog
+        if (confirm('⚠️ TESTING MODE: This will create an account without payment. Continue?')) {
+          // Simulate successful account creation
+          closeModal('paymentModal');
+          
+          // Show success message
+          alert('✅ Account created successfully (Testing Mode)!\n\nIn production, this would redirect to a success page or dashboard.');
+          
+          // You can redirect to a success page or dashboard here
+          // window.location.href = '/dashboard.html';
+          
+          console.log('Account created in testing mode');
+        }
+      }
+      
       // Close modal when clicking outside
       window.addEventListener('click', function(e) {
         if (e.target.classList.contains('bg-black') && e.target.classList.contains('bg-opacity-50')) {
-          const modals = ['termsModal', 'privacyModal'];
+          const modals = ['paymentModal', 'termsModal', 'privacyModal'];
           modals.forEach(modalId => {
             if (!document.getElementById(modalId).classList.contains('hidden')) {
               closeModal(modalId);
