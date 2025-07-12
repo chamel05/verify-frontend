@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rejected Candidates | Verify</title>
+
+    <!-- Tailwind & Icons -->
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: { primary: "#F50302", secondary: "#4D4D4D" },
+            borderRadius: { button: "8px" },
+          },
+        },
+      };
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
+    />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Futura:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Supabase client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+    <style>
+      body {
+        font-family: 'Futura', sans-serif;
+        background-color: #f8fafc;
+      }
+      .tier-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .tier-bronze { background-color: #A6A6A6; color: white; }
+      .tier-silver { background-color: #4D4D4D; color: white; }
+      .tier-gold   { background-color: #F50302; color: white; }
+
+      /* Date-picker tweak */
+      .date-range-picker {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 10;
+        width: 100%;
+        max-width: 300px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        padding: 16px;
+        margin-top: 4px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Header + Nav -->
+    <header class="bg-white shadow-sm">
+      <div class="flex items-center justify-between px-6 py-4">
+        <a href="/dashboard"><img src="https://static.readdy.ai/image/…jpeg" alt="Verify" class="h-8" /></a>
+        <div class="flex items-center space-x-6">
+          <div class="flex items-center bg-gray-100 rounded-full px-3 py-1">
+            <span class="text-primary font-semibold mr-2">12</span>
+            <span class="text-gray-600 text-sm">Credits</span>
+          </div>
+          <button class="flex items-center space-x-2">
+            <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
+              <i class="ri-user-line text-gray-600"></i>
+            </div>
+            <span class="text-gray-700">James Wilson</span>
+            <i class="ri-arrow-down-s-line text-gray-500"></i>
+          </button>
+        </div>
+      </div>
+
+      <nav class="bg-white border-t border-gray-200">
+        <div class="flex items-center justify-between px-6">
+          <div class="flex space-x-1">
+            <a href="/dashboard" class="px-4 py-3 text-gray-600 hover:text-gray-900 flex items-center">
+              <i class="ri-dashboard-line mr-2"></i> Dashboard
+            </a>
+            <a href="/saved-candidates" class="px-4 py-3 text-gray-600 hover:text-gray-900 flex items-center">
+              <i class="ri-bookmark-line mr-2"></i> Saved Candidates
+            </a>
+            <a href="/rejected-candidates" class="px-4 py-3 text-primary border-b-2 border-primary font-medium flex items-center">
+              <i class="ri-close-circle-fill mr-2"></i> Rejected
+            </a>
+            <a href="/credits" class="px-4 py-3 text-gray-600 hover:text-gray-900 flex items-center">
+              <i class="ri-history-line mr-2"></i> Credits
+            </a>
+            <a href="/settings" class="px-4 py-3 text-gray-600 hover:text-gray-900 flex items-center">
+              <i class="ri-settings-4-line mr-2"></i> Settings
+            </a>
+          </div>
+          <div class="flex items-center space-x-4">
+            <button class="text-gray-600 hover:text-gray-900"><i class="ri-notification-3-line text-xl"></i></button>
+            <button class="text-gray-600 hover:text-gray-900"><i class="ri-question-line text-xl"></i></button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-6 max-w-7xl">
+      <!-- Page Header -->
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+        <div>
+          <h1 class="text-2xl font-semibold text-gray-900">Rejected Candidates</h1>
+          <p class="text-gray-600 mt-1">View and manage candidates you’ve previously rejected</p>
+        </div>
+        <a href="/saved-candidates"
+           class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-button flex items-center justify-center space-x-2 hover:bg-gray-50 transition-colors mt-4 md:mt-0">
+          <i class="ri-bookmark-line"></i><span>View Saved Candidates</span>
+        </a>
+      </div>
+
+      <!-- Filters -->
+      <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4">
+          <h2 class="text-lg font-medium text-gray-900">Filters</h2>
+          <div class="flex space-x-2 mt-2 sm:mt-0">
+            <button id="rejected-clearFiltersBtn" class="text-primary hover:text-red-600 text-sm flex items-center">
+              <i class="ri-refresh-line mr-1"></i> Clear All
+            </button>
+            <button id="rejected-applyFiltersBtn" class="bg-primary text-white px-4 py-2 rounded-button text-sm hover:bg-red-600 transition-colors">
+              <i class="ri-filter-3-line mr-1"></i> Apply
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+          <!-- Search -->
+          <div class="relative">
+            <i class="ri-search-line absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            <input id="rejected-searchInput" type="text" placeholder="Search by name or position"
+                   class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary" />
+          </div>
+
+          <!-- Date Range -->
+          <div class="relative">
+            <button id="rejected-dateRangeDropdown"
+                    class="w-full flex items-center justify-between border border-gray-300 rounded px-4 py-2 bg-white">
+              <span><i class="ri-calendar-line text-gray-400 mr-2"></i><span id="rejected-dateRangeText">Rejection Date</span></span>
+              <i class="ri-arrow-down-s-line text-gray-400"></i>
+            </button>
+            <div id="rejected-dateRangePicker" class="date-range-picker hidden">
+              <!-- Simplified calendar header (generate dynamically if you like) -->
+              <div class="flex justify-between items-center mb-4">
+                <button class="text-gray-700 hover:text-primary"><i class="ri-arrow-left-s-line"></i></button>
+                <span class="font-medium" id="rejected-calendarMonth">June 2025</span>
+                <button class="text-gray-700 hover:text-primary"><i class="ri-arrow-right-s-line"></i></button>
+              </div>
+              <!-- Days grid (for brevity, only layout—populate via JS if you need full date-pick) -->
+              <div class="grid grid-cols-7 gap-1 text-xs text-gray-500 mb-2">
+                <div class="text-center">Su</div><div class="text-center">Mo</div><div class="text-center">Tu</div>
+                <div class="text-center">We</div><div class="text-center">Th</div><div class="text-center">Fr</div><div class="text-center">Sa</div>
+              </div>
+              <div class="grid grid-cols-7 gap-1 text-sm text-gray-700 mb-4">
+                <!-- Example static days; ideally generate 1–30 dynamically -->
+                <div class="text-gray-300">30</div><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div>
+                <!-- … etc … -->
+              </div>
+              <div class="flex justify-end space-x-2">
+                <button id="rejected-cancelDate" class="text-gray-600 text-sm hover:text-primary">Cancel</button>
+                <button id="rejected-applyDate" class="text-primary text-sm font-medium">Apply</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Reason -->
+          <div class="relative">
+            <button id="rejected-reasonDropdown"
+                    class="w-full flex items-center justify-between border border-gray-300 rounded px-4 py-2 bg-white">
+              <span><i class="ri-file-list-line text-gray-400 mr-2"></i><span id="rejected-reasonText">Rejection Reason</span></span>
+              <i class="ri-arrow-down-s-line text-gray-400"></i>
+            </button>
+            <div id="rejected-reasonMenu" class="absolute top-full left-0 z-10 bg-white border border-gray-200 rounded mt-1 max-h-48 overflow-y-auto hidden">
+              <div class="px-4 py-2 hover:bg-gray-50 cursor-pointer" data-value="">All Reasons</div>
+              <div class="px-4 py-2 hover:bg-gray-50 cursor-pointer" data-value="Not Qualified">Not Qualified</div>
+              <div class="px-4 py-2 hover:bg-gray-50 cursor-pointer" data-value="Insufficient Experience">Insufficient Experience</div>
+              <div class="px-4 py-2 hover:bg-gray-50 cursor-pointer" data-value="Salary Expectations Too High">Salary Too High</div>
+              <div class="px-4 py-2 hover:bg-gray-50 cursor-pointer" data-value="Location Mismatch">Location Mismatch</div>
+            </div>
+          </div>
+
+          <!-- Position -->
+          <div class="relative">
+            <button id="rejected-positionDropdown"
+                    class="w-full flex items-center justify-between border border-gray-300 rounded px-4 py-2 bg-white">
+              <span><i class="ri-briefcase-line text-gray-400 mr-2"></i><span id="rejected-positionText">Position</span></span>
+              <i class="ri-arrow-down-s-line text-gray-400"></i>
+            </button>
+            <div id="rejected-positionMenu" class="absolute top-full left-0 z-10 bg-white border border-gray-200 rounded mt-1 max-h-48 overflow-y-auto hidden">
+              <div class="px-4 py-2 hover:bg-gray-50 cursor-pointer" data-value="">All Positions</div>
+              <div class="px-4 py-2 hover:bg-gray-50 cursor-pointer" data-value="Domestic Worker">Domestic Worker</div>
+              <div class="px-4 py-2 hover:bg-gray-50 cursor-pointer" data-value="Nanny">Nanny</div>
+              <div class="px-4 py-2 hover:bg-gray-50 cursor-pointer" data-value="Gardener">Gardener</div>
+              <div class="px-4 py-2 hover:bg-gray-50 cursor-pointer" data-value="Driver">Driver</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Candidate List / Empty State -->
+      <div id="rejected-candidateList" class="space-y-4">
+        <!-- dynamically injected -->
+      </div>
+      <div id="rejected-emptyState" class="hidden text-center py-12">
+        <i class="ri-inbox-line text-5xl text-gray-300 mb-4"></i>
+        <h3 class="text-xl font-medium text-gray-900 mb-2">No Rejected Candidates</h3>
+        <p class="text-gray-600 mb-4">You haven’t rejected anyone yet.</p>
+        <a href="/saved-candidates" class="bg-primary text-white px-6 py-2 rounded-button">View Saved Candidates</a>
+      </div>
+
+      <!-- (Static pagination left here for your future enhancement) -->
+      <nav class="flex justify-center mt-6 space-x-1">
+        <button disabled class="px-3 py-2 rounded text-gray-400 cursor-not-allowed"><i class="ri-arrow-left-s-line"></i></button>
+        <button class="px-3 py-2 rounded bg-primary text-white">1</button>
+        <button class="px-3 py-2 rounded text-gray-700 hover:bg-gray-100">2</button>
+        <button class="px-3 py-2 rounded text-gray-700 hover:bg-gray-100">3</button>
+        <button class="px-3 py-2 rounded text-gray-700 hover:bg-gray-100"><i class="ri-arrow-right-s-line"></i></button>
+      </nav>
+    </main>
+
+    <!-- Support Chat Widget (unchanged) -->
+    <div id="supportWidget" class="fixed bottom-6 right-6 z-40">
+      <button id="openChatBtn" class="w-14 h-14 bg-primary rounded-full shadow-lg flex items-center justify-center hover:bg-red-600 transition-colors">
+        <i class="ri-customer-service-2-line text-white text-2xl"></i>
+      </button>
+    </div>
+    <div id="chatWindow" class="fixed bottom-24 right-6 w-80 bg-white rounded-lg shadow-xl overflow-hidden z-40 hidden">
+      <div class="bg-primary text-white p-4 flex justify-between items-center">
+        <h3 class="font-medium">Support Chat</h3>
+        <button id="closeChatBtn" class="text-white"><i class="ri-close-line"></i></button>
+      </div>
+      <div id="chatMessages" class="h-80 overflow-y-auto p-4 bg-gray-50">
+        <div class="flex mb-4">
+          <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+            <i class="ri-customer-service-2-line text-white"></i>
+          </div>
+          <div class="ml-3 bg-white p-3 rounded-lg shadow-sm max-w-[85%]">
+            <p class="text-sm text-gray-700">Hi there! How can I help with rejected candidates today?</p>
+          </div>
+        </div>
+        <div class="mb-4 text-xs text-gray-500 text-center">Quick questions</div>
+        <div class="flex flex-wrap gap-2">
+          <button class="bg-white text-gray-700 text-xs py-1 px-3 rounded-full border border-gray-200 hover:bg-gray-50">How do I restore?</button>
+          <button class="bg-white text-gray-700 text-xs py-1 px-3 rounded-full border border-gray-200 hover:bg-gray-50">After restoration?</button>
+        </div>
+      </div>
+      <div class="p-3 border-t border-gray-200">
+        <div class="relative">
+          <input type="text" placeholder="Type your message..."
+                 class="w-full border border-gray-300 rounded-full py-2 pl-4 pr-10 text-sm focus:ring-2 focus:ring-primary focus:border-primary" />
+          <button class="absolute right-2 top-1/2 transform -translate-y-1/2 text-primary hover:text-red-600">
+            <i class="ri-send-plane-fill"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Supabase + page logic -->
+    <script>
+      // replace these with your real env values
+      const SUPABASE_URL = 'https://dvbbvjlwmkqqyfqdbupg.supabase.co';
+      const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.…pylAY';
+      const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+      document.addEventListener('DOMContentLoaded', async () => {
+        // get current user
+        const { data: { user } } = await supabase.auth.getUser();
+        const employerId = user?.id;
+        let dateRange = { from: null, to: null };
+
+        // cache DOM
+        const listEl = document.getElementById('rejected-candidateList');
+        const emptyEl = document.getElementById('rejected-emptyState');
+        const searchInput = document.getElementById('rejected-searchInput');
+        const dateBtn = document.getElementById('rejected-dateRangeDropdown');
+        const dateText = document.getElementById('rejected-dateRangeText');
+        const drPicker = document.getElementById('rejected-dateRangePicker');
+        const applyDate = document.getElementById('rejected-applyDate');
+        const cancelDate = document.getElementById('rejected-cancelDate');
+        const reasonBtn = document.getElementById('rejected-reasonDropdown');
+        const reasonText = document.getElementById('rejected-reasonText');
+        const reasonMenu = document.getElementById('rejected-reasonMenu');
+        const posBtn = document.getElementById('rejected-positionDropdown');
+        const posText = document.getElementById('rejected-positionText');
+        const posMenu = document.getElementById('rejected-positionMenu');
+        const clearBtn = document.getElementById('rejected-clearFiltersBtn');
+        const applyBtn = document.getElementById('rejected-applyFiltersBtn');
+
+        // dropdown toggles
+        dateBtn.addEventListener('click', e => { e.stopPropagation(); drPicker.classList.toggle('hidden'); });
+        reasonBtn.addEventListener('click', e => { e.stopPropagation(); reasonMenu.classList.toggle('hidden'); });
+        posBtn.addEventListener('click', e => { e.stopPropagation(); posMenu.classList.toggle('hidden'); });
+        document.addEventListener('click', () => { drPicker.classList.add('hidden'); reasonMenu.classList.add('hidden'); posMenu.classList.add('hidden'); });
+
+        // date apply/cancel (example: picks "today")
+        applyDate.addEventListener('click', () => {
+          const today = new Date().toISOString().split('T')[0];
+          dateRange = { from: today, to: today };
+          dateText.textContent = today;
+          drPicker.classList.add('hidden');
+        });
+        cancelDate.addEventListener('click', () => {
+          dateRange = { from: null, to: null };
+          dateText.textContent = 'Rejection Date';
+          drPicker.classList.add('hidden');
+        });
+
+        // reason & position selection
+        reasonMenu.querySelectorAll('[data-value]').forEach(el => {
+          el.addEventListener('click', () => {
+            reasonText.textContent = el.textContent;
+            reasonMenu.classList.add('hidden');
+          });
+        });
+        posMenu.querySelectorAll('[data-value]').forEach(el => {
+          el.addEventListener('click', () => {
+            posText.textContent = el.textContent;
+            posMenu.classList.add('hidden');
+          });
+        });
+
+        // clear filters
+        clearBtn.addEventListener('click', () => {
+          searchInput.value = '';
+          dateRange = { from: null, to: null };
+          dateText.textContent = 'Rejection Date';
+          reasonText.textContent = 'Rejection Reason';
+          posText.textContent = 'Position';
+          loadCandidates();
+        });
+
+        // central loader
+        async function loadCandidates() {
+          listEl.innerHTML = '';
+          emptyEl.classList.add('hidden');
+
+          // build query
+          let q = supabase
+            .from('rejected_candidates')
+            .select('*')
+            .eq('employer_id', employerId);
+
+          // text filter
+          const txt = searchInput.value.trim();
+          if (txt) {
+            q = q.or(`name.ilike.%${txt}%,position.ilike.%${txt}%`);
+          }
+          // date filter
+          if (dateRange.from && dateRange.to) {
+            q = q.gte('rejected_at', dateRange.from).lte('rejected_at', dateRange.to);
+          }
+          // reason
+          if (reasonText.textContent !== 'Rejection Reason') {
+            q = q.eq('rejection_reason', reasonText.textContent);
+          }
+          // position
+          if (posText.textContent !== 'Position') {
+            q = q.eq('position', posText.textContent);
+          }
+
+          // fetch
+          const { data, error } = await q.order('rejected_at', { ascending: false });
+          if (error) return console.error(error);
+          if (!data.length) {
+            emptyEl.classList.remove('hidden');
+            return;
+          }
+
+          data.forEach(c => {
+            const card = document.createElement('div');
+            card.className = 'bg-white rounded-lg shadow-sm p-4 hover:shadow-md transition-shadow';
+            card.innerHTML = `
+              <div class="flex flex-col md:flex-row">
+                <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center text-xl font-semibold text-gray-600 mr-4 mb-4 md:mb-0">
+                  ${c.name.split(' ').map(n=>n[0]).join('')}
+                </div>
+                <div class="flex-1">
+                  <div class="flex justify-between items-start mb-2">
+                    <div>
+                      <h3 class="text-lg font-medium text-gray-900">${c.name}</h3>
+                      <p class="text-gray-600">${c.position}</p>
+                    </div>
+                    <span class="tier-badge tier-${c.verification_level===3?'gold':c.verification_level===2?'silver':'bronze'}">
+                      ${c.verification_level===3?'Gold':c.verification_level===2?'Silver':'Bronze'} Verified
+                    </span>
+                  </div>
+                  <div class="flex flex-wrap gap-3 mb-3 text-gray-600 text-sm">
+                    <div class="flex items-center"><i class="ri-map-pin-line mr-1"></i>${c.location}</div>
+                    <div class="flex items-center"><i class="ri-time-line mr-1"></i>${c.experience}+ yrs</div>
+                    <div class="flex items-center"><i class="ri-calendar-close-line mr-1"></i>${new Date(c.rejected_at).toLocaleDateString()}</div>
+                  </div>
+                  <div class="mb-3 text-sm">
+                    <strong>Reason:</strong> ${c.rejection_reason}
+                  </div>
+                  <div class="flex flex-col sm:flex-row gap-3">
+                    <a href="/profile/${c.candidate_id}" class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-button flex items-center space-x-2 hover:bg-gray-50">
+                      <i class="ri-eye-line"></i><span>View Profile</span>
+                    </a>
+                    <button data-id="${c.id}" class="restoreBtn bg-white border border-primary text-primary px-4 py-2 rounded-button flex items-center space-x-2 hover:bg-red-50">
+                      <i class="ri-refresh-line"></i><span>Restore Candidate</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            `;
+            listEl.append(card);
+          });
+        }
+
+        // initial load
+        await loadCandidates();
+
+        // realtime subscribe
+        supabase
+          .channel('public:rejected_candidates')
+          .on('postgres_changes',
+              { event: '*', schema: 'public', table: 'rejected_candidates', filter: `employer_id=eq.${employerId}` },
+              () => loadCandidates()
+          )
+          .subscribe();
+
+        // wire “Apply Filters”
+        applyBtn.addEventListener('click', loadCandidates);
+
+        // restore button handler
+        document.body.addEventListener('click', async e => {
+          if (e.target.closest('.restoreBtn')) {
+            const btn = e.target.closest('.restoreBtn');
+            const id = btn.dataset.id;
+            await supabase
+              .from('rejected_candidates')
+              .delete()
+              .eq('id', id);
+            // optionally move to saved_candidates
+            loadCandidates();
+          }
+        });
+
+        // chat widget
+        document.getElementById('openChatBtn').addEventListener('click', () => {
+          document.getElementById('chatWindow').classList.toggle('hidden');
+        });
+        document.getElementById('closeChatBtn').addEventListener('click', () => {
+          document.getElementById('chatWindow').classList.add('hidden');
+        });
+      });
+    </script>
+  </body>
+</html>

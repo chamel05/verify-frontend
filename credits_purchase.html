@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Purchase Credits | Verify</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: { primary: "#F50302", secondary: "#4D4D4D" },
+            borderRadius: {
+              button: "8px",
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
+    />
+    <style>
+      body {
+        font-family: 'Futura', sans-serif;
+        background-color: #f8fafc;
+      }
+      .btn {
+        @apply w-full py-2 rounded-button flex items-center justify-center space-x-2 transition-colors;
+      }
+      .btn-primary { @apply bg-primary text-white hover:bg-red-600; }
+      .btn-outline { @apply bg-white border border-primary text-primary hover:bg-red-50; }
+      .qr-box {
+        @apply p-4 border border-gray-200 rounded-lg text-center;
+      }
+    </style>
+  </head>
+  <!-- Replace YOUR_EMPLOYER_ID with the real employer ID -->
+  <body data-employer-id="YOUR_EMPLOYER_ID">
+    <!-- Header & Nav -->
+    <header class="bg-white shadow-sm">
+      <div class="flex items-center justify-between px-6 py-4">
+        <a href="/dashboard" class="flex items-center">
+          <img
+            src="https://static.readdy.ai/image/783dd8c3d2d1f38f9648f46144ac17f1/bc2b69f3a823a0bfcee48284d9c2d098.jpeg"
+            alt="Verify"
+            class="h-8"
+          />
+        </a>
+        <div class="flex items-center space-x-6">
+          <div
+            id="balanceBanner"
+            class="flex items-center bg-gray-100 rounded-full px-3 py-1"
+          >
+            <span id="balanceDisplay" class="text-primary font-semibold mr-2">0</span>
+            <span class="text-gray-600 text-sm">credits</span>
+          </div>
+          <div class="relative">
+            <button class="flex items-center space-x-2">
+              <div
+                class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center"
+              >
+                <i class="ri-user-line text-gray-600"></i>
+              </div>
+              <span class="text-gray-700">James Wilson</span>
+              <i class="ri-arrow-down-s-line text-gray-500"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <nav class="bg-white border-t border-gray-200">
+        <div class="flex items-center justify-between px-6">
+          <div class="flex space-x-1">
+            <a
+              href="/dashboard"
+              class="px-4 py-3 text-gray-600 hover:text-gray-900 flex items-center"
+            >
+              <i class="ri-dashboard-line mr-2"></i>Dashboard
+            </a>
+            <a
+              href="/saved"
+              class="px-4 py-3 text-gray-600 hover:text-gray-900 flex items-center"
+            >
+              <i class="ri-bookmark-line mr-2"></i>Saved
+            </a>
+            <a
+              href="/rejected"
+              class="px-4 py-3 text-gray-600 hover:text-gray-900 flex items-center"
+            >
+              <i class="ri-close-circle-fill mr-2"></i>Rejected
+            </a>
+            <a
+              href="/credits"
+              class="px-4 py-3 text-primary border-b-2 border-primary font-medium flex items-center"
+            >
+              <i class="ri-history-line mr-2"></i>Credits
+            </a>
+            <a
+              href="/settings"
+              class="px-4 py-3 text-gray-600 hover:text-gray-900 flex items-center"
+            >
+              <i class="ri-settings-4-line mr-2"></i>Settings
+            </a>
+          </div>
+          <div class="flex items-center space-x-4">
+            <button class="text-gray-600 hover:text-gray-900">
+              <i class="ri-notification-3-line text-xl"></i>
+            </button>
+            <button class="text-gray-600 hover:text-gray-900">
+              <i class="ri-question-line text-xl"></i>
+            </button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main -->
+    <main class="container mx-auto px-4 py-6 max-w-3xl">
+      <!-- Page Header -->
+      <div
+        class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6"
+      >
+        <div>
+          <h1 class="text-2xl font-semibold text-gray-900">Buy Credits</h1>
+          <p class="text-gray-600 mt-1">
+            Choose your package and complete payment
+          </p>
+        </div>
+      </div>
+
+      <!-- Credit Packages -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <!-- Starter -->
+        <div class="bg-white border border-gray-200 rounded-lg overflow-hidden">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Starter</h3>
+            <div class="flex items-baseline mb-4">
+              <span class="text-3xl font-bold">R199</span>
+              <span class="text-gray-500 ml-1">/20 credits</span>
+            </div>
+            <ul class="space-y-2 mb-6 text-gray-700">
+              <li><i class="ri-check-line text-green-500 mr-2"></i>R9.95/credit</li>
+              <li><i class="ri-check-line text-green-500 mr-2"></i>Valid 30 days</li>
+            </ul>
+          </div>
+        </div>
+        <!-- Professional -->
+        <div class="bg-white border-2 border-primary rounded-lg overflow-hidden relative">
+          <div class="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-3 py-1 rounded-bl">
+            MOST POPULAR
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Professional</h3>
+            <div class="flex items-baseline mb-4">
+              <span class="text-3xl font-bold">R499</span>
+              <span class="text-gray-500 ml-1">/60 credits</span>
+            </div>
+            <ul class="space-y-2 mb-6 text-gray-700">
+              <li><i class="ri-check-line text-green-500 mr-2"></i>R8.32/credit</li>
+              <li><i class="ri-check-line text-green-500 mr-2"></i>Valid 60 days</li>
+              <li><i class="ri-check-line text-green-500 mr-2"></i>Priority support</li>
+            </ul>
+          </div>
+        </div>
+        <!-- Enterprise -->
+        <div class="bg-white border border-gray-200 rounded-lg overflow-hidden">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Enterprise</h3>
+            <div class="flex items-baseline mb-4">
+              <span class="text-3xl font-bold">R999</span>
+              <span class="text-gray-500 ml-1">/150 credits</span>
+            </div>
+            <ul class="space-y-2 mb-6 text-gray-700">
+              <li><i class="ri-check-line text-green-500 mr-2"></i>R6.66/credit</li>
+              <li><i class="ri-check-line text-green-500 mr-2"></i>Valid 90 days</li>
+              <li><i class="ri-check-line text-green-500 mr-2"></i>Priority support</li>
+              <li><i class="ri-check-line text-green-500 mr-2"></i>Advanced analytics</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payment Options -->
+      <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
+        <h2 class="text-lg font-medium text-gray-900 mb-4">Complete Payment</h2>
+
+        <!-- Stripe (Card & Apple Pay) -->
+        <button id="stripePayBtn" class="btn btn-primary mb-4">
+          <i class="ri-credit-card-line"></i>
+          <span>Pay with Card or Apple Pay</span>
+        </button>
+
+        <!-- Ozow (EFT) -->
+        <button id="ozowPayBtn" class="btn btn-outline mb-4">
+          <i class="ri-bank-line"></i>
+          <span>Pay via Ozow (EFT)</span>
+        </button>
+
+        <!-- Zapper (QR) -->
+        <div class="qr-box">
+          <p class="mb-2 font-medium">Pay with Zapper</p>
+          <div id="zapperQrCode">
+            <!-- QR code will be injected here -->
+          </div>
+        </div>
+
+        <!-- TODO:  
+          - Implement Ozow/EFT callback handling  
+          - Generate Zapper QR code via its JS SDK  
+          - Hook up Stripe Elements + Payment Request (Apple Pay)  
+        -->
+      </div>
+
+      <!-- FAQ -->
+      <div class="bg-white rounded-lg shadow-sm p-6">
+        <h3 class="text-lg font-medium text-gray-900 mb-4">Need Help?</h3>
+        <div class="space-y-4">
+          <div class="text-sm text-gray-600">
+            • Each payment option will redirect you through a secure flow.<br/>
+            • Your credits balance updates in real time.
+          </div>
+          <a href="/settings#payment" class="text-primary text-sm font-medium hover:underline">
+            Manage payment methods &rarr;
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <!-- Supabase & Tab/FAQ Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.13.0/dist/bundle.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // --- Supabase Init (real-time balance) ---
+        const SUPA_URL = "https://YOUR_SUPABASE_URL";
+        const SUPA_KEY = "YOUR_SUPABASE_ANON_KEY";
+        const supabase = supabaseJs.createClient(SUPA_URL, SUPA_KEY);
+        const employerId = document.body.dataset.employerId;
+        const balanceDisplay = document.getElementById("balanceDisplay");
+
+        function updateBalance(bal) {
+          balanceDisplay.textContent = Math.max(0, bal);
+        }
+
+        supabase
+          .from("employers")
+          .select("credits_balance")
+          .eq("id", employerId)
+          .single()
+          .then(({ data }) => updateBalance(data.credits_balance));
+
+        supabase
+          .channel(`public:employers:id=eq.${employerId}`)
+          .on("postgres_changes", {
+            event: "UPDATE", schema: "public", table: "employers",
+            filter: `id=eq.${employerId}`
+          }, (msg) => updateBalance(msg.new.credits_balance))
+          .subscribe();
+
+        // --- Stub Payment Handlers ---
+        document.getElementById("stripePayBtn").addEventListener("click", () => {
+          // TODO: launch Stripe Elements / PaymentRequest
+          alert("Stripe flow placeholder");
+        });
+        document.getElementById("ozowPayBtn").addEventListener("click", () => {
+          // TODO: redirect to Ozow checkout
+          alert("Ozow flow placeholder");
+        });
+        // TODO: initialize Zapper JS SDK and render QR in #zapperQrCode
+      });
+    </script>
+  </body>
+</html>

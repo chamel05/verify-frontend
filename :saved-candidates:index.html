@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Saved Candidates | Verify</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: { primary: "#F50302", secondary: "#4D4D4D" },
+            borderRadius: {
+              none: "0px",
+              sm: "4px",
+              DEFAULT: "8px",
+              md: "12px",
+              lg: "16px",
+              xl: "20px",
+              "2xl": "24px",
+              "3xl": "32px",
+              full: "9999px",
+              button: "8px",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Futura:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
+    />
+    <style>
+      :where([class^="ri-"])::before { content: "\f3c2"; }
+      body {
+        font-family: 'Futura', sans-serif;
+        background-color: #f8fafc;
+      }
+      input[type="number"]::-webkit-inner-spin-button,
+      input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      .custom-checkbox {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 18px;
+        height: 18px;
+        border: 2px solid #d1d5db;
+        border-radius: 4px;
+        outline: none;
+        cursor: pointer;
+        position: relative;
+      }
+      .custom-checkbox:checked {
+        background-color: #F50302;
+        border-color: #F50302;
+      }
+      .custom-checkbox:checked::after {
+        content: '';
+        position: absolute;
+        top: 2px;
+        left: 5px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+      .custom-radio {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 18px;
+        height: 18px;
+        border: 2px solid #d1d5db;
+        border-radius: 50%;
+        outline: none;
+        cursor: pointer;
+        position: relative;
+      }
+      .custom-radio:checked {
+        border-color: #F50302;
+      }
+      .custom-radio:checked::after {
+        content: '';
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #F50302;
+      }
+      .custom-switch {
+        position: relative;
+        display: inline-block;
+        width: 44px;
+        height: 22px;
+      }
+      .custom-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+        border-radius: 34px;
+      }
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        width: 18px;
+        left: 3px;
+        bottom: 2px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+      }
+      input:checked + .slider {
+        background-color: #F50302;
+      }
+      input:checked + .slider:before {
+        transform: translateX(20px);
+      }
+      .tier-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .tier-bronze {
+        background-color: #A6A6A6;
+        color: white;
+      }
+      .tier-silver {
+        background-color: #4D4D4D;
+        color: white;
+      }
+      .tier-gold {
+        background-color: #F50302;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+      <div class="flex items-center justify-between px-6 py-4">
+        <div class="flex items-center">
+          <a href="#" class="text-2xl">
+            <img
+              src="https://static.readdy.ai/image/783dd8c3d2d1f38f9648f46144ac17f1/bc2b69f3a823a0bfcee48284d9c2d098.jpeg"
+              alt="Verify"
+              class="h-8"
+            />
+          </a>
+        </div>
+        <div class="flex items-center space-x-6">
+          <div class="flex items-center bg-gray-100 rounded-full px-3 py-1">
+            <span class="text-primary font-semibold mr-2">12</span>
+            <span class="text-gray-600 text-sm">Credits</span>
+          </div>
+          <div class="relative">
+            <button class="flex items-center space-x-2">
+              <div
+                class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center"
+              >
+                <i class="ri-user-line text-gray-600"></i>
+              </div>
+              <span class="text-gray-700">James Wilson</span>
+              <i class="ri-arrow-down-s-line text-gray-500"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <nav class="bg-white border-t border-gray-200">
+        <div class="flex items-center justify-between px-6">
+          <div class="flex space-x-1">
+            <a
+              href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/8ea92133-187c-4eb2-8ff0-7f976b807723"
+              data-readdy="true"
+              class="px-4 py-3 text-gray-600 hover:text-gray-900 flex items-center"
+            >
+              <i class="ri-dashboard-line mr-2"></i>
+              Dashboard
+            </a>
+            <a
+              href="/saved-candidates"
+              class="px-4 py-3 text-primary border-b-2 border-primary font-medium flex items-center"
+            >
+              <i class="ri-bookmark-fill mr-2"></i>
+              Saved Candidates
+            </a>
+            <a
+              href="#"
+              class="px-4 py-3 text-gray-600 hover:text-gray-900 flex items-center"
+            >
+              <i class="ri-close-circle-line mr-2"></i>
+              Rejected
+            </a>
+            <a
+              href="#"
+              class="px-4 py-3 text-gray-600 hover:text-gray-900 flex items-center"
+            >
+              <i class="ri-history-line mr-2"></i>
+              Credits
+            </a>
+            <a
+              href="#"
+              class="px-4 py-3 text-gray-600 hover:text-gray-900 flex items-center"
+            >
+              <i class="ri-settings-4-line mr-2"></i>
+              Settings
+            </a>
+          </div>
+          <div class="flex items-center space-x-4">
+            <button class="text-gray-600 hover:text-gray-900 flex items-center">
+              <i class="ri-notification-3-line text-xl"></i>
+            </button>
+            <button class="text-gray-600 hover:text-gray-900 flex items-center">
+              <i class="ri-question-line text-xl"></i>
+            </button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-6 max-w-7xl">
+      <!-- Dashboard Header -->
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+        <div>
+          <h1 class="text-2xl font-semibold text-gray-900">Saved Candidates</h1>
+          <p class="text-gray-600 mt-1">
+            Manage your bookmarked candidates and contact them directly
+          </p>
+        </div>
+        <div class="mt-4 md:mt-0">
+          <a
+            href="https://readdy.ai/home/c14c6ca2-d668-408a-94aa-6976679ad86b/caac35f4-d723-4aaa-9bf1-3a56d32dff34"
+            data-readdy="true"
+            class="bg-primary text-white px-4 py-2 rounded-button flex items-center space-x-2 shadow-sm hover:bg-red-600 transition-colors whitespace-nowrap"
+          >
+            <i class="ri-add-line"></i>
+            <span>Buy More Credits</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="bg-white rounded shadow-sm p-4 mb-6">
+        <!-- all your filter controls exactly as before -->
+      </div>
+
+      <!-- Error Banner -->
+      <div id="errorBanner" class="bg-red-50 border border-red-200 rounded-lg p-4 mb-4 hidden">
+        <!-- ... -->
+      </div>
+
+      <!-- Loading State -->
+      <div id="loadingState" class="hidden">
+        <!-- ... -->
+      </div>
+
+      <!-- Empty State -->
+      <div id="emptyState" class="hidden">
+        <!-- ... -->
+      </div>
+
+      <!-- Results Count -->
+      <div id="resultsCount" class="flex justify-between items-center mb-4">
+        <!-- ... -->
+      </div>
+
+      <!-- Candidate Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+        <!-- all your candidate cards -->
+      </div>
+
+      <!-- Pagination -->
+      <div class="flex justify-center">
+        <nav class="flex items-center space-x-1" id="pagination">
+          <!-- ... -->
+        </nav>
+      </div>
+    </main>
+
+    <!-- Modals (Remove, Contact) -->
+    <div id="removeModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+      <!-- ... -->
+    </div>
+    <div id="contactModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+      <!-- ... -->
+    </div>
+
+    <!-- Support Chat Widget -->
+    <div id="supportWidget" class="fixed bottom-6 right-6 z-40">
+      <!-- ... -->
+    </div>
+    <div id="chatWindow" class="fixed bottom-24 right-6 w-80 bg-white rounded-lg shadow-xl overflow-hidden z-40 hidden">
+      <!-- ... -->
+    </div>
+
+    <!-- Scripts -->
+    <!-- include your existing dropdownsScript, modalToggleScript, paginationScript, chatWidgetScript here, exactly as before -->
+
+  </body>
+</html>

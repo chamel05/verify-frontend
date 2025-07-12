@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cookie Policy – Verify</title>
+    <meta
+      name="description"
+      content="Learn how Verify uses cookies and similar technologies to enhance your experience and how you can control them."
+    />
+    <meta property="og:title" content="Cookie Policy – Verify" />
+    <meta
+      property="og:description"
+      content="Understand our Cookie Policy: what cookies we use, why we use them, and how you can manage your preferences."
+    />
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: { primary: "#F50302", secondary: "#4D4D4D" },
+            borderRadius: {
+              none: "0px",
+              sm: "4px",
+              DEFAULT: "8px",
+              md: "12px",
+              lg: "16px",
+              xl: "20px",
+              "2xl": "24px",
+              "3xl": "32px",
+              full: "9999px",
+              button: "8px"
+            }
+          }
+        }
+      };
+    </script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Futura:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
+    />
+    <style>
+      body { font-family: 'Futura', sans-serif; }
+      .skip-link {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background: #000;
+        color: #fff;
+        padding: 8px;
+        z-index: 100;
+      }
+      .skip-link:focus { top: 0; }
+    </style>
+  </head>
+
+  <body class="bg-white text-gray-900">
+    <a href="#main-content" class="skip-link">Skip to content</a>
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
+      <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <a href="/" aria-label="Home">
+          <img
+            src="https://static.readdy.ai/image/783dd8c3d2d1f38f9648f46144ac17f1/bc2b69f3a823a0bfcee48284d9c2d098.jpeg"
+            alt="Verify Logo"
+            class="h-10"
+          />
+        </a>
+        <nav
+          id="main-nav"
+          class="hidden flex-col space-y-4 absolute top-full left-0 w-full bg-white px-4 py-4 md:static md:flex md:flex-row md:space-x-8 items-center"
+        >
+          <a href="/" class="text-gray-800 hover:text-primary font-medium">Home</a>
+          <a
+            href="/login/"
+            class="bg-white text-primary border border-primary px-4 py-2 rounded-button hover:bg-gray-50 whitespace-nowrap"
+            >Log in</a
+          >
+          <a
+            href="/register/"
+            class="bg-primary text-white px-4 py-2 rounded-button hover:bg-red-600 whitespace-nowrap"
+            >Register</a
+          >
+        </nav>
+        <button
+          class="md:hidden w-10 h-10 flex items-center justify-center"
+          aria-label="Toggle menu"
+        >
+          <i class="ri-menu-line text-gray-800 ri-2x"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" class="pt-32 pb-16">
+      <!-- Breadcrumb -->
+      <div class="bg-gray-50">
+        <div class="container mx-auto px-4 py-3">
+          <nav class="flex items-center text-sm text-gray-600">
+            <a href="/" class="hover:text-primary">Home</a>
+            <i class="ri-arrow-right-s-line mx-2"></i>
+            <span class="text-gray-900 font-medium">Cookie Policy</span>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Page Intro -->
+      <div class="container mx-auto px-4 py-12 max-w-4xl text-center">
+        <div class="mb-8">
+          <div class="w-16 h-16 bg-primary/10 rounded-full mx-auto flex items-center justify-center mb-4">
+            <i class="ri-cookie-line text-primary ri-2x"></i>
+          </div>
+          <h1 class="text-3xl md:text-4xl font-bold">Cookie Policy</h1>
+          <p class="text-gray-600 mt-2">Last updated: June 3, 2025</p>
+        </div>
+
+        <!-- Policy Content -->
+        <div class="bg-white rounded-lg shadow-md p-8 mb-8 prose max-w-none">
+          <p>This Cookie Policy explains how Verify ("we", "us", or "our") uses cookies and similar technologies to recognize you when you visit our website. It explains what these technologies are and why we use them, as well as your rights to control our use of them.</p>
+          <h2>What are cookies?</h2>
+          <p>Cookies are small data files that are placed on your computer or mobile device when you visit a website…</p>
+          <h2>Why do we use cookies?</h2>
+          <p>We use first-party and third-party cookies for several reasons…</p>
+          <h2>Types of cookies we use</h2>
+          <h3>Essential Cookies</h3>
+          <p>These cookies are strictly necessary to provide you with services…</p>
+          <ul>
+            <li>Authentication cookies</li>
+            <li>Security cookies</li>
+            <li>Load balancing cookies</li>
+          </ul>
+          <h3>Functional Cookies</h3>
+          <p>These cookies allow us to remember choices you make…</p>
+          <h3>Analytics Cookies</h3>
+          <p>These cookies collect information in aggregate form…</p>
+          <h3>Marketing Cookies</h3>
+          <p>These cookies are used to track your browsing habits…</p>
+          <h2>How can you control cookies?</h2>
+          <p>You have the right to decide whether to accept or reject cookies…</p>
+          <h2>How to delete cookies?</h2>
+          <p>You can delete cookies already stored on your computer through your browser settings…</p>
+          <ul>
+            <li><a href="#" class="text-primary hover:underline">Chrome</a></li>
+            <li><a href="#" class="text-primary hover:underline">Firefox</a></li>
+            <li><a href="#" class="text-primary hover:underline">Safari</a></li>
+            <li><a href="#" class="text-primary hover:underline">Edge</a></li>
+            <li><a href="#" class="text-primary hover:underline">Internet Explorer</a></li>
+          </ul>
+          <h2>Changes to this Cookie Policy</h2>
+          <p>We may update this Cookie Policy from time to time…</p>
+          <h2>Contact us</h2>
+          <p>If you have any questions… email us at <a href="mailto:privacy@verify.co.za" class="text-primary hover:underline">privacy@verify.co.za</a>.</p>
+        </div>
+
+        <!-- Preferences Manager -->
+        <div class="bg-white rounded-lg shadow-md p-8 mb-8">
+          <h2 class="text-2xl font-bold mb-6">Manage Cookie Preferences</h2>
+          <p class="text-gray-600 mb-4">Select which categories of cookies you accept. Essential cookies are always enabled.</p>
+          <div class="space-y-6">
+            <!-- Essential (always on) -->
+            <div class="flex items-center justify-between bg-gray-50 p-4 rounded-lg">
+              <div class="flex items-center">
+                <i class="ri-lock-line text-primary text-2xl mr-4"></i>
+                <div>
+                  <h3 class="font-bold">Essential Cookies</h3>
+                  <p class="text-sm text-gray-600">Required for website functionality</p>
+                </div>
+              </div>
+              <span class="text-sm font-medium text-gray-500">Always On</span>
+            </div>
+            <!-- Functional -->
+            <div class="flex items-center justify-between bg-gray-50 p-4 rounded-lg">
+              <div class="flex items-center">
+                <i class="ri-settings-line text-blue-500 text-2xl mr-4"></i>
+                <div>
+                  <h3 class="font-bold">Functional Cookies</h3>
+                  <p class="text-sm text-gray-600">Remember preferences and login</p>
+                </div>
+              </div>
+              <label class="inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="cookie-toggle sr-only peer" checked />
+                <div class="toggle-bg w-14 h-7 bg-gray-300 rounded-full peer-checked:bg-primary relative after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full"></div>
+              </label>
+            </div>
+            <!-- Analytics -->
+            <div class="flex items-center justify-between bg-gray-50 p-4 rounded-lg">
+              <div class="flex items-center">
+                <i class="ri-bar-chart-line text-green-500 text-2xl mr-4"></i>
+                <div>
+                  <h3 class="font-bold">Analytics Cookies</h3>
+                  <p class="text-sm text-gray-600">Help us improve our site</p>
+                </div>
+              </div>
+              <label class="inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="cookie-toggle sr-only peer" checked />
+                <div class="toggle-bg w-14 h-7 bg-gray-300 rounded-full peer-checked:bg-primary relative after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full"></div>
+              </label>
+            </div>
+            <!-- Marketing -->
+            <div class="flex items-center justify-between bg-gray-50 p-4 rounded-lg">
+              <div class="flex items-center">
+                <i class="ri-advertisement-line text-yellow-500 text-2xl mr-4"></i>
+                <div>
+                  <h3 class="font-bold">Marketing Cookies</h3>
+                  <p class="text-sm text-gray-600">Deliver personalized ads</p>
+                </div>
+              </div>
+              <label class="inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="cookie-toggle sr-only peer" />
+                <div class="toggle-bg w-14 h-7 bg-gray-300 rounded-full peer-checked:bg-primary relative after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full"></div>
+              </label>
+            </div>
+          </div>
+          <div class="mt-8 flex flex-col sm:flex-row gap-4">
+            <button id="save-preferences" class="flex-1 bg-primary text-white px-6 py-3 rounded-button font-bold hover:bg-red-600">Save Preferences</button>
+            <button id="accept-all" class="flex-1 bg-gray-800 text-white px-6 py-3 rounded-button font-bold hover:bg-gray-700">Accept All</button>
+            <button id="reject-all" class="flex-1 bg-white text-gray-800 border border-gray-300 px-6 py-3 rounded-button font-bold hover:bg-gray-50">Reject Non-Essential</button>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <a href="/" class="inline-flex items-center text-primary hover:text-red-600">
+            <i class="ri-arrow-left-line mr-2"></i>Back to Home
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 pt-16 pb-8">
+      <div class="container mx-auto px-4">
+        <div class="border-t border-gray-300 pt-8 flex flex-col md:flex-row justify-between items-center">
+          <p class="text-gray-600 text-sm mb-4 md:mb-0">&copy; 2025 Verify. All rights reserved. South African platform only.</p>
+          <div class="flex space-x-6">
+            <a href="/privacy/" class="text-gray-600 hover:text-primary">Privacy Policy</a>
+            <a href="/terms/" class="text-gray-600 hover:text-primary">Terms of Service</a>
+            <a href="/cookie-policy/" class="text-gray-600 hover:text-primary">Cookie Policy</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Back to top -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg opacity-0 invisible transition-opacity duration-300" aria-label="Back to top">
+      <i class="ri-arrow-up-line ri-lg"></i>
+    </button>
+
+    <!-- Cookie Banner -->
+    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 bg-white shadow-lg p-4 z-50 transform translate-y-full transition-transform duration-300">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div class="flex-1">
+            <h3 class="font-bold mb-2">We use cookies</h3>
+            <p class="text-sm text-gray-600">We use cookies to enhance your browsing experience, personalize content & ads, and analyze our traffic.</p>
+          </div>
+          <div class="flex flex-wrap gap-3">
+            <button id="customize-cookies" class="bg-white text-gray-800 border border-gray-300 px-4 py-2 rounded-button text-sm font-bold hover:bg-gray-50">Customize</button>
+            <button id="reject-cookies" class="bg-white text-gray-800 border border-gray-300 px-4 py-2 rounded-button text-sm font-bold hover:bg-gray-50">Reject All</button>
+            <button id="accept-cookies" class="bg-primary text-white px-4 py-2 rounded-button text-sm font-bold hover:bg-red-600">Accept All</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Supabase Init -->
+    <script id="supabase-config">
+      const supabaseUrl = "https://dvbbvjlwmkqqyfqdbupg.supabase.co";
+      const supabaseKey =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2YmJ2amx3bWtxcXlmcWRidXBnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAzNjI0OTYsImV4cCI6MjA2NTkzODQ5Nn0.Zpkj5G3mTngZD2lMCo7Yr6PeyEJ3X6jHndHrvDgPylAY";
+      async function initSupabase() {
+        const { createClient } = supabase;
+        return createClient(supabaseUrl, supabaseKey);
+      }
+      document.addEventListener("DOMContentLoaded", async () => {
+        window.supabase = await initSupabase();
+      });
+    </script>
+
+    <!-- Scripts -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Mobile menu toggle
+        const btn = document.querySelector('button[aria-label="Toggle menu"]');
+        const nav = document.getElementById("main-nav");
+        btn.addEventListener("click", () => nav.classList.toggle("hidden"));
+
+        // Smooth scroll for breadcrumb Back to Home
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
+          link.addEventListener("click", e => {
+            e.preventDefault();
+            const tgt = document.querySelector(link.getAttribute("href"));
+            if (tgt) window.scrollTo({ top: tgt.offsetTop - 80, behavior: "smooth" });
+          });
+        });
+
+        // Back-to-top button
+        const backToTop = document.getElementById("back-to-top");
+        window.addEventListener("scroll", () => {
+          backToTop.classList.toggle("invisible", window.pageYOffset < 300);
+          backToTop.classList.toggle("opacity-0", window.pageYOffset < 300);
+          backToTop.classList.toggle("visible", window.pageYOffset >= 300);
+          backToTop.classList.toggle("opacity-100", window.pageYOffset >= 300);
+        });
+        backToTop.addEventListener("click", () =>
+          window.scrollTo({ top: 0, behavior: "smooth" })
+        );
+
+        // Cookie banner logic
+        const banner = document.getElementById("cookie-banner");
+        const accept = document.getElementById("accept-cookies");
+        const reject = document.getElementById("reject-cookies");
+        const customize = document.getElementById("customize-cookies");
+        if (!localStorage.getItem("cookiePreference")) {
+          setTimeout(() => banner.classList.remove("translate-y-full"), 500);
+        }
+        accept.onclick = () => {
+          localStorage.setItem("cookiePreference", "accepted");
+          banner.classList.add("translate-y-full");
+        };
+        reject.onclick = () => {
+          localStorage.setItem("cookiePreference", "rejected");
+          banner.classList.add("translate-y-full");
+        };
+        customize.onclick = () => {
+          banner.classList.add("translate-y-full");
+          document
+            .getElementById("main-content")
+            .scrollIntoView({ behavior: "smooth" });
+        };
+
+        // Preferences manager
+        document.getElementById("save-preferences").onclick = () => {
+          const prefs = {};
+          document.querySelectorAll(".cookie-toggle").forEach(toggle => {
+            const label = toggle
+              .closest("div")
+              .querySelector("h3").textContent;
+            prefs[label] = toggle.checked;
+          });
+          localStorage.setItem("cookiePreferencesDetailed", JSON.stringify(prefs));
+          alert("Cookie preferences saved");
+        };
+        document.getElementById("accept-all").onclick = () => {
+          document.querySelectorAll(".cookie-toggle").forEach(t => (t.checked = true));
+        };
+        document.getElementById("reject-all").onclick = () => {
+          document.querySelectorAll(".cookie-toggle").forEach(t => (t.checked = false));
+        };
+
+        // Load saved detailed preferences
+        const saved = localStorage.getItem("cookiePreferencesDetailed");
+        if (saved) {
+          const prefs = JSON.parse(saved);
+          document.querySelectorAll(".cookie-toggle").forEach(toggle => {
+            const label = toggle
+              .closest("div")
+              .querySelector("h3").textContent;
+            if (prefs[label] !== undefined) toggle.checked = prefs[label];
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
