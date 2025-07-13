@@ -1183,7 +1183,7 @@
                       </div>
                     </div>
                     <button
-                      type="button"
+                      type="submit"
                       id="jobSeekerSubmit"
                       class="w-full bg-primary text-white py-3 !rounded-button font-medium hover:bg-red-600 transition-colors whitespace-nowrap flex items-center justify-center"
                     >
@@ -1905,7 +1905,7 @@
         }
         async function handleFormSubmit(event) {
           event.preventDefault();
-          const form = event.target;
+          console.log("handleFormSubmit fired"), { form: event.target.id });
           
           // Check if Supabase is configured
           if (!supabaseClient) {
@@ -2614,7 +2614,7 @@
         console.log('openPaymentPortal called');
         
         // Detect user type based on which form is visible
-        const jobSeekerForm = document.getElementById('jobSeekerForm');
+        const jobSeekerForm = document.getElementById('jobSeekerRegisrForm');
         const employerForm = document.getElementById('employerForm');
         
         console.log('jobSeekerForm:', jobSeekerForm);
