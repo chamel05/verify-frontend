@@ -37,6 +37,8 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
     />
+    <!-- Supabase -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <style>
       :root {
       --primary-red: #F50302;
@@ -2866,6 +2868,311 @@
           loadMessages();
           loadVerificationStatus();
         }, 300000);
+
+        // Supabase Integration for User Data
+        // Initialize Supabase client
+        const SUPABASE_URL = 'https://dvbbvjlwmkqqyfqdbupg.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2YmJ2amx3bWtxcXlmcWRidXBnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAzNjI0OTYsImV4cCI6MjA2NTkzODQ5Nn0.Zpkj5G3mTngZD2lMCo7Yr6PeyEJ3X6jHndHrvDgPylA';
+        
+        const supabaseClient = window.supabase?.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        if (!supabaseClient) {
+          console.error('❌ Failed to initialize Supabase client');
+          showNotification('Database connection failed', 'error');
+        }
+
+        // Global variables for user data
+        let currentUserData = null;
+        let realtimeSubscription = null;
+
+        // Function to load user profile data from Supabase
+        async function loadUserProfile() {
+          try {
+            // Check if user is authenticated
+            const { data: { user }, error: userError } = await supabaseClient.auth.getUser();
+            
+            if (userError || !user) {
+              console.error('User not authenticated:', userError);
+              // Redirect to login if not authenticated
+              window.location.href = 'login.html';
+              return;
+            }
+
+            console.log('✅ User authenticated:', user.id);
+
+            // Load job seeker data
+            const { data: jobSeekerData, error: dbError } = await supabaseClient
+              .from('job_seekers')
+              .select('*')
+              .eq('id', user.id)
+              .single();
+
+            if (dbError) {
+              console.error('Error loading user profile:', dbError);
+              showNotification('Failed to load profile data', 'error');
+              return;
+            }
+
+            if (!jobSeekerData) {
+              console.warn('No job seeker profile found for user');
+              showNotification('Profile not found. Please complete registration.', 'error');
+              return;
+            }
+
+            currentUserData = { ...user, ...jobSeekerData };
+            updateDashboardWithUserData(currentUserData);
+            
+            // Set up real-time subscription for profile changes
+            setupRealtimeSubscription(user.id);
+
+          } catch (error) {
+            console.error('Error in loadUserProfile:', error);
+            showNotification('Failed to load profile', 'error');
+          }
+        }
+
+        // Function to update dashboard with user data
+        function updateDashboardWithUserData(userData) {
+          try {
+            console.log('🔄 Updating dashboard with user data:', userData);
+
+            // Update user name in header/profile sections
+            const userNameElements = document.querySelectorAll('.user-name, [data-user-name]');
+            userNameElements.forEach(el => {
+              if (userData.first_name && userData.surname) {
+                el.textContent = `${userData.first_name} ${userData.surname}`;
+              }
+            });
+
+            // Update professional title
+            const titleElements = document.querySelectorAll('.user-title, [data-user-title]');
+            titleElements.forEach(el => {
+              if (userData.professional_title) {
+                el.textContent = userData.professional_title;
+              }
+            });
+
+            // Update form fields with IDs
+            const fieldsToUpdate = {
+              'email': userData.email,
+              'phone': userData.phone,
+              'location': userData.location,
+              'professional_title': userData.professional_title,
+              'first_name': userData.first_name,
+              'surname': userData.surname,
+              'travel_distance': userData.travel_distance,
+              'years_experience': userData.years_experience,
+              'industry': userData.industry
+            };
+
+            Object.entries(fieldsToUpdate).forEach(([fieldId, value]) => {
+              const element = document.getElementById(fieldId);
+              if (element && value) {
+                if (element.tagName === 'SELECT') {
+                  element.value = value;
+                } else {
+                  element.value = value;
+                }
+              }
+            });
+
+            // Update references
+            const referenceFields = {
+              'ref1Name': userData.reference_1_name,
+              'ref1Phone': userData.reference_1_phone,
+              'ref2Name': userData.reference_2_name,
+              'ref2Phone': userData.reference_2_phone
+            };
+
+            Object.entries(referenceFields).forEach(([fieldId, value]) => {
+              const element = document.getElementById(fieldId);
+              if (element && value) {
+                element.value = value;
+              }
+            });
+
+            // Update skills
+            if (userData.skills && Array.isArray(userData.skills) && userData.skills.length > 0) {
+              updateSkillTags(userData.skills);
+            }
+
+            // Update selected jobs
+            if (userData.selected_jobs && Array.isArray(userData.selected_jobs) && userData.selected_jobs.length > 0) {
+              updateSelectedJobs(userData.selected_jobs);
+            }
+
+            // Update subscription tier display
+            if (userData.subscription_tier) {
+              updateSubscriptionDisplay(userData.subscription_tier);
+            }
+
+            // Update currentUser locations for the existing location logic
+            if (userData.location && currentUser) {
+              currentUser.locations = [userData.location];
+            }
+
+            console.log('✅ Dashboard updated with user data');
+            showNotification('Profile loaded successfully', 'success');
+
+          } catch (error) {
+            console.error('Error updating dashboard:', error);
+            showNotification('Error updating dashboard', 'error');
+          }
+        }
+
+        // Function to update skill tags
+        function updateSkillTags(skills) {
+          const skillTagsContainer = document.getElementById('skillTags');
+          if (!skillTagsContainer) return;
+
+          skillTagsContainer.innerHTML = '';
+          skills.forEach(skill => {
+            const tag = document.createElement('span');
+            tag.className = 'inline-flex items-center gap-1 bg-gray-100 text-gray-800 px-2 py-1 rounded text-sm';
+            tag.innerHTML = `${skill} <button onclick="removeSkill('${skill}')" class="text-gray-500 hover:text-gray-700">✕</button>`;
+            skillTagsContainer.appendChild(tag);
+          });
+        }
+
+        // Function to update selected jobs
+        function updateSelectedJobs(jobs) {
+          const selectedJobsContainer = document.getElementById('selectedJobs');
+          if (!selectedJobsContainer) return;
+
+          selectedJobsContainer.innerHTML = '';
+          jobs.forEach(job => {
+            const tag = document.createElement('span');
+            tag.className = 'inline-flex items-center gap-1 bg-gray-100 text-gray-800 px-2 py-1 rounded text-sm';
+            tag.innerHTML = `${job} <button onclick="removeJob('${job}')" class="text-gray-500 hover:text-gray-700">✕</button>`;
+            selectedJobsContainer.appendChild(tag);
+          });
+        }
+
+        // Function to update subscription display
+        function updateSubscriptionDisplay(tier) {
+          // Find subscription tier cards and mark the current one as active
+          const tierCards = document.querySelectorAll('.tier-card');
+          tierCards.forEach(card => {
+            const cardTier = card.querySelector('[data-tier]')?.getAttribute('data-tier');
+            if (cardTier === tier) {
+              card.classList.add('ring-2', 'ring-red-500');
+            } else {
+              card.classList.remove('ring-2', 'ring-red-500');
+            }
+          });
+        }
+
+        // Function to set up real-time subscription
+        function setupRealtimeSubscription(userId) {
+          if (realtimeSubscription) {
+            realtimeSubscription.unsubscribe();
+          }
+
+          realtimeSubscription = supabaseClient
+            .channel('job-seeker-changes')
+            .on(
+              'postgres_changes',
+              {
+                event: 'UPDATE',
+                schema: 'public',
+                table: 'job_seekers',
+                filter: `id=eq.${userId}`
+              },
+              (payload) => {
+                console.log('👁️ Real-time update received:', payload);
+                if (payload.new) {
+                  currentUserData = { ...currentUserData, ...payload.new };
+                  updateDashboardWithUserData(currentUserData);
+                  showNotification('Profile updated in real-time', 'success');
+                }
+              }
+            )
+            .subscribe();
+
+          console.log('👁️ Real-time subscription set up for user:', userId);
+        }
+
+        // Function to save profile changes
+        async function saveProfileChanges() {
+          if (!currentUserData) {
+            showNotification('No user data to save', 'error');
+            return;
+          }
+
+          try {
+            // Collect updated data from form fields
+            const updatedData = {
+              first_name: document.querySelector('input[placeholder*="First Name"]')?.value || currentUserData.first_name,
+              surname: document.querySelector('input[placeholder*="Surname"]')?.value || currentUserData.surname,
+              phone: document.querySelector('input[type="tel"]')?.value || currentUserData.phone,
+              location: document.querySelector('input[placeholder*="location"], input[placeholder*="Location"]')?.value || currentUserData.location,
+              professional_title: document.querySelector('input[placeholder*="Professional Title"]')?.value || currentUserData.professional_title,
+              travel_distance: document.querySelector('select')?.value || currentUserData.travel_distance,
+              reference_1_name: document.querySelector('input[placeholder*="Reference 1 Name"]')?.value || currentUserData.reference_1_name,
+              reference_1_phone: document.querySelector('input[placeholder*="Reference 1 Phone"]')?.value || currentUserData.reference_1_phone,
+              reference_2_name: document.querySelector('input[placeholder*="Reference 2 Name"]')?.value || currentUserData.reference_2_name,
+              reference_2_phone: document.querySelector('input[placeholder*="Reference 2 Phone"]')?.value || currentUserData.reference_2_phone,
+            };
+
+            // Update in Supabase
+            const { data, error } = await supabaseClient
+              .from('job_seekers')
+              .update(updatedData)
+              .eq('id', currentUserData.id);
+
+            if (error) {
+              throw error;
+            }
+
+            console.log('✅ Profile saved successfully');
+            showNotification('Profile saved successfully', 'success');
+
+          } catch (error) {
+            console.error('Error saving profile:', error);
+            showNotification('Failed to save profile', 'error');
+          }
+        }
+
+        // Function to show notifications
+        function showNotification(message, type = 'info') {
+          const notification = document.createElement('div');
+          notification.className = `fixed top-4 right-4 px-4 py-2 rounded shadow-lg z-50 ${
+            type === 'success' ? 'bg-green-500 text-white' : 
+            type === 'error' ? 'bg-red-500 text-white' : 
+            'bg-blue-500 text-white'
+          }`;
+          notification.textContent = message;
+          document.body.appendChild(notification);
+          setTimeout(() => notification.remove(), 3000);
+        }
+
+        // Load user profile on page load
+        loadUserProfile();
+
+        // Add save button functionality
+        document.addEventListener('click', function(e) {
+          if (e.target.matches('[data-action="save-profile"]') || e.target.closest('[data-action="save-profile"]')) {
+            saveProfileChanges();
+          }
+        });
+
+        // Auto-save on form changes (debounced)
+        let saveTimeout;
+        document.addEventListener('input', function(e) {
+          if (e.target.matches('input, select, textarea')) {
+            clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(() => {
+              saveProfileChanges();
+            }, 2000); // Auto-save after 2 seconds of inactivity
+          }
+        });
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', function() {
+          if (realtimeSubscription) {
+            realtimeSubscription.unsubscribe();
+          }
+        });
       });
     </script>
   </body>

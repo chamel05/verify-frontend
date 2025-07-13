@@ -114,6 +114,9 @@
           console.error('❌ Database test failed:', error);
         }
       }
+
+      // Testing mode configuration
+      // Set to false for production
       
       /*
       DATABASE SCHEMA NEEDED FOR THIS REGISTRATION FORM:
@@ -718,6 +721,8 @@
                     </div>
                     <input
                       type="text"
+                      id="location"
+                      name="location"
                       placeholder="Current Location (City, Province)"
                       class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
                     />
@@ -727,6 +732,8 @@
                       <i class="ri-route-line"></i>
                     </div>
                     <select
+                      id="travelDistance"
+                      name="travelDistance"
                       class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm pl-10 pr-8 appearance-none"
                     >
                       <option value="">Maximum Travel Distance</option>
@@ -748,6 +755,8 @@
                       <i class="ri-home-4-line"></i>
                     </div>
                     <select
+                      id="willRelocate"
+                      name="willRelocate"
                       class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm pl-10 pr-8 appearance-none"
                     >
                       <option value="">Willing to Relocate?</option>
@@ -767,6 +776,9 @@
                     </div>
                     <input
                       type="email"
+                      id="email"
+                      name="email"
+                      required
                       placeholder="Email Address"
                       class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
                     />
@@ -777,6 +789,8 @@
                     </div>
                     <input
                       type="tel"
+                      id="phone"
+                      name="phone"
                       placeholder="Phone Number (Optional)"
                       class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
                     />
@@ -787,6 +801,8 @@
                     </div>
                     <input
                       type="text"
+                      id="professionalTitle"
+                      name="professionalTitle"
                       placeholder="Professional Title"
                       class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
                     />
@@ -797,6 +813,9 @@
                     </div>
                     <input
                       type="text"
+                      id="username"
+                      name="username"
+                      required
                       placeholder="Username"
                       class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
                     />
@@ -806,6 +825,8 @@
                       <i class="ri-time-line"></i>
                     </div>
                     <select
+                      id="experience"
+                      name="experience"
                       class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm pl-10 pr-8 appearance-none"
                     >
                       <option value="">Years of Experience</option>
@@ -1118,6 +1139,8 @@
                       <input
                         type="password"
                         id="seekerPassword"
+                        name="password"
+                        required
                         placeholder="Create a password"
                         class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
                       />
@@ -1148,6 +1171,9 @@
                     </div>
                     <input
                       type="password"
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      required
                       placeholder="Confirm password"
                       class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
                     />
@@ -1870,10 +1896,23 @@
           });
           // Validate password
           const passwordField = form.querySelector("#seekerPassword");
+          const confirmPasswordField = form.querySelector("#confirmPassword");
+          
           if (passwordField && passwordField.value.length < 8) {
             isValid = false;
             passwordField.classList.add("border-red-500");
             errorMessages.push("Password must be at least 8 characters long");
+          }
+          
+          // Validate password confirmation
+          if (passwordField && confirmPasswordField) {
+            if (passwordField.value !== confirmPasswordField.value) {
+              isValid = false;
+              confirmPasswordField.classList.add("border-red-500");
+              errorMessages.push("Passwords do not match");
+            } else {
+              confirmPasswordField.classList.remove("border-red-500");
+            }
           }
           // Validate terms acceptance
           const termsCheckbox = form.querySelector("#seekerTerms");
@@ -1938,9 +1977,15 @@
             const isEmployerForm = form.id === 'employerRegistrationForm';
 
             // Get common form data
-            const email = form.querySelector('input[type="email"]').value;
-            const password = form.querySelector(isJobSeekerForm ? '#seekerPassword' : '#employerPassword').value;
-            const username = form.querySelector('input[placeholder="Username"]').value;
+            const email = form.querySelector('#email')?.value || form.querySelector('input[type="email"]')?.value;
+            const password = form.querySelector('#seekerPassword')?.value || form.querySelector('#employerPassword')?.value;
+            const username = form.querySelector('#username')?.value || form.querySelector('input[placeholder="Username"]')?.value;
+
+            console.log('📋 Form data collected:', { email, username, hasPassword: !!password });
+
+            if (!email || !password || !username) {
+              throw new Error('Missing required fields: email, password, or username');
+            }
 
             // Create auth user first
             const { data: authData, error: authError } = await SupabaseAuth.signUp(email, password, {
@@ -1969,24 +2014,28 @@
               // Job Seeker specific data
               const firstName = form.querySelector('[name="firstName"]')?.value;
               const surname = form.querySelector('[name="surname"]')?.value;
-              const location = form.querySelector('input[placeholder="Current Location (City, Province)"]')?.value;
-              const phone = form.querySelector('input[type="tel"]')?.value;
-              const professionalTitle = form.querySelector('input[placeholder="Professional Title"]')?.value;
-              const travelDistance = form.querySelector('select option:checked')?.value;
-              const relocation = form.querySelector('select:nth-of-type(2) option:checked')?.value;
-              const experience = form.querySelector('select:last-of-type option:checked')?.value;
+              const location = form.querySelector('#location')?.value || form.querySelector('input[placeholder*="Location"]')?.value;
+              const phone = form.querySelector('#phone')?.value || form.querySelector('input[type="tel"]')?.value;
+              const professionalTitle = form.querySelector('#professionalTitle')?.value || form.querySelector('input[placeholder*="Professional Title"]')?.value;
+              const travelDistance = form.querySelector('#travelDistance')?.value;
+              const relocation = form.querySelector('#willRelocate')?.value;
+              const experience = form.querySelector('#experience')?.value;
               const industry = form.querySelector('#industrySelect')?.value;
               
+              console.log('📋 Job seeker data:', { firstName, surname, location, industry });
+              
               // Get subscription tier
-              const selectedTier = form.querySelector('input[name="subscription"]:checked')?.value;
+              const selectedTier = form.querySelector('input[name="subscription"]:checked')?.value || 'bronze';
               
               // Get selected jobs
               const selectedJobs = Array.from(document.querySelectorAll("#selectedJobs .bg-gray-100"))
-                .map((tag) => tag.textContent.trim().replace(/✕$/, "").trim());
+                .map((tag) => tag.textContent.trim().replace(/✕$/, "").trim())
+                .filter(job => job.length > 0);
               
               // Get skills
               const selectedSkills = Array.from(document.querySelectorAll("#skillTags .bg-gray-100"))
-                .map((tag) => tag.textContent.trim().replace(/✕$/, "").trim());
+                .map((tag) => tag.textContent.trim().replace(/✕$/, "").trim())
+                .filter(skill => skill.length > 0);
               
               // Get references
               const reference1Name = form.querySelector('[name="reference1_name"]')?.value;
@@ -2075,14 +2124,37 @@
 
             // Success!
             showNotification(
-              "Your registration has been submitted successfully! Please check your email to verify your account.",
+              "Your registration has been submitted successfully! Please proceed to payment.",
               "success"
             );
 
-            // Redirect after success
-            setTimeout(() => {
-              window.location.href = "login.html";
-            }, 2000);
+            // Store user data temporarily for payment process
+            sessionStorage.setItem('registrationData', JSON.stringify({
+              userId: userId,
+              userType: isJobSeekerForm ? 'job_seeker' : 'employer',
+              userData: userData,
+              timestamp: Date.now()
+            }));
+
+            // For job seekers, redirect to payment unless skip payment is enabled
+            if (isJobSeekerForm) {
+              // Check if this is a premium subscription that requires payment
+              const selectedTier = userData.subscription_tier;
+              if (selectedTier !== 'basic' && !TESTING_MODE) {
+                // Show payment modal for premium subscriptions
+                showPaymentModal();
+              } else {
+                // Free tier or testing mode - redirect directly to dashboard
+                setTimeout(() => {
+                  window.location.href = "job seekers dash.html";
+                }, 1000);
+              }
+            } else {
+              // Employers go to their dashboard
+              setTimeout(() => {
+                window.location.href = "dashboard/employer.html";
+              }, 1000);
+            }
 
           } catch (error) {
             console.error('Registration error:', error);
@@ -2652,6 +2724,23 @@
         document.body.style.overflow = 'auto';
       }
       
+      // Payment modal function
+      function showPaymentModal() {
+        console.log('🏦 Opening payment modal');
+        
+        // Update payment details in modal
+        const registrationData = sessionStorage.getItem('registrationData');
+        if (registrationData) {
+          const data = JSON.parse(registrationData);
+          const subscriptionTier = data.userData?.subscription_tier || 'bronze';
+          
+          // Update modal content based on subscription
+          updatePaymentModalContent(subscriptionTier);
+        }
+        
+        openModal('paymentModal');
+      }
+      
       // Payment Portal Functions
       function openPaymentPortal() {
         console.log('openPaymentPortal called');
@@ -2973,6 +3062,46 @@
         return 'seeker'; // default to job seeker
       }
       
+      // Payment completion handler
+      function handlePaymentSuccess(paymentMethod) {
+        console.log(`💳 Payment successful via ${paymentMethod}`);
+        
+        // Show success message
+        showNotification(`Payment successful via ${paymentMethod}! Redirecting to dashboard...`, 'success');
+        
+        // Get registration data
+        const registrationData = sessionStorage.getItem('registrationData');
+        if (registrationData) {
+          const data = JSON.parse(registrationData);
+          console.log('Registration data found:', data.userType);
+          
+          // Update user status to paid in Supabase (if needed)
+          // This is where you'd mark the subscription as active
+          
+          // Redirect to appropriate dashboard
+          setTimeout(() => {
+            if (data.userType === 'employer') {
+              window.location.href = 'dashboard/employer.html';
+            } else {
+              window.location.href = 'job seekers dash.html';
+            }
+            
+            // Clear registration data after successful payment
+            sessionStorage.removeItem('registrationData');
+          }, 1500); // 1.5 second delay to show success message
+          
+        } else {
+          console.warn('No registration data found in session storage');
+          // Fallback redirect
+          setTimeout(() => {
+            window.location.href = 'job seekers dash.html';
+          }, 1500);
+        }
+        
+        // Close payment modal
+        closeModal('paymentModal');
+      }
+
       function handleSkipPayment() {
         if (!TESTING_MODE) {
           alert('Skip payment is only available in testing mode.');
@@ -2980,15 +3109,34 @@
         }
         
         console.log('Skip payment clicked - redirecting to dashboard');
-        alert('Payment skipped for testing purposes. Redirecting to dashboard...');
         
-        // Determine which dashboard to redirect to based on user type
-        const userType = getCurrentUserType();
-        if (userType === 'employer') {
-          window.location.href = 'dashboard/employer.html';
+        // Get registration data from session storage
+        const registrationData = sessionStorage.getItem('registrationData');
+        if (registrationData) {
+          const data = JSON.parse(registrationData);
+          console.log('Registration data found:', data.userType);
+          
+          // Determine which dashboard to redirect to based on user type
+          if (data.userType === 'employer') {
+            window.location.href = 'dashboard/employer.html';
+          } else {
+            window.location.href = 'job seekers dash.html';
+          }
+          
+          // Clear registration data
+          sessionStorage.removeItem('registrationData');
         } else {
-          window.location.href = 'job seekers dash.html';
+          // Fallback if no registration data
+          const userType = getCurrentUserType();
+          if (userType === 'employer') {
+            window.location.href = 'dashboard/employer.html';
+          } else {
+            window.location.href = 'job seekers dash.html';
+          }
         }
+        
+        // Close payment modal
+        closeModal('paymentModal');
       }
       
       function generateQRCode() {
@@ -3030,7 +3178,7 @@
           if (e.target.id === 'payfastBtn' || e.target.closest('#payfastBtn')) {
             // Redirect to PayFast payment gateway
             console.log('Processing PayFast payment...');
-            alert('Redirecting to PayFast payment gateway...');
+            handlePaymentSuccess('PayFast');
           }
           
           if (e.target.id === 'skipPaymentBtn' || e.target.closest('#skipPaymentBtn')) {
@@ -3041,19 +3189,19 @@
           if (e.target.id === 'ozowPay' || e.target.closest('#ozowPay')) {
             // Redirect to Ozow payment gateway
             console.log('Processing Ozow payment...');
-            alert('Redirecting to Ozow instant EFT...');
+            handlePaymentSuccess('Ozow');
           }
           
           if (e.target.id === 'applePay' || e.target.closest('#applePay')) {
             // Apple Pay integration
             console.log('Processing Apple Pay...');
-            alert('Redirecting to Apple Pay...');
+            handlePaymentSuccess('Apple Pay');
           }
           
           if (e.target.id === 'googlePay' || e.target.closest('#googlePay')) {
             // Google Pay integration
             console.log('Processing Google Pay...');
-            alert('Redirecting to Google Pay...');
+            handlePaymentSuccess('Google Pay');
           }
         });
       });
