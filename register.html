@@ -1905,7 +1905,13 @@
         }
         async function handleFormSubmit(event) {
           event.preventDefault();
-          console.log("handleFormSubmit fired"), { form: event.target.id });
+          const form = event.target; 
+          console.log("🔔 handleFormSubmit fired", { form: form.id });
+          console.log("📝 Form data preview:", {
+            email: form.querySelector('input[type="email"]')?.value,
+            username: form.querySelector('input[placeholder="Username"]')?.value,
+            hasPassword: !!form.querySelector('#seekerPassword')?.value
+          });
           
           // Check if Supabase is configured
           if (!supabaseClient) {
@@ -2092,12 +2098,49 @@
         }
         const jobSeekerForm = document.getElementById("jobSeekerRegistrationForm");
         const employerForm = document.getElementById("employerRegistrationForm");
+        
+        console.log("🔗 Attaching form event listeners:", {
+          jobSeekerForm: !!jobSeekerForm,
+          employerForm: !!employerForm
+        });
+        
         if (jobSeekerForm) {
           jobSeekerForm.addEventListener("submit", handleFormSubmit);
+          console.log("✅ Job seeker form submit listener attached");
+        } else {
+          console.warn("❌ Job seeker form not found!");
         }
+        
         if (employerForm) {
           employerForm.addEventListener("submit", handleFormSubmit);
+          console.log("✅ Employer form submit listener attached");
+        } else {
+          console.warn("❌ Employer form not found!");
         }
+        
+        // Add backup click handlers to submit buttons
+        const jobSeekerSubmitBtn = document.getElementById("jobSeekerSubmit");
+        if (jobSeekerSubmitBtn) {
+          jobSeekerSubmitBtn.addEventListener("click", function(event) {
+            console.log("🖱️ Submit button clicked for job seeker form");
+            // The form submit event should handle this, but this is a backup
+          });
+        }
+        
+        // Add a helper function to manually trigger form submission for testing
+        window.testFormSubmission = function() {
+          console.log("🧪 Testing form submission...");
+          const form = document.getElementById("jobSeekerRegistrationForm");
+          if (form) {
+            const event = new Event('submit', { bubbles: true, cancelable: true });
+            form.dispatchEvent(event);
+          } else {
+            console.error("Form not found!");
+          }
+        };
+        
+        console.log("💡 Form debugging ready. Use testFormSubmission() in console to test manually."); 
+      
         const industrySelect = document.getElementById("industrySelect");
         const jobSelect = document.getElementById("jobSelect");
         const selectedJobs = document.getElementById("selectedJobs");
@@ -2917,6 +2960,17 @@
         // For now, always return true to allow payment portal to open
         // Add your form validation logic here if needed
         return true;
+      }
+      
+      function getCurrentUserType() {
+        // Determine user type based on which form is currently visible
+        const jobSeekerForm = document.getElementById('jobSeekerForm');
+        const employerForm = document.getElementById('employerForm');
+        
+        if (employerForm && !employerForm.classList.contains('hidden')) {
+          return 'employer';
+        }
+        return 'seeker'; // default to job seeker
       }
       
       function handleSkipPayment() {
