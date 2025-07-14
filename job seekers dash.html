@@ -1175,6 +1175,27 @@
               <h3 class="text-lg font-medium text-gray-900 mb-4">
                 Select Preferred Locations
               </h3>
+              
+              <!-- Enhanced Location Preferences Guide -->
+              <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+                <div class="flex items-start">
+                  <div class="flex-shrink-0">
+                    <i class="ri-information-line text-blue-400 text-lg"></i>
+                  </div>
+                  <div class="ml-3">
+                    <h4 class="text-sm font-medium text-blue-800 mb-2">
+                      Comprehensive Location Selection
+                    </h4>
+                    <div class="text-sm text-blue-700">
+                      <p class="mb-2">✅ <strong>Multiple Provinces:</strong> Select one or more provinces where you're willing to work</p>
+                      <p class="mb-2">✅ <strong>Specific Areas:</strong> Choose from cities, townships, and suburbs within selected provinces</p>
+                      <p class="mb-2">✅ <strong>Smart Filtering:</strong> Use the filter buttons to narrow down by location type</p>
+                      <p>✅ <strong>Better Matches:</strong> More specific preferences help employers find you faster</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
               <div class="max-w-4xl mx-auto">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div class="space-y-4">
@@ -1269,7 +1290,7 @@
                           <div
                             class="sticky top-0 bg-gray-50 p-2 border-b border-gray-200"
                           >
-                            <div class="flex gap-2">
+                            <div class="flex gap-2 flex-wrap">
                               <button
                                 class="px-3 py-1 text-xs rounded-full bg-white border border-gray-200 hover:border-primary text-gray-600 hover:text-primary active"
                                 data-filter="all"
@@ -1278,9 +1299,21 @@
                               </button>
                               <button
                                 class="px-3 py-1 text-xs rounded-full bg-white border border-gray-200 hover:border-primary text-gray-600 hover:text-primary"
+                                data-filter="province"
+                              >
+                                Provinces
+                              </button>
+                              <button
+                                class="px-3 py-1 text-xs rounded-full bg-white border border-gray-200 hover:border-primary text-gray-600 hover:text-primary"
                                 data-filter="city"
                               >
                                 Cities
+                              </button>
+                              <button
+                                class="px-3 py-1 text-xs rounded-full bg-white border border-gray-200 hover:border-primary text-gray-600 hover:text-primary"
+                                data-filter="township"
+                              >
+                                Townships
                               </button>
                               <button
                                 class="px-3 py-1 text-xs rounded-full bg-white border border-gray-200 hover:border-primary text-gray-600 hover:text-primary"
@@ -2164,7 +2197,7 @@
         const locationData = {
           provinces: [
             "Gauteng",
-            "Western Cape",
+            "Western Cape", 
             "Eastern Cape",
             "KwaZulu-Natal",
             "Free State",
@@ -2173,156 +2206,374 @@
             "North West",
             "Northern Cape",
           ],
-          cities: {
+          majorCities: {
             Gauteng: [
-              "Johannesburg",
-              "Pretoria",
-              "Ekurhuleni",
-              "Midrand",
-              "Centurion",
+              "Johannesburg", "Pretoria", "Ekurhuleni", "Soweto", "Roodepoort", 
+              "Sandton", "Midrand", "Centurion", "Kempton Park", "Benoni", 
+              "Boksburg", "Germiston", "Springs", "Brakpan", "Edenvale",
+              "Randburg", "Krugersdorp", "Alberton", "Vereeniging", "Vanderbijlpark"
             ],
             "Western Cape": [
-              "Cape Town",
-              "Stellenbosch",
-              "Paarl",
-              "George",
-              "Knysna",
+              "Cape Town", "Stellenbosch", "Paarl", "George", "Knysna", 
+              "Worcester", "Mossel Bay", "Oudtshoorn", "Wellington", "Franschhoek",
+              "Hermanus", "Swellendam", "Caledon", "Grabouw", "Somerset West",
+              "Strand", "Gordons Bay", "Bellville", "Goodwood", "Parow"
             ],
             "KwaZulu-Natal": [
-              "Durban",
-              "Pietermaritzburg",
-              "Newcastle",
-              "Richards Bay",
-              "Port Shepstone",
+              "Durban", "Pietermaritzburg", "Newcastle", "Richards Bay", "Port Shepstone",
+              "Umhlanga", "Ballito", "Pinetown", "Chatsworth", "Phoenix",
+              "Ladysmith", "Dundee", "Kokstad", "Eshowe", "Mtubatuba",
+              "Ulundi", "Vryheid", "Estcourt", "Howick", "Margate"
             ],
             "Eastern Cape": [
-              "Port Elizabeth",
-              "East London",
-              "Mthatha",
-              "Grahamstown",
-              "Uitenhage",
+              "Port Elizabeth", "East London", "Mthatha", "Grahamstown", "Uitenhage",
+              "King Williams Town", "Queenstown", "Mdantsane", "Bhisho", "Alice",
+              "Fort Beaufort", "Cradock", "Graaff-Reinet", "Somerset East", "Cathcart",
+              "Jeffreys Bay", "Knysna", "Plettenberg Bay", "Humansdorp", "Despatch"
             ],
             "Free State": [
-              "Bloemfontein",
-              "Welkom",
-              "Bethlehem",
-              "Sasolburg",
-              "Parys",
+              "Bloemfontein", "Welkom", "Bethlehem", "Sasolburg", "Parys",
+              "Kroonstad", "Potchefstroom", "Klerksdorp", "Virginia", "Odendaalsrus",
+              "Harrismith", "Phuthaditjhaba", "Heilbron", "Frankfort", "Vrede",
+              "Winburg", "Theunissen", "Hoopstad", "Hennenman", "Wesselsbron"
             ],
             Limpopo: [
-              "Polokwane",
-              "Tzaneen",
-              "Mokopane",
-              "Thohoyandou",
-              "Louis Trichardt",
+              "Polokwane", "Tzaneen", "Mokopane", "Thohoyandou", "Louis Trichardt",
+              "Musina", "Giyani", "Lebowakgomo", "Marble Hall", "Burgersfort",
+              "Hoedspruit", "Phalaborwa", "Lephalale", "Thabazimbi", "Bela-Bela",
+              "Modimolle", "Dendron", "Seshego", "Mankweng", "Zebediela"
             ],
-            Mpumalanga: ["Nelspruit", "Witbank", "Secunda", "Middelburg", "Ermelo"],
+            Mpumalanga: [
+              "Nelspruit", "Witbank", "Secunda", "Middelburg", "Ermelo",
+              "Standerton", "Barberton", "White River", "Hazyview", "Sabie",
+              "Lydenburg", "Delmas", "Bethal", "Volksrust", "Piet Retief",
+              "Carolina", "Belfast", "Dullstroom", "Graskop", "Pilgrim's Rest"
+            ],
             "North West": [
-              "Rustenburg",
-              "Klerksdorp",
-              "Potchefstroom",
-              "Mahikeng",
-              "Brits",
+              "Rustenburg", "Klerksdorp", "Potchefstroom", "Mahikeng", "Brits",
+              "Zeerust", "Lichtenburg", "Vryburg", "Mmabatho", "Taung",
+              "Christiana", "Schweizer-Reneke", "Wolmaransstad", "Koster", "Swartruggens",
+              "Groot Marico", "Sannieshof", "Delareyville", "Coligny", "Madikwe"
             ],
             "Northern Cape": [
-              "Kimberley",
-              "Upington",
-              "Kuruman",
-              "De Aar",
-              "Springbok",
+              "Kimberley", "Upington", "Kuruman", "De Aar", "Springbok",
+              "Calvinia", "Carnarvon", "Colesberg", "Hanover", "Hopetown",
+              "Noupoort", "Postmasburg", "Prieska", "Sutherland", "Victoria West",
+              "Williston", "Britstown", "Douglas", "Kakamas", "Keimoes"
             ],
+          },
+          townships: {
+            Gauteng: [
+              "Soweto", "Alexandra", "Tembisa", "Katlehong", "Thokoza", 
+              "Vosloorus", "Daveyton", "Duduza", "KwaThema", "Sebokeng",
+              "Orange Farm", "Evaton", "Ivory Park", "Diepsloot", "Zandspruit"
+            ],
+            "Western Cape": [
+              "Khayelitsha", "Mitchells Plain", "Gugulethu", "Langa", "Nyanga",
+              "Crossroads", "Philippi", "Delft", "Bonteheuwel", "Hanover Park",
+              "Manenberg", "Athlone", "Grassy Park", "Elsies River", "Bishop Lavis"
+            ],
+            "KwaZulu-Natal": [
+              "Umlazi", "KwaMashu", "Chatsworth", "Phoenix", "Lamontville",
+              "Chesterville", "Cato Manor", "Inanda", "Ntuzuma", "Hammarsdale",
+              "Mpumalanga", "Clermont", "Newlands East", "Malvern", "Wentworth"
+            ],
+            "Eastern Cape": [
+              "Mdantsane", "New Brighton", "KwaNobuhle", "Zwide", "Motherwell",
+              "KwaZakhele", "Kwanobuhle", "Wells Estate", "Gelvan Park", "Joe Slovo",
+              "Missionvale", "Bethelsdorp", "Algoa Park", "Walmer", "Chatty"
+            ]
           },
           suburbs: {
             Johannesburg: [
-              "Sandton",
-              "Rosebank",
-              "Randburg",
-              "Fourways",
-              "Bryanston",
+              "Sandton", "Rosebank", "Randburg", "Fourways", "Bryanston",
+              "Melville", "Parktown", "Houghton", "Hyde Park", "Illovo",
+              "Morningside", "Rivonia", "Sunninghill", "Woodmead", "Paulshof",
+              "Lonehill", "Dainfern", "Steyn City", "Waterfall", "Kyalami"
             ],
             "Cape Town": [
-              "Sea Point",
-              "Green Point",
-              "Camps Bay",
-              "Claremont",
-              "Constantia",
+              "Sea Point", "Green Point", "Camps Bay", "Claremont", "Constantia",
+              "Newlands", "Rondebosch", "Observatory", "Woodstock", "Salt River",
+              "Gardens", "Tamboerskloof", "Oranjezicht", "Higgovale", "Bo-Kaap",
+              "Century City", "Milnerton", "Table View", "Blouberg", "Durbanville"
             ],
-            Durban: ["Umhlanga", "Ballito", "Morningside", "Berea", "Westville"],
-          },
+            Pretoria: [
+              "Hatfield", "Brooklyn", "Menlyn", "Waterkloof", "Lynnwood",
+              "Garsfontein", "Faerie Glen", "Moreleta Park", "Silverlakes", "Olympus",
+              "Centurion", "Irene", "Eldoraigne", "Lyttleton", "Clubview",
+              "Wierdapark", "Die Hoewes", "Eldorette", "Amberfield", "Heuwelsig"
+            ],
+            Durban: [
+              "Umhlanga", "Ballito", "Morningside", "Berea", "Westville",
+              "Kloof", "Hillcrest", "Pinetown", "Chatsworth", "Phoenix",
+              "Durban North", "Glenwood", "Musgrave", "Windermere", "Yellowwood Park",
+              "Amanzimtoti", "Queensburgh", "Malvern", "Overport", "Cato Ridge"
+            ]
+          }
         };
         const provinceSelect = document.getElementById("provinceSelect");
         const locationSearch = document.getElementById("locationSearch");
         let currentState = {
-          selectedProvince: "",
+          selectedProvinces: [], // Changed to array for multiple province selection
           selectedLocations: [],
           currentFilter: "all",
           searchTerm: "",
         };
-        // Initialize province select
+        // Initialize province multi-select interface
         function initProvinceSelect() {
-          locationData.provinces.forEach((province) => {
-            const option = document.createElement("option");
-            option.value = province;
-            option.textContent = province;
-            provinceSelect.appendChild(option);
+          // Convert single province select to multi-select interface
+          const provinceContainer = provinceSelect.parentElement;
+          
+          // Create new multi-select province interface
+          const multiProvinceSelect = document.createElement('div');
+          multiProvinceSelect.className = 'relative';
+          multiProvinceSelect.innerHTML = `
+            <div class="border border-gray-300 rounded-lg p-3 min-h-[45px] cursor-pointer bg-white" id="provinceMultiSelect">
+              <div class="flex flex-wrap gap-2 items-center" id="selectedProvinces">
+                <span class="text-gray-500 text-sm">Select provinces...</span>
+              </div>
+            </div>
+            <div class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg hidden" id="provinceOptions">
+              <div class="p-2 border-b">
+                <div class="flex gap-2 mb-2">
+                  <button type="button" class="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded hover:bg-blue-200" onclick="selectAllProvinces()">
+                    Select All
+                  </button>
+                  <button type="button" class="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded hover:bg-gray-200" onclick="clearAllProvinces()">
+                    Clear All
+                  </button>
+                </div>
+              </div>
+              <div class="max-h-60 overflow-y-auto p-2" id="provinceList">
+                ${locationData.provinces.map(province => `
+                  <label class="flex items-center p-2 hover:bg-gray-50 cursor-pointer rounded">
+                    <input type="checkbox" value="${province}" class="province-checkbox mr-3">
+                    <span class="text-sm">${province}</span>
+                  </label>
+                `).join('')}
+              </div>
+            </div>
+          `;
+          
+          // Replace the old select with new multi-select
+          provinceContainer.replaceChild(multiProvinceSelect, provinceSelect);
+          
+          // Set up event listeners for the new interface
+          setupProvinceMultiSelect();
+        }
+        // Set up province multi-select functionality
+        function setupProvinceMultiSelect() {
+          const multiSelect = document.getElementById('provinceMultiSelect');
+          const provinceOptions = document.getElementById('provinceOptions');
+          const checkboxes = document.querySelectorAll('.province-checkbox');
+          
+          // Toggle dropdown on click
+          multiSelect.addEventListener('click', () => {
+            provinceOptions.classList.toggle('hidden');
+          });
+          
+          // Handle checkbox changes
+          checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+              updateSelectedProvinces();
+              updateLocationOptions();
+            });
+          });
+          
+          // Close dropdown when clicking outside
+          document.addEventListener('click', (e) => {
+            if (!multiSelect.contains(e.target) && !provinceOptions.contains(e.target)) {
+              provinceOptions.classList.add('hidden');
+            }
           });
         }
-        // Filter locations based on province and search term
+        
+        // Update selected provinces display
+        function updateSelectedProvinces() {
+          const checkboxes = document.querySelectorAll('.province-checkbox:checked');
+          const selectedContainer = document.getElementById('selectedProvinces');
+          
+          currentState.selectedProvinces = Array.from(checkboxes).map(cb => cb.value);
+          
+          if (currentState.selectedProvinces.length === 0) {
+            selectedContainer.innerHTML = '<span class="text-gray-500 text-sm">Select provinces...</span>';
+          } else {
+            selectedContainer.innerHTML = currentState.selectedProvinces.map(province => `
+              <span class="inline-flex items-center gap-1 bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">
+                ${province}
+                <button type="button" onclick="removeProvince('${province}')" class="text-blue-600 hover:text-blue-800">×</button>
+              </span>
+            `).join('');
+          }
+          
+          // Clear selected locations when provinces change
+          currentState.selectedLocations = [];
+          updateTags();
+        }
+        
+        // Global functions for province management
+        window.selectAllProvinces = function() {
+          const checkboxes = document.querySelectorAll('.province-checkbox');
+          checkboxes.forEach(cb => cb.checked = true);
+          updateSelectedProvinces();
+          updateLocationOptions();
+        };
+        
+        window.clearAllProvinces = function() {
+          const checkboxes = document.querySelectorAll('.province-checkbox');
+          checkboxes.forEach(cb => cb.checked = false);
+          updateSelectedProvinces();
+          updateLocationOptions();
+        };
+        
+        window.removeProvince = function(province) {
+          const checkbox = document.querySelector(`input[value="${province}"]`);
+          if (checkbox) {
+            checkbox.checked = false;
+            updateSelectedProvinces();
+            updateLocationOptions();
+          }
+        };
+
+        // Filter locations based on selected provinces and search term
         function filterLocations() {
           const searchTerm = locationSearch.value.toLowerCase();
           let filteredItems = [];
-          if (currentState.selectedProvince) {
-            if (
-              currentState.currentFilter === "all" ||
-              currentState.currentFilter === "city"
-            ) {
-              const cities = locationData.cities[currentState.selectedProvince] || [];
+          
+          // If no provinces selected, show all provinces as options
+          if (currentState.selectedProvinces.length === 0) {
+            if (currentState.currentFilter === "all" || currentState.currentFilter === "province") {
               filteredItems = filteredItems.concat(
-                cities.filter((city) => city.toLowerCase().includes(searchTerm)),
+                locationData.provinces.filter(province => 
+                  province.toLowerCase().includes(searchTerm)
+                ).map(province => ({ name: province, type: 'Province' }))
               );
             }
-            if (
-              currentState.currentFilter === "all" ||
-              currentState.currentFilter === "suburb"
-            ) {
-              const citiesInProvince =
-                locationData.cities[currentState.selectedProvince] || [];
-              citiesInProvince.forEach((city) => {
-                const suburbs = locationData.suburbs[city] || [];
-                filteredItems = filteredItems.concat(
-                  suburbs.filter((suburb) =>
-                    suburb.toLowerCase().includes(searchTerm),
-                  ),
-                );
+            return filteredItems;
+          }
+          
+          // Filter based on selected provinces
+          currentState.selectedProvinces.forEach(selectedProvince => {
+            // Add major cities
+            if (currentState.currentFilter === "all" || currentState.currentFilter === "city") {
+              const cities = locationData.majorCities[selectedProvince] || [];
+              filteredItems = filteredItems.concat(
+                cities.filter(city => city.toLowerCase().includes(searchTerm))
+                     .map(city => ({ name: city, type: 'City', province: selectedProvince }))
+              );
+            }
+            
+            // Add townships
+            if (currentState.currentFilter === "all" || currentState.currentFilter === "township") {
+              const townships = locationData.townships[selectedProvince] || [];
+              filteredItems = filteredItems.concat(
+                townships.filter(township => township.toLowerCase().includes(searchTerm))
+                        .map(township => ({ name: township, type: 'Township', province: selectedProvince }))
+              );
+            }
+            
+            // Add suburbs
+            if (currentState.currentFilter === "all" || currentState.currentFilter === "suburb") {
+              const cityKeys = Object.keys(locationData.suburbs);
+              cityKeys.forEach(city => {
+                // Check if this city belongs to the selected province
+                if (locationData.majorCities[selectedProvince]?.includes(city)) {
+                  const suburbs = locationData.suburbs[city] || [];
+                  filteredItems = filteredItems.concat(
+                    suburbs.filter(suburb => suburb.toLowerCase().includes(searchTerm))
+                           .map(suburb => ({ name: suburb, type: 'Suburb', province: selectedProvince, city: city }))
+                  );
+                }
               });
             }
-          }
+          });
+          
           return filteredItems;
         }
         // Update location options display
         function updateLocationOptions() {
+          const locationOptionsContent = document.getElementById('locationOptionsContent');
+          if (!locationOptionsContent) return;
+          
           locationOptionsContent.innerHTML = "";
           const filteredLocations = filterLocations();
+          
           if (filteredLocations.length === 0) {
             const noResults = document.createElement("div");
             noResults.className = "p-4 text-center text-sm text-gray-500";
-            noResults.textContent = "No locations found";
+            noResults.textContent = currentState.selectedProvinces.length === 0 
+              ? "Please select one or more provinces first" 
+              : "No locations found";
             locationOptionsContent.appendChild(noResults);
             return;
           }
-          filteredLocations.forEach((location) => {
-            const item = document.createElement("div");
-            item.className =
-              "p-2 hover:bg-gray-50 cursor-pointer text-sm flex items-center justify-between group";
-            item.innerHTML = `
-      <span>${location}</span>
-      <span class="text-xs text-gray-400 opacity-0 group-hover:opacity-100">
-      ${locationData.suburbs[location] ? "City" : "Suburb"}
-      </span>
-      `;
-            item.onclick = () => selectLocation(location);
-            locationOptionsContent.appendChild(item);
+          
+          // Group by type for better organization
+          const groupedLocations = {};
+          filteredLocations.forEach(location => {
+            if (!groupedLocations[location.type]) {
+              groupedLocations[location.type] = [];
+            }
+            groupedLocations[location.type].push(location);
           });
+          
+          // Display grouped results
+          Object.entries(groupedLocations).forEach(([type, locations]) => {
+            // Add type header
+            if (Object.keys(groupedLocations).length > 1) {
+              const typeHeader = document.createElement("div");
+              typeHeader.className = "px-3 py-2 text-xs font-semibold text-gray-500 bg-gray-50 border-b";
+              typeHeader.textContent = `${type}s`;
+              locationOptionsContent.appendChild(typeHeader);
+            }
+            
+            // Add locations of this type
+            locations.forEach((location) => {
+              const item = document.createElement("div");
+              item.className = "p-2 hover:bg-gray-50 cursor-pointer text-sm flex items-center justify-between group";
+              
+              const locationInfo = document.createElement("div");
+              locationInfo.className = "flex flex-col";
+              
+              const mainText = document.createElement("span");
+              mainText.textContent = location.name;
+              mainText.className = "font-medium";
+              
+              const subText = document.createElement("span");
+              subText.className = "text-xs text-gray-500";
+              if (location.city && location.province) {
+                subText.textContent = `${location.city}, ${location.province}`;
+              } else if (location.province) {
+                subText.textContent = location.province;
+              } else {
+                subText.textContent = location.type;
+              }
+              
+              locationInfo.appendChild(mainText);
+              locationInfo.appendChild(subText);
+              
+              const typeLabel = document.createElement("span");
+              typeLabel.className = `text-xs px-2 py-1 rounded-full ${getTypeColor(location.type)}`;
+              typeLabel.textContent = location.type;
+              
+              item.appendChild(locationInfo);
+              item.appendChild(typeLabel);
+              
+              item.onclick = () => selectLocation(location.name);
+              locationOptionsContent.appendChild(item);
+            });
+          });
+        }
+        
+        // Get color class for location type
+        function getTypeColor(type) {
+          const colors = {
+            'Province': 'bg-purple-100 text-purple-800',
+            'City': 'bg-blue-100 text-blue-800',
+            'Township': 'bg-green-100 text-green-800',
+            'Suburb': 'bg-yellow-100 text-yellow-800'
+          };
+          return colors[type] || 'bg-gray-100 text-gray-800';
         }
         // Handle location selection
         function selectLocation(location) {
@@ -2366,51 +2617,67 @@
           updateTags();
           saveLocationPreferences();
         };
-        // Event Listeners
-        provinceSelect.addEventListener("change", (e) => {
-          currentState.selectedProvince = e.target.value;
-          currentState.selectedLocations = [];
-          updateTags();
-          updateLocationOptions();
-        });
+        // Event Listeners (Updated for multi-province support)
+        // Province select is now handled by setupProvinceMultiSelect()
+        
         locationSearch.addEventListener("input", (e) => {
           currentState.searchTerm = e.target.value;
-          locationOptions.classList.remove("hidden");
-          updateLocationOptions();
-        });
-        multiSelect.addEventListener("click", () => {
-          locationOptions.classList.toggle("hidden");
-          if (!locationOptions.classList.contains("hidden")) {
+          const locationOptions = document.getElementById('locationOptions');
+          if (locationOptions) {
+            locationOptions.classList.remove("hidden");
             updateLocationOptions();
-            locationSearch.focus();
           }
         });
+        
+        // Multi-select container click handler
+        const multiSelect = document.getElementById('multiSelect');
+        if (multiSelect) {
+          multiSelect.addEventListener("click", () => {
+            const locationOptions = document.getElementById('locationOptions');
+            if (locationOptions) {
+              locationOptions.classList.toggle("hidden");
+              if (!locationOptions.classList.contains("hidden")) {
+                updateLocationOptions();
+                locationSearch.focus();
+              }
+            }
+          });
+        }
+        
+        // Close location options when clicking outside
         document.addEventListener("click", (e) => {
-          if (!multiSelect.contains(e.target)) {
+          const multiSelect = document.getElementById('multiSelect');
+          const locationOptions = document.getElementById('locationOptions');
+          if (multiSelect && locationOptions && !multiSelect.contains(e.target)) {
             locationOptions.classList.add("hidden");
           }
         });
-        const filterButtons = locationOptions.querySelectorAll("[data-filter]");
-        filterButtons.forEach((button) => {
-          button.addEventListener("click", () => {
-            filterButtons.forEach((btn) =>
-              btn.classList.remove(
+        
+        // Filter buttons event listeners
+        const locationOptions = document.getElementById('locationOptions');
+        if (locationOptions) {
+          const filterButtons = locationOptions.querySelectorAll("[data-filter]");
+          filterButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+              filterButtons.forEach((btn) =>
+                btn.classList.remove(
+                  "active",
+                  "bg-primary",
+                  "text-white",
+                  "border-primary",
+                ),
+              );
+              button.classList.add(
                 "active",
                 "bg-primary",
                 "text-white",
                 "border-primary",
-              ),
-            );
-            button.classList.add(
-              "active",
-              "bg-primary",
-              "text-white",
-              "border-primary",
-            );
-            currentState.currentFilter = button.dataset.filter;
-            updateLocationOptions();
+              );
+              currentState.currentFilter = button.dataset.filter;
+              updateLocationOptions();
+            });
           });
-        });
+        }
         // Initialize
         initProvinceSelect();
         updateTags();
@@ -2549,6 +2816,8 @@
         createLocationList();
         // Remove the unused function since we're using a custom multiselect implementation
         function saveLocationPreferences() {
+          const maxTravelDistance = document.getElementById("maxTravelDistance");
+          
           fetch(`${API_BASE_URL}/${JOBSEEKER_ID}/location-preferences`, {
             method: "POST",
             headers: {
@@ -2556,8 +2825,9 @@
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,
             },
             body: JSON.stringify({
-              locations: currentUser.locations,
-              maxTravelKm: currentUser.maxTravelKm,
+              selectedProvinces: currentState.selectedProvinces,
+              selectedLocations: currentState.selectedLocations,
+              maxTravelKm: maxTravelDistance ? parseInt(maxTravelDistance.value) || 0 : 0,
             }),
           })
             .then((response) => {
