@@ -1096,28 +1096,19 @@
                 </div>
               </div>
               <!-- Add Job Position Selector -->
-              <div class="input-container">
-                <div class="icon w-5 h-5 flex items-center justify-center">
-                  <i class="ri-briefcase-line"></i>
+              <div class="relative">
+                <div class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 flex items-center justify-center pointer-events-none">
+                  <i class="ri-briefcase-line text-gray-400"></i>
                 </div>
                 <select
                   id="jobPositionSelect"
-                  class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm pl-10 pr-8 appearance-none"
+                  class="w-full px-4 py-3 pl-10 pr-8 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm appearance-none bg-white"
+                  disabled
                 >
-                  <option value="">Add a job position</option>
-                  <option value="Driver">Driver</option>
-                  <option value="Domestic Worker">Domestic Worker</option>
-                  <option value="Childminder">Childminder</option>
-                  <option value="Elder Care Assistant">Elder Care Assistant</option>
-                  <option value="Security Guard">Security Guard</option>
-                  <option value="Cleaner">Cleaner</option>
-                  <option value="Gardener">Gardener</option>
-                  <option value="Handyman">Handyman</option>
-                  <option value="Cook">Cook</option>
-                  <option value="Caregiver">Caregiver</option>
+                  <option value="">First select an industry above</option>
                 </select>
                 <div class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                  <i class="ri-arrow-down-s-line"></i>
+                  <i class="ri-arrow-down-s-line text-gray-400"></i>
                 </div>
               </div>
               <p class="text-xs text-gray-500 mt-1">Add or remove job positions you're interested in.</p>
@@ -3467,6 +3458,10 @@
                   element.checked = value === true || value === 'yes' || value === 'true';
                 } else if (element.tagName === 'SELECT') {
                   element.value = value;
+                  // If this is the industry preference, update job position options
+                  if (fieldId === 'industryPreference') {
+                    updateJobPositionOptions(value);
+                  }
                 } else {
                   element.value = value;
                 }
@@ -3600,6 +3595,182 @@
         // Make removeJobPosition available globally
         window.removeJobPosition = removeJobPosition;
 
+        // Industry-specific job positions mapping
+        const industryJobPositions = {
+          'drivers': [
+            'Delivery Driver',
+            'Taxi Driver', 
+            'Uber/Bolt Driver',
+            'Truck Driver',
+            'Bus Driver',
+            'Chauffeur',
+            'Courier Driver',
+            'Logistics Driver'
+          ],
+          'domestic_workers': [
+            'Domestic Worker',
+            'Housekeeper',
+            'Cleaner',
+            'Cook',
+            'Laundry Assistant',
+            'General Helper',
+            'Live-in Domestic Worker'
+          ],
+          'child_elder_care': [
+            'Childminder',
+            'Nanny',
+            'Babysitter',
+            'Elder Care Assistant',
+            'Caregiver',
+            'Au Pair',
+            'After School Care',
+            'Special Needs Care'
+          ],
+          'security': [
+            'Security Guard',
+            'Armed Response',
+            'CCTV Operator',
+            'Access Control',
+            'Patrol Officer',
+            'Event Security',
+            'Retail Security',
+            'Industrial Security'
+          ],
+          'trades': [
+            'Plumber',
+            'Electrician',
+            'Carpenter',
+            'Painter',
+            'Tiler',
+            'Welder',
+            'HVAC Technician',
+            'General Handyman'
+          ],
+          'construction': [
+            'Construction Worker',
+            'Bricklayer',
+            'Roofer',
+            'Scaffolder',
+            'Concrete Worker',
+            'Steel Fixer',
+            'Construction Helper',
+            'Site Cleaner'
+          ],
+          'retail_hospitality': [
+            'Sales Assistant',
+            'Cashier',
+            'Waiter/Waitress',
+            'Barista',
+            'Kitchen Assistant',
+            'Cleaner',
+            'Customer Service',
+            'Stock Clerk'
+          ],
+          'admin': [
+            'Receptionist',
+            'Data Capturer',
+            'Filing Clerk',
+            'Administrative Assistant',
+            'Call Center Agent',
+            'Office Cleaner',
+            'Messenger',
+            'General Office Assistant'
+          ],
+          'warehouse': [
+            'Warehouse Assistant',
+            'Picker/Packer',
+            'Forklift Operator',
+            'Stock Controller',
+            'Loading Assistant',
+            'Inventory Clerk',
+            'Dispatch Clerk',
+            'Warehouse Cleaner'
+          ],
+          'event_staff': [
+            'Event Assistant',
+            'Setup Crew',
+            'Waiter/Waitress',
+            'Bartender',
+            'Kitchen Staff',
+            'Cleaning Staff',
+            'Security Staff',
+            'Parking Attendant'
+          ],
+          'mechanics': [
+            'Mechanic',
+            'Auto Electrician', 
+            'Panel Beater',
+            'Spray Painter',
+            'Tire Technician',
+            'Diesel Mechanic',
+            'Motorcycle Mechanic',
+            'Heavy Vehicle Mechanic'
+          ],
+          'agriculture_farm_work': [
+            'Farm Worker',
+            'Harvester',
+            'Livestock Handler',
+            'Tractor Operator',
+            'Irrigation Worker',
+            'Greenhouse Worker',
+            'Fruit Picker',
+            'General Farm Hand'
+          ]
+        };
+
+        // Function to update job position options based on selected industry
+        function updateJobPositionOptions(selectedIndustry) {
+          console.log('updateJobPositionOptions called with:', selectedIndustry);
+          const jobPositionSelect = document.getElementById('jobPositionSelect');
+          if (!jobPositionSelect) {
+            console.error('jobPositionSelect element not found');
+            return;
+          }
+
+          // Clear existing options
+          jobPositionSelect.innerHTML = '';
+
+          if (!selectedIndustry || !industryJobPositions[selectedIndustry]) {
+            // No industry selected or invalid industry
+            console.log('No valid industry selected, disabling dropdown');
+            jobPositionSelect.innerHTML = '<option value="">First select an industry above</option>';
+            jobPositionSelect.disabled = true;
+            return;
+          }
+
+          // Enable the selector and add options for the selected industry
+          console.log('Enabling dropdown with positions for:', selectedIndustry);
+          jobPositionSelect.disabled = false;
+          jobPositionSelect.innerHTML = '<option value="">Add a job position</option>';
+          
+          industryJobPositions[selectedIndustry].forEach(position => {
+            const option = document.createElement('option');
+            option.value = position;
+            option.textContent = position;
+            jobPositionSelect.appendChild(option);
+          });
+          
+          console.log('Added', industryJobPositions[selectedIndustry].length, 'job positions');
+        }
+
+        // Industry preference change handler
+        document.addEventListener('change', function(e) {
+          if (e.target.id === 'industryPreference') {
+            console.log('Industry changed to:', e.target.value);
+            updateJobPositionOptions(e.target.value);
+          }
+        });
+
+        // Initialize dropdown on page load
+        document.addEventListener('DOMContentLoaded', function() {
+          // Initialize job position dropdown based on current industry selection
+          const industrySelect = document.getElementById('industryPreference');
+          if (industrySelect && industrySelect.value) {
+            console.log('Initializing with industry:', industrySelect.value);
+            updateJobPositionOptions(industrySelect.value);
+          }
+        });
+
         // Function to update subscription display
         function updateSubscriptionDisplay(tier) {
           // Find subscription tier cards and mark the current one as active
@@ -3727,6 +3898,7 @@
         // Job position selector event listener
         document.addEventListener('change', function(e) {
           if (e.target.id === 'jobPositionSelect' && e.target.value) {
+            console.log('Job position selected:', e.target.value);
             addJobPosition(e.target.value);
             e.target.value = ''; // Reset selector
           }
