@@ -1177,16 +1177,16 @@
               </h3>
               
               <!-- Enhanced Location Preferences Guide -->
-              <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+              <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
                 <div class="flex items-start">
                   <div class="flex-shrink-0">
-                    <i class="ri-information-line text-blue-400 text-lg"></i>
+                    <i class="ri-information-line text-red-500 text-lg"></i>
                   </div>
                   <div class="ml-3">
-                    <h4 class="text-sm font-medium text-blue-800 mb-2">
+                    <h4 class="text-sm font-medium text-red-800 mb-2">
                       Comprehensive Location Selection
                     </h4>
-                    <div class="text-sm text-blue-700">
+                    <div class="text-sm text-red-700">
                       <p class="mb-2">✅ <strong>Multiple Provinces:</strong> Select one or more provinces where you're willing to work</p>
                       <p class="mb-2">✅ <strong>Specific Areas:</strong> Choose from cities, townships, and suburbs within selected provinces</p>
                       <p class="mb-2">✅ <strong>Smart Filtering:</strong> Use the filter buttons to narrow down by location type</p>
@@ -1215,117 +1215,90 @@
                         </div>
                       </div>
                       <div class="space-y-4">
-                        <select
-                          id="provinceSelect"
-                          class="w-full px-3 py-2 border border-gray-300 rounded-button text-sm bg-white"
-                        >
-                          <option value="">Select Province</option>
-                          <option value="Gauteng">Gauteng</option>
-                          <option value="Western Cape">Western Cape</option>
-                          <option value="Eastern Cape">Eastern Cape</option>
-                          <option value="KwaZulu-Natal">KwaZulu-Natal</option>
-                          <option value="Free State">Free State</option>
-                          <option value="Limpopo">Limpopo</option>
-                          <option value="Mpumalanga">Mpumalanga</option>
-                          <option value="North West">North West</option>
-                          <option value="Northern Cape">Northern Cape</option>
-                        </select>
-                        <div class="relative">
-                          <div
-                            class="flex items-center border border-gray-300 rounded-button overflow-hidden"
-                          >
-                            <i class="ri-search-line text-gray-400 ml-3"></i>
-                            <input
-                              type="text"
-                              id="locationSearch"
-                              class="w-full px-3 py-2 text-sm border-none focus:ring-0"
-                              placeholder="Search cities and suburbs..."
-                            />
-                          </div>
-                          <ul
-                            id="locationResults"
-                            class="absolute w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-48 overflow-y-auto hidden z-10"
-                          ></ul>
-                        </div>
-                        <div
-                          id="selectedLocations"
-                          class="flex flex-wrap gap-2"
-                        ></div>
-                      </div>
-                      <!-- Province Select -->
-                      <div class="mb-4">
-                        <select
-                          id="provinceSelect"
-                          class="w-full px-3 py-2 border border-gray-300 rounded-button text-sm bg-white"
-                        >
-                          <option value="">Select Province</option>
-                        </select>
-                      </div>
-                      <!-- Location Multi-select -->
-                      <div
-                        id="locationMultiSelect"
-                        class="w-full bg-white border border-gray-300 rounded-button cursor-pointer"
-                      >
-                        <div
-                          class="flex items-center p-2 gap-2 flex-wrap min-h-[40px]"
-                          id="selectedTags"
-                        ></div>
-                        <div
-                          class="relative flex items-center border-t border-gray-200"
-                        >
-                          <i
-                            class="ri-search-line text-gray-400 absolute left-3"
-                          ></i>
-                          <input
-                            type="text"
-                            id="locationSearch"
-                            class="w-full pl-10 pr-3 py-2 text-sm"
-                            placeholder="Search cities and suburbs..."
-                          />
-                        </div>
-                        <div
-                          class="absolute w-full bg-white border border-gray-200 rounded-lg shadow-lg mt-1 max-h-64 overflow-y-auto hidden z-10"
-                          id="locationOptions"
-                        >
-                          <div
-                            class="sticky top-0 bg-gray-50 p-2 border-b border-gray-200"
-                          >
-                            <div class="flex gap-2 flex-wrap">
-                              <button
-                                class="px-3 py-1 text-xs rounded-full bg-white border border-gray-200 hover:border-primary text-gray-600 hover:text-primary active"
-                                data-filter="all"
-                              >
-                                All
-                              </button>
-                              <button
-                                class="px-3 py-1 text-xs rounded-full bg-white border border-gray-200 hover:border-primary text-gray-600 hover:text-primary"
-                                data-filter="province"
-                              >
-                                Provinces
-                              </button>
-                              <button
-                                class="px-3 py-1 text-xs rounded-full bg-white border border-gray-200 hover:border-primary text-gray-600 hover:text-primary"
-                                data-filter="city"
-                              >
-                                Cities
-                              </button>
-                              <button
-                                class="px-3 py-1 text-xs rounded-full bg-white border border-gray-200 hover:border-primary text-gray-600 hover:text-primary"
-                                data-filter="township"
-                              >
-                                Townships
-                              </button>
-                              <button
-                                class="px-3 py-1 text-xs rounded-full bg-white border border-gray-200 hover:border-primary text-gray-600 hover:text-primary"
-                                data-filter="suburb"
-                              >
-                                Suburbs
-                              </button>
+                        <!-- Multi-Province Selection Interface -->
+                        <div class="space-y-2">
+                          <label class="text-sm font-medium text-gray-700">Select Provinces</label>
+                          <div id="provinceMultiSelect" class="relative">
+                            <div class="border border-gray-300 rounded-lg p-3 min-h-[45px] cursor-pointer bg-white">
+                              <div class="flex flex-wrap gap-2 items-center" id="selectedProvinces">
+                                <span class="text-gray-500 text-sm">Select provinces...</span>
+                              </div>
+                            </div>
+                            <div class="absolute z-20 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg hidden" id="provinceOptions">
+                              <div class="p-2 border-b">
+                                <div class="flex gap-2 mb-2">
+                                  <button type="button" class="text-xs px-2 py-1 bg-red-100 text-red-700 rounded hover:bg-red-200" onclick="selectAllProvinces()">
+                                    Select All
+                                  </button>
+                                  <button type="button" class="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded hover:bg-gray-200" onclick="clearAllProvinces()">
+                                    Clear All
+                                  </button>
+                                </div>
+                              </div>
+                              <div class="max-h-60 overflow-y-auto p-2" id="provinceList">
+                                <!-- Province checkboxes will be populated by JavaScript -->
+                              </div>
                             </div>
                           </div>
-                          <div class="p-2" id="locationOptionsContent"></div>
                         </div>
-                      </div>
+
+                        <!-- Location Search and Selection -->
+                        <div class="space-y-2">
+                          <label class="text-sm font-medium text-gray-700">Search & Select Locations</label>
+                          <div id="multiSelect" class="relative">
+                            <div class="w-full bg-white border border-gray-300 rounded-lg cursor-pointer">
+                              <div class="flex items-center p-2 gap-2 flex-wrap min-h-[40px]" id="selectedTags">
+                                <span class="text-gray-500 text-sm">No locations selected</span>
+                              </div>
+                              <div class="relative flex items-center border-t border-gray-200">
+                                <i class="ri-search-line text-gray-400 absolute left-3"></i>
+                                <input
+                                  type="text"
+                                  id="locationSearch"
+                                  class="w-full pl-10 pr-3 py-2 text-sm border-none focus:ring-0"
+                                  placeholder="Search cities, townships, and suburbs..."
+                                />
+                              </div>
+                            </div>
+                            <div class="absolute w-full bg-white border border-gray-200 rounded-lg shadow-lg mt-1 max-h-64 overflow-y-auto hidden z-10" id="locationOptions">
+                              <div class="sticky top-0 bg-gray-50 p-2 border-b border-gray-200">
+                                <div class="flex gap-2 flex-wrap">
+                                  <button
+                                    class="px-3 py-1 text-xs rounded-full bg-white border border-gray-200 hover:border-primary text-gray-600 hover:text-primary active"
+                                    data-filter="all"
+                                  >
+                                    All
+                                  </button>
+                                  <button
+                                    class="px-3 py-1 text-xs rounded-full bg-white border border-gray-200 hover:border-primary text-gray-600 hover:text-primary"
+                                    data-filter="province"
+                                  >
+                                    Provinces
+                                  </button>
+                                  <button
+                                    class="px-3 py-1 text-xs rounded-full bg-white border border-gray-200 hover:border-primary text-gray-600 hover:text-primary"
+                                    data-filter="city"
+                                  >
+                                    Cities
+                                  </button>
+                                  <button
+                                    class="px-3 py-1 text-xs rounded-full bg-white border border-gray-200 hover:border-primary text-gray-600 hover:text-primary"
+                                    data-filter="township"
+                                  >
+                                    Townships
+                                  </button>
+                                  <button
+                                    class="px-3 py-1 text-xs rounded-full bg-white border border-gray-200 hover:border-primary text-gray-600 hover:text-primary"
+                                    data-filter="suburb"
+                                  >
+                                    Suburbs
+                                  </button>
+                                </div>
+                              </div>
+                              <div class="p-2" id="locationOptionsContent"></div>
+                            </div>
+                          </div>
+                        </div>
                     </div>
                     <div class="space-y-4">
                       <div>
@@ -2311,7 +2284,6 @@
             ]
           }
         };
-        const provinceSelect = document.getElementById("provinceSelect");
         const locationSearch = document.getElementById("locationSearch");
         let currentState = {
           selectedProvinces: [], // Changed to array for multiple province selection
@@ -2321,42 +2293,22 @@
         };
         // Initialize province multi-select interface
         function initProvinceSelect() {
-          // Convert single province select to multi-select interface
-          const provinceContainer = provinceSelect.parentElement;
+          const provinceList = document.getElementById('provinceList');
+          if (!provinceList) return;
           
-          // Create new multi-select province interface
-          const multiProvinceSelect = document.createElement('div');
-          multiProvinceSelect.className = 'relative';
-          multiProvinceSelect.innerHTML = `
-            <div class="border border-gray-300 rounded-lg p-3 min-h-[45px] cursor-pointer bg-white" id="provinceMultiSelect">
-              <div class="flex flex-wrap gap-2 items-center" id="selectedProvinces">
-                <span class="text-gray-500 text-sm">Select provinces...</span>
-              </div>
-            </div>
-            <div class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg hidden" id="provinceOptions">
-              <div class="p-2 border-b">
-                <div class="flex gap-2 mb-2">
-                  <button type="button" class="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded hover:bg-blue-200" onclick="selectAllProvinces()">
-                    Select All
-                  </button>
-                  <button type="button" class="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded hover:bg-gray-200" onclick="clearAllProvinces()">
-                    Clear All
-                  </button>
-                </div>
-              </div>
-              <div class="max-h-60 overflow-y-auto p-2" id="provinceList">
-                ${locationData.provinces.map(province => `
-                  <label class="flex items-center p-2 hover:bg-gray-50 cursor-pointer rounded">
-                    <input type="checkbox" value="${province}" class="province-checkbox mr-3">
-                    <span class="text-sm">${province}</span>
-                  </label>
-                `).join('')}
-              </div>
-            </div>
-          `;
+          // Clear existing content
+          provinceList.innerHTML = '';
           
-          // Replace the old select with new multi-select
-          provinceContainer.replaceChild(multiProvinceSelect, provinceSelect);
+          // Populate province checkboxes
+          locationData.provinces.forEach(province => {
+            const label = document.createElement('label');
+            label.className = 'flex items-center p-2 hover:bg-gray-50 cursor-pointer rounded';
+            label.innerHTML = `
+              <input type="checkbox" value="${province}" class="province-checkbox mr-3 text-primary focus:ring-primary">
+              <span class="text-sm">${province}</span>
+            `;
+            provinceList.appendChild(label);
+          });
           
           // Set up event listeners for the new interface
           setupProvinceMultiSelect();
@@ -2365,20 +2317,28 @@
         function setupProvinceMultiSelect() {
           const multiSelect = document.getElementById('provinceMultiSelect');
           const provinceOptions = document.getElementById('provinceOptions');
-          const checkboxes = document.querySelectorAll('.province-checkbox');
+          
+          if (!multiSelect || !provinceOptions) return;
           
           // Toggle dropdown on click
-          multiSelect.addEventListener('click', () => {
+          multiSelect.addEventListener('click', (e) => {
+            e.stopPropagation();
             provinceOptions.classList.toggle('hidden');
           });
           
           // Handle checkbox changes
-          checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', () => {
-              updateSelectedProvinces();
-              updateLocationOptions();
+          const updateCheckboxListeners = () => {
+            const checkboxes = document.querySelectorAll('.province-checkbox');
+            checkboxes.forEach(checkbox => {
+              checkbox.addEventListener('change', () => {
+                updateSelectedProvinces();
+                updateLocationOptions();
+              });
             });
-          });
+          };
+          
+          // Set up initial listeners
+          updateCheckboxListeners();
           
           // Close dropdown when clicking outside
           document.addEventListener('click', (e) => {
@@ -2393,15 +2353,17 @@
           const checkboxes = document.querySelectorAll('.province-checkbox:checked');
           const selectedContainer = document.getElementById('selectedProvinces');
           
+          if (!selectedContainer) return;
+          
           currentState.selectedProvinces = Array.from(checkboxes).map(cb => cb.value);
           
           if (currentState.selectedProvinces.length === 0) {
             selectedContainer.innerHTML = '<span class="text-gray-500 text-sm">Select provinces...</span>';
           } else {
             selectedContainer.innerHTML = currentState.selectedProvinces.map(province => `
-              <span class="inline-flex items-center gap-1 bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">
+              <span class="inline-flex items-center gap-1 bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs">
                 ${province}
-                <button type="button" onclick="removeProvince('${province}')" class="text-blue-600 hover:text-blue-800">×</button>
+                <button type="button" onclick="removeProvince('${province}')" class="text-red-600 hover:text-red-800 ml-1">×</button>
               </span>
             `).join('');
           }
@@ -2588,6 +2550,9 @@
         }
         // Update selected location tags
         function updateTags() {
+          const selectedTags = document.getElementById("selectedTags");
+          if (!selectedTags) return;
+          
           selectedTags.innerHTML = "";
           if (currentState.selectedLocations.length === 0) {
             const placeholder = document.createElement("div");
@@ -2598,14 +2563,13 @@
           }
           currentState.selectedLocations.forEach((location) => {
             const tag = document.createElement("div");
-            tag.className =
-              "bg-gray-100 hover:bg-gray-200 rounded-full px-3 py-1.5 text-sm flex items-center gap-2 transition-colors";
+            tag.className = "bg-red-100 hover:bg-red-200 rounded-full px-3 py-1.5 text-sm flex items-center gap-2 transition-colors text-red-800";
             tag.innerHTML = `
-      <span class="truncate max-w-[150px]">${location}</span>
-      <button class="w-4 h-4 flex items-center justify-center hover:text-primary" onclick="removeLocation('${location}')">
-      <i class="ri-close-line"></i>
-      </button>
-      `;
+              <span class="truncate max-w-[150px]">${location}</span>
+              <button class="w-4 h-4 flex items-center justify-center hover:text-red-600" onclick="removeLocation('${location}')">
+                <i class="ri-close-line"></i>
+              </button>
+            `;
             selectedTags.appendChild(tag);
           });
         }
@@ -2617,9 +2581,7 @@
           updateTags();
           saveLocationPreferences();
         };
-        // Event Listeners (Updated for multi-province support)
-        // Province select is now handled by setupProvinceMultiSelect()
-        
+        // Event Listeners (Updated for clean multi-province support)
         locationSearch.addEventListener("input", (e) => {
           currentState.searchTerm = e.target.value;
           const locationOptions = document.getElementById('locationOptions');
@@ -2632,13 +2594,16 @@
         // Multi-select container click handler
         const multiSelect = document.getElementById('multiSelect');
         if (multiSelect) {
-          multiSelect.addEventListener("click", () => {
-            const locationOptions = document.getElementById('locationOptions');
-            if (locationOptions) {
-              locationOptions.classList.toggle("hidden");
-              if (!locationOptions.classList.contains("hidden")) {
-                updateLocationOptions();
-                locationSearch.focus();
+          multiSelect.addEventListener("click", (e) => {
+            // Only toggle if clicking the container, not the input
+            if (e.target === multiSelect || e.target.id === 'selectedTags') {
+              const locationOptions = document.getElementById('locationOptions');
+              if (locationOptions) {
+                locationOptions.classList.toggle("hidden");
+                if (!locationOptions.classList.contains("hidden")) {
+                  updateLocationOptions();
+                  locationSearch.focus();
+                }
               }
             }
           });
@@ -2648,36 +2613,47 @@
         document.addEventListener("click", (e) => {
           const multiSelect = document.getElementById('multiSelect');
           const locationOptions = document.getElementById('locationOptions');
+          const provinceMultiSelect = document.getElementById('provinceMultiSelect');
+          const provinceOptions = document.getElementById('provinceOptions');
+          
           if (multiSelect && locationOptions && !multiSelect.contains(e.target)) {
             locationOptions.classList.add("hidden");
+          }
+          
+          if (provinceMultiSelect && provinceOptions && 
+              !provinceMultiSelect.contains(e.target) && !provinceOptions.contains(e.target)) {
+            provinceOptions.classList.add("hidden");
           }
         });
         
         // Filter buttons event listeners
-        const locationOptions = document.getElementById('locationOptions');
-        if (locationOptions) {
-          const filterButtons = locationOptions.querySelectorAll("[data-filter]");
-          filterButtons.forEach((button) => {
-            button.addEventListener("click", () => {
-              filterButtons.forEach((btn) =>
-                btn.classList.remove(
+        document.addEventListener('DOMContentLoaded', function() {
+          const locationOptions = document.getElementById('locationOptions');
+          if (locationOptions) {
+            const filterButtons = locationOptions.querySelectorAll("[data-filter]");
+            filterButtons.forEach((button) => {
+              button.addEventListener("click", (e) => {
+                e.stopPropagation();
+                filterButtons.forEach((btn) =>
+                  btn.classList.remove(
+                    "active",
+                    "bg-primary",
+                    "text-white",
+                    "border-primary",
+                  ),
+                );
+                button.classList.add(
                   "active",
                   "bg-primary",
                   "text-white",
                   "border-primary",
-                ),
-              );
-              button.classList.add(
-                "active",
-                "bg-primary",
-                "text-white",
-                "border-primary",
-              );
-              currentState.currentFilter = button.dataset.filter;
-              updateLocationOptions();
+                );
+                currentState.currentFilter = button.dataset.filter;
+                updateLocationOptions();
+              });
             });
-          });
-        }
+          }
+        });
         // Initialize
         initProvinceSelect();
         updateTags();
