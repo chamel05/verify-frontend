@@ -1391,7 +1391,7 @@
               </h3>
               
               <!-- Location Preferences Guide -->
-              <div class="bg-white rounded shadow-sm p-6 mb-6 border-l-4 border-primary">
+              <div class="bg-white rounded p-6 mb-6 border-l-4 border-primary">
                 <div class="flex items-start">
                   <div class="flex-shrink-0">
                     <div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-full">
@@ -1402,29 +1402,33 @@
                     <h4 class="text-lg font-semibold text-gray-900 mb-3">
                       Location Preferences
                     </h4>
-                    <div class="space-y-2 text-sm text-gray-600">
+                    <div class="space-y-3 text-sm">
                       <div class="flex items-start">
-                        <i class="ri-checkbox-circle-fill text-green-500 mt-0.5 mr-2 flex-shrink-0"></i>
+                        <i class="ri-checkbox-line text-primary mt-0.5 mr-2 flex-shrink-0"></i>
                         <div>
-                          <span class="font-medium text-gray-700">Multiple Provinces:</span> Select one or more provinces where you're willing to work
+                          <span class="font-medium text-gray-900">Multiple Provinces:</span> 
+                          <span class="text-gray-800 ml-1">Select one or more provinces where you're willing to work</span>
                         </div>
                       </div>
                       <div class="flex items-start">
-                        <i class="ri-checkbox-circle-fill text-green-500 mt-0.5 mr-2 flex-shrink-0"></i>
+                        <i class="ri-checkbox-line text-primary mt-0.5 mr-2 flex-shrink-0"></i>
                         <div>
-                          <span class="font-medium text-gray-700">Specific Areas:</span> Choose from cities, townships, and suburbs within selected provinces
+                          <span class="font-medium text-gray-900">Specific Areas:</span> 
+                          <span class="text-gray-800 ml-1">Choose from cities, townships, and suburbs within selected provinces</span>
                         </div>
                       </div>
                       <div class="flex items-start">
-                        <i class="ri-checkbox-circle-fill text-green-500 mt-0.5 mr-2 flex-shrink-0"></i>
+                        <i class="ri-checkbox-line text-primary mt-0.5 mr-2 flex-shrink-0"></i>
                         <div>
-                          <span class="font-medium text-gray-700">Smart Filtering:</span> Use the filter buttons to narrow down by location type
+                          <span class="font-medium text-gray-900">Smart Filtering:</span> 
+                          <span class="text-gray-800 ml-1">Use the filter buttons to narrow down by location type</span>
                         </div>
                       </div>
                       <div class="flex items-start">
-                        <i class="ri-checkbox-circle-fill text-green-500 mt-0.5 mr-2 flex-shrink-0"></i>
+                        <i class="ri-checkbox-line text-primary mt-0.5 mr-2 flex-shrink-0"></i>
                         <div>
-                          <span class="font-medium text-gray-700">Better Matches:</span> More specific preferences help employers find you faster
+                          <span class="font-medium text-gray-900">Better Matches:</span> 
+                          <span class="text-gray-800 ml-1">More specific preferences help employers find you faster</span>
                         </div>
                       </div>
                     </div>
@@ -1674,229 +1678,6 @@
               </div>
             </div>
           </div>
-          <script id="locationScript">
-            document.addEventListener("DOMContentLoaded", function () {
-              const cities = [
-                { name: "Johannesburg", province: "Gauteng" },
-                { name: "Pretoria", province: "Gauteng" },
-                { name: "Sandton", province: "Gauteng" },
-                { name: "Cape Town", province: "Western Cape" },
-                { name: "Stellenbosch", province: "Western Cape" },
-                { name: "Durban", province: "KwaZulu-Natal" },
-                { name: "Pietermaritzburg", province: "KwaZulu-Natal" },
-                { name: "Port Elizabeth", province: "Eastern Cape" },
-                { name: "East London", province: "Eastern Cape" },
-                { name: "Bloemfontein", province: "Free State" },
-                { name: "Welkom", province: "Free State" },
-                { name: "Polokwane", province: "Limpopo" },
-                { name: "Tzaneen", province: "Limpopo" },
-                { name: "Nelspruit", province: "Mpumalanga" },
-                { name: "Witbank", province: "Mpumalanga" },
-                { name: "Rustenburg", province: "North West" },
-                { name: "Klerksdorp", province: "North West" },
-                { name: "Kimberley", province: "Northern Cape" },
-                { name: "Upington", province: "Northern Cape" },
-              ];
-              let selectedProvince = "";
-              let selectedLocations = [];
-              const provinceSelect = document.getElementById("provinceSelect");
-              const locationSearch = document.getElementById("locationSearch");
-              const locationResults = document.getElementById("locationResults");
-              const selectedLocationsContainer =
-                document.getElementById("selectedLocations");
-              provinceSelect.addEventListener("change", function (e) {
-                selectedProvince = e.target.value;
-                filterLocations("");
-              });
-              locationSearch.addEventListener("input", function (e) {
-                const searchTerm = e.target.value.toLowerCase();
-                filterLocations(searchTerm);
-                locationResults.classList.remove("hidden");
-              });
-              document.addEventListener("click", function (e) {
-                if (
-                  !locationSearch.contains(e.target) &&
-                  !locationResults.contains(e.target)
-                ) {
-                  locationResults.classList.add("hidden");
-                }
-              });
-              function filterLocations(searchTerm) {
-                locationResults.innerHTML = "";
-                if (!selectedProvince) return;
-                const filteredCities = cities.filter(
-                  (city) =>
-                    city.province === selectedProvince &&
-                    city.name.toLowerCase().includes(searchTerm),
-                );
-                if (filteredCities.length === 0) {
-                  locationResults.innerHTML =
-                    '<div class="p-3 text-sm text-gray-500 text-center">No locations found</div>';
-                  return;
-                }
-                filteredCities.forEach((city) => {
-                  const item = document.createElement("li");
-                  item.className = "px-3 py-2 hover:bg-gray-50 cursor-pointer text-sm";
-                  item.textContent = city.name;
-                  item.onclick = () => addLocation(city);
-                  locationResults.appendChild(item);
-                });
-                locationResults.classList.remove("hidden");
-              }
-              function addLocation(city) {
-                if (!selectedLocations.find((loc) => loc.name === city.name)) {
-                  selectedLocations.push(city);
-                  updateSelectedLocations();
-                }
-                locationSearch.value = "";
-                locationResults.classList.add("hidden");
-              }
-              function removeLocation(cityName) {
-                selectedLocations = selectedLocations.filter(
-                  (city) => city.name !== cityName,
-                );
-                updateSelectedLocations();
-              }
-              function updateSelectedLocations() {
-                selectedLocationsContainer.innerHTML = "";
-                selectedLocations.forEach((city) => {
-                  const tag = document.createElement("div");
-                  tag.className =
-                    "bg-gray-100 rounded-full px-3 py-1 text-sm flex items-center gap-2";
-                  tag.innerHTML = `
-            <span>${city.name}</span>
-            <button class="hover:text-primary" onclick="removeLocation('${city.name}')">
-            <i class="ri-close-line"></i>
-            </button>
-            `;
-                  selectedLocationsContainer.appendChild(tag);
-                });
-              }
-              const multiSelect = document.getElementById("locationMultiSelect");
-              const selectedTags = document.getElementById("selectedTags");
-              const locationOptions = document.getElementById("locationOptions");
-              const searchInput = multiSelect.querySelector("input");
-              let currentUser = {
-                locations: [],
-              };
-              function createLocationList(filter = "") {
-                locationOptionsContent.innerHTML = "";
-                const searchTerm = filter.toLowerCase();
-                function createLocationItem(location, type) {
-                  if (!location.toLowerCase().includes(searchTerm)) return null;
-                  const div = document.createElement("div");
-                  div.className =
-                    "p-2 hover:bg-gray-50 cursor-pointer text-sm flex items-center justify-between group";
-                  div.innerHTML = `
-            <span>${location}</span>
-            <span class="text-xs text-gray-400 opacity-0 group-hover:opacity-100">${type}</span>
-            `;
-                  div.onclick = () => selectLocation(location, type);
-                  return div;
-                }
-                if (
-                  currentUser.currentFilter === "all" ||
-                  currentUser.currentFilter === "province"
-                ) {
-                  locations.provinces.forEach((province) => {
-                    const item = createLocationItem(province, "Province");
-                    if (item) locationOptionsContent.appendChild(item);
-                  });
-                }
-                if (
-                  currentUser.currentFilter === "all" ||
-                  currentUser.currentFilter === "metro"
-                ) {
-                  locations.metros.forEach((metro) => {
-                    const item = createLocationItem(metro, "Metro");
-                    if (item) locationOptionsContent.appendChild(item);
-                  });
-                }
-                if (
-                  currentUser.currentFilter === "all" ||
-                  currentUser.currentFilter === "suburb"
-                ) {
-                  Object.values(locations.suburbs)
-                    .flat()
-                    .forEach((suburb) => {
-                      const item = createLocationItem(suburb, "Suburb");
-                      if (item) locationOptionsContent.appendChild(item);
-                    });
-                }
-                if (locationOptionsContent.children.length === 0) {
-                  const noResults = document.createElement("div");
-                  noResults.className = "p-4 text-center text-sm text-gray-500";
-                  noResults.textContent = "No locations found";
-                  locationOptionsContent.appendChild(noResults);
-                }
-              }
-              function selectLocation(location) {
-                if (!currentUser.locations.includes(location)) {
-                  currentUser.locations.push(location);
-                  updateTags();
-                  saveLocations();
-                }
-                locationOptions.classList.add("hidden");
-                searchInput.value = "";
-              }
-              function updateTags() {
-                selectedTags.innerHTML = "";
-                currentUser.locations.forEach((location) => {
-                  const tag = document.createElement("div");
-                  tag.className =
-                    "bg-gray-100 hover:bg-gray-200 rounded-full px-3 py-1.5 text-sm flex items-center gap-2 transition-colors";
-                  tag.innerHTML = `
-            <span class="truncate max-w-[150px]">${location}</span>
-            <button class="w-4 h-4 flex items-center justify-center hover:text-primary" onclick="removeLocation('${location}')">
-            <i class="ri-close-line"></i>
-            </button>
-            `;
-                  selectedTags.appendChild(tag);
-                });
-                if (currentUser.locations.length === 0) {
-                  const placeholder = document.createElement("div");
-                  placeholder.className = "text-sm text-gray-400 px-1";
-                  placeholder.textContent = "No locations selected";
-                  selectedTags.appendChild(placeholder);
-                }
-              }
-              window.removeLocation = function (location) {
-                currentUser.locations = currentUser.locations.filter(
-                  (loc) => loc !== location,
-                );
-                updateTags();
-                saveLocations();
-              };
-              function saveLocations() {
-                fetch("/api/save-locations", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    locations: currentUser.locations,
-                  }),
-                });
-              }
-              multiSelect.addEventListener("click", () => {
-                locationOptions.classList.toggle("hidden");
-                if (!locationOptions.classList.contains("hidden")) {
-                  createLocationList();
-                  searchInput.focus();
-                }
-              });
-              searchInput.addEventListener("input", (e) => {
-                createLocationList(e.target.value);
-                locationOptions.classList.remove("hidden");
-              });
-              document.addEventListener("click", (e) => {
-                if (!multiSelect.contains(e.target)) {
-                  locationOptions.classList.add("hidden");
-                }
-              });
-              createLocationList();
-            });
-          </script>
         </div>
       </div>
       <!-- Help & Support -->
@@ -2105,7 +1886,7 @@
             },
             locations: {
               province: document.getElementById("provinceSelect")?.value || null,
-              selectedLocations: currentUser.locations || [],
+              selectedLocations: currentState.selectedLocations || [],
               postalCode: document.getElementById("postalCode")?.value || null,
               maxTravelDistance:
                 document.getElementById("maxTravelDistance")?.value || null,
@@ -2895,180 +2676,6 @@
         // Initialize
         initProvinceSelect();
         updateTags();
-        const maxTravelDistance = document.getElementById("maxTravelDistance");
-        const postalCode = document.getElementById("postalCode");
-        const toggleMapBtn = document.getElementById("toggleMapBtn");
-        const mapContainer = document.getElementById("mapContainer");
-        const radiusCircle = document.getElementById("radiusCircle");
-        let currentUser = {
-          locations: [],
-          maxTravelKm: 0,
-          postalCode: "",
-          currentFilter: "all",
-        };
-        function createLocationList(filter = "") {
-          locationOptionsContent.innerHTML = "";
-          const searchTerm = filter.toLowerCase();
-          function createLocationItem(location, type) {
-            if (!location.toLowerCase().includes(searchTerm)) return null;
-            const div = document.createElement("div");
-            div.className =
-              "p-2 hover:bg-gray-50 cursor-pointer text-sm flex items-center justify-between group";
-            div.innerHTML = `
-      <span>${location}</span>
-      <span class="text-xs text-gray-400 opacity-0 group-hover:opacity-100">${type}</span>
-      `;
-            div.onclick = () => selectLocation(location, type);
-            return div;
-          }
-          if (
-            currentUser.currentFilter === "all" ||
-            currentUser.currentFilter === "province"
-          ) {
-            locations.provinces.forEach((province) => {
-              const item = createLocationItem(province, "Province");
-              if (item) locationOptionsContent.appendChild(item);
-            });
-          }
-          if (
-            currentUser.currentFilter === "all" ||
-            currentUser.currentFilter === "metro"
-          ) {
-            locations.metros.forEach((metro) => {
-              const item = createLocationItem(metro, "Metro");
-              if (item) locationOptionsContent.appendChild(item);
-            });
-          }
-          if (
-            currentUser.currentFilter === "all" ||
-            currentUser.currentFilter === "suburb"
-          ) {
-            Object.values(locations.suburbs)
-              .flat()
-              .forEach((suburb) => {
-                const item = createLocationItem(suburb, "Suburb");
-                if (item) locationOptionsContent.appendChild(item);
-              });
-          }
-          if (locationOptionsContent.children.length === 0) {
-            const noResults = document.createElement("div");
-            noResults.className = "p-4 text-center text-sm text-gray-500";
-            noResults.textContent = "No locations found";
-            locationOptionsContent.appendChild(noResults);
-          }
-        }
-        function selectLocation(location, type) {
-          if (!currentUser.locations.includes(location)) {
-            currentUser.locations.push(location);
-            updateTags();
-            saveLocationPreferences();
-          }
-          locationOptions.classList.add("hidden");
-          searchInput.value = "";
-        }
-        function updateMapRadius() {
-          const radius = maxTravelDistance.value || 0;
-          const size = Math.min(radius * 2, 300);
-          radiusCircle.style.width = `${size}px`;
-          radiusCircle.style.height = `${size}px`;
-        }
-        toggleMapBtn.addEventListener("click", () => {
-          mapContainer.classList.toggle("hidden");
-          if (!mapContainer.classList.contains("hidden")) {
-            updateMapRadius();
-          }
-        });
-        maxTravelDistance.addEventListener("input", updateMapRadius);
-        postalCode.addEventListener("input", (e) => {
-          e.target.value = e.target.value.replace(/\D/g, "").slice(0, 4);
-        });
-        // Filter buttons event listeners are already handled above
-        function updateTags() {
-          selectedTags.innerHTML = "";
-          currentUser.locations.forEach((location) => {
-            const tag = document.createElement("div");
-            tag.className =
-              "bg-gray-100 hover:bg-gray-200 rounded-full px-3 py-1.5 text-sm flex items-center gap-2 transition-colors";
-            tag.innerHTML = `
-      <span class="truncate max-w-[150px]">${location}</span>
-      <button class="w-4 h-4 flex items-center justify-center hover:text-primary" onclick="removeLocation('${location}')">
-      <i class="ri-close-line"></i>
-      </button>
-      `;
-            selectedTags.appendChild(tag);
-          });
-          if (currentUser.locations.length === 0) {
-            const placeholder = document.createElement("div");
-            placeholder.className = "text-sm text-gray-400 px-1";
-            placeholder.textContent = "No locations selected";
-            selectedTags.appendChild(placeholder);
-          }
-        }
-        window.removeLocation = function (location) {
-          currentUser.locations = currentUser.locations.filter(
-            (loc) => loc !== location,
-          );
-          updateTags();
-          saveLocationPreferences();
-        };
-        multiSelect.addEventListener("click", () => {
-          locationOptions.classList.toggle("hidden");
-          if (!locationOptions.classList.contains("hidden")) {
-            createLocationList();
-            searchInput.focus();
-          }
-        });
-        searchInput.addEventListener("input", (e) => {
-          createLocationList(e.target.value);
-          locationOptions.classList.remove("hidden");
-        });
-        document.addEventListener("click", (e) => {
-          if (!multiSelect.contains(e.target)) {
-            locationOptions.classList.add("hidden");
-          }
-        });
-        createLocationList();
-        // Remove the unused function since we're using a custom multiselect implementation
-        function saveLocationPreferences() {
-          const maxTravelDistance = document.getElementById("maxTravelDistance");
-          
-          fetch(`${API_BASE_URL}/${JOBSEEKER_ID}/location-preferences`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-            },
-            body: JSON.stringify({
-              selectedProvinces: currentState.selectedProvinces,
-              selectedLocations: currentState.selectedLocations,
-              maxTravelKm: maxTravelDistance ? parseInt(maxTravelDistance.value) || 0 : 0,
-            }),
-          })
-            .then((response) => {
-              if (!response.ok) throw new Error("Failed to save preferences");
-              showToast("Location preferences saved successfully");
-              loadVerificationStatus();
-            })
-            .catch((error) => {
-              console.error("Save error:", error);
-              showToast("Failed to save preferences. Please try again.");
-            });
-        }
-        // Remove the unused dropdown code since we're using a custom multiselect
-        maxTravelDistance.addEventListener("change", (e) => {
-          const value = parseInt(e.target.value);
-          if (value >= 0) {
-            currentUser.maxTravelKm = value;
-            saveLocationPreferences();
-          }
-        });
-        maxTravelDistance.addEventListener("change", (e) => {
-          const value = parseInt(e.target.value);
-          if (value >= 0) {
-            currentUser.maxTravelKm = value;
-            saveLocationPreferences();
-          }
-        });
         const policeClearanceUpload = document.getElementById(
           "policeClearanceUpload",
         );
@@ -3314,7 +2921,7 @@
             const polygraphStatus = document.getElementById("polygraphStatus");
             if (polygraphStatus.classList.contains("verified")) completedSteps++;
             // Check Location Preferences
-            if (currentUser.locations.length > 0) completedSteps++;
+            if (currentState.selectedLocations.length > 0) completedSteps++;
             // Check References
             if (ref1Name.value && ref1Phone.value) completedSteps++;
             const percentage = Math.round((completedSteps / totalSteps) * 100);
@@ -3498,9 +3105,10 @@
               updateSubscriptionDisplay(userData.subscription_tier);
             }
 
-            // Update currentUser locations for the existing location logic
-            if (userData.location && currentUser) {
-              currentUser.locations = [userData.location];
+            // Update location preferences for the current location system
+            if (userData.location) {
+              currentState.selectedLocations = [userData.location];
+              updateTags();
             }
 
             console.log('✅ Dashboard updated with user data');
