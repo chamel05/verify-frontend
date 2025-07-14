@@ -1179,8 +1179,8 @@
                     />
                   </div>
                   <div class="flex items-start">
-                    <label class="flex items-start checkbox-container">
-                      <input type="checkbox" id="seekerTerms" />
+                    <label class="flex items-start checkbox-container" title="Click to read and accept Terms & Conditions">
+                      <input type="checkbox" id="seekerTerms" required />
                       <div class="checkbox-custom mt-1"></div>
                       <span class="ml-2 text-sm text-gray-700"
                         >I agree to the
@@ -1190,8 +1190,12 @@
                         and
                         <a href="#" onclick="openModal('privacyModal')" class="text-primary hover:underline"
                           >Privacy Policy</a
-                        ></span
-                      >
+                        >
+                        <span class="text-red-500">*</span>
+                        <span class="text-xs text-gray-500 block mt-1">
+                          💡 Click the checkbox to read and accept our terms
+                        </span>
+                      </span>
                     </label>
                   </div>
                   <div class="space-y-3">
@@ -1513,8 +1517,8 @@
                     />
                   </div>
                   <div class="flex items-start">
-                    <label class="flex items-start checkbox-container">
-                      <input type="checkbox" id="employerTerms" />
+                    <label class="flex items-start checkbox-container" title="Click to read and accept Terms & Conditions">
+                      <input type="checkbox" id="employerTerms" required />
                       <div class="checkbox-custom mt-1"></div>
                       <span class="ml-2 text-sm text-gray-700"
                         >I agree to the
@@ -1524,8 +1528,12 @@
                         and
                         <a href="#" onclick="openModal('privacyModal')" class="text-primary hover:underline"
                           >Privacy Policy</a
-                        ></span
-                      >
+                        >
+                        <span class="text-red-500">*</span>
+                        <span class="text-xs text-gray-500 block mt-1">
+                          💡 Click the checkbox to read and accept our terms
+                        </span>
+                      </span>
                     </label>
                   </div>
                   <button
@@ -1771,13 +1779,44 @@
         checkboxContainers.forEach((container) => {
           const checkbox = container.querySelector('input[type="checkbox"]');
           if (container && checkbox) {
-            container.addEventListener("click", function (e) {
-              if (e.target !== checkbox) {
-                checkbox.checked = !checkbox.checked;
-              }
-            });
+            // Special handling for terms checkboxes
+            if (checkbox.id === 'seekerTerms' || checkbox.id === 'employerTerms') {
+              container.addEventListener("click", function (e) {
+                e.preventDefault(); // Prevent default checkbox behavior
+                
+                // If checkbox is already checked, uncheck it
+                if (checkbox.checked) {
+                  checkbox.checked = false;
+                  console.log('📋 Terms unchecked');
+                  return;
+                }
+                
+                // If not checked, show terms modal first
+                console.log('📋 Opening terms modal for user to read and accept');
+                openModal('termsModal');
+              });
+              
+              // Also handle direct checkbox clicks
+              checkbox.addEventListener("click", function (e) {
+                e.preventDefault();
+                
+                // If trying to check, show modal instead
+                if (!checkbox.checked) {
+                  console.log('📋 Terms checkbox clicked - opening modal');
+                  openModal('termsModal');
+                }
+              });
+            } else {
+              // Normal checkbox behavior for other checkboxes
+              container.addEventListener("click", function (e) {
+                if (e.target !== checkbox) {
+                  checkbox.checked = !checkbox.checked;
+                }
+              });
+            }
           }
         });
+        
         const subscriptionCards = document.querySelectorAll(".category-card");
         const subscriptionRadios = document.querySelectorAll(
           'input[name="subscription"]',
@@ -1919,6 +1958,15 @@
           if (termsCheckbox && !termsCheckbox.checked) {
             isValid = false;
             errorMessages.push("Please accept the Terms of Service");
+            // Add visual cue to terms section
+            const termsContainer = termsCheckbox.closest('.checkbox-container');
+            if (termsContainer) {
+              termsContainer.classList.add('border-2', 'border-red-500', 'rounded-lg', 'p-2');
+              // Remove the visual cue after a few seconds
+              setTimeout(() => {
+                termsContainer.classList.remove('border-2', 'border-red-500', 'rounded-lg', 'p-2');
+              }, 5000);
+            }
           }
           // Check text length limit
           const textInputs = form.querySelectorAll('input[type="text"], textarea');
@@ -2630,6 +2678,18 @@
             <i class="ri-close-line text-2xl"></i>
           </button>
         </div>
+        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mx-6 mt-4">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <i class="ri-information-line text-blue-400"></i>
+            </div>
+            <div class="ml-3">
+              <p class="text-sm text-blue-700">
+                Please read through our terms carefully. Click "Accept Terms & Continue" below to proceed with registration.
+              </p>
+            </div>
+          </div>
+        </div>
         <div class="p-6 overflow-y-auto max-h-[70vh]">
           <div class="prose max-w-none">
             <h3>1. Acceptance of Terms</h3>
@@ -2657,9 +2717,12 @@
             <p>These terms are governed by the laws of South Africa.</p>
           </div>
         </div>
-        <div class="flex justify-end p-6 border-t bg-gray-50">
-          <button onclick="closeModal('termsModal')" class="bg-primary text-white px-6 py-2 rounded-button hover:bg-red-600">
-            Close
+        <div class="flex justify-between items-center p-6 border-t bg-gray-50">
+          <button onclick="closeModal('termsModal')" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-button hover:bg-gray-400">
+            Cancel
+          </button>
+          <button onclick="acceptTerms()" class="bg-primary text-white px-6 py-2 rounded-button hover:bg-red-600">
+            Accept Terms & Continue
           </button>
         </div>
       </div>
@@ -2698,9 +2761,12 @@
             <p>For privacy-related questions, contact us at privacy@verify.co.za</p>
           </div>
         </div>
-        <div class="flex justify-end p-6 border-t bg-gray-50">
-          <button onclick="closeModal('privacyModal')" class="bg-primary text-white px-6 py-2 rounded-button hover:bg-red-600">
-            Close
+        <div class="flex justify-between items-center p-6 border-t bg-gray-50">
+          <button onclick="closeModal('privacyModal')" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-button hover:bg-gray-400">
+            Cancel
+          </button>
+          <button onclick="acceptPrivacy()" class="bg-primary text-white px-6 py-2 rounded-button hover:bg-red-600">
+            Accept Privacy Policy
           </button>
         </div>
       </div>
@@ -2739,6 +2805,33 @@
         }
         
         openModal('paymentModal');
+      }
+
+      // Terms and conditions functionality
+      function acceptTerms() {
+        // Check both job seeker and employer terms checkboxes
+        const seekerTermsCheckbox = document.getElementById('seekerTerms');
+        const employerTermsCheckbox = document.getElementById('employerTerms');
+        
+        if (seekerTermsCheckbox) {
+          seekerTermsCheckbox.checked = true;
+          console.log('✅ Job seeker terms accepted and checkbox checked');
+        }
+        
+        if (employerTermsCheckbox) {
+          employerTermsCheckbox.checked = true;
+          console.log('✅ Employer terms accepted and checkbox checked');
+        }
+        
+        showNotification('Terms & Conditions accepted!', 'success');
+        closeModal('termsModal');
+      }
+
+      function acceptPrivacy() {
+        console.log('✅ Privacy Policy acknowledged');
+        showNotification('Privacy Policy acknowledged!', 'success');
+        closeModal('privacyModal');
+        // If both terms and privacy need to be accepted, you can handle that logic here
       }
       
       // Payment Portal Functions
