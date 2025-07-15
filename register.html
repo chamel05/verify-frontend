@@ -2210,7 +2210,7 @@
             } else {
               // Employers go to their dashboard
               setTimeout(() => {
-                window.location.href = "dashboard/employer.html";
+                window.location.href = ":dashboard:employer.html";
               }, 1000);
             }
 
@@ -3184,7 +3184,7 @@
           // Redirect to appropriate dashboard
           setTimeout(() => {
             if (data.userType === 'employer') {
-              window.location.href = 'dashboard/employer.html';
+              window.location.href = ':dashboard:employer.html';
             } else {
               window.location.href = 'job seekers dash.html';
             }
@@ -3221,7 +3221,7 @@
           
           // Determine which dashboard to redirect to based on user type
           if (data.userType === 'employer') {
-            window.location.href = 'dashboard/employer.html';
+            window.location.href = ':dashboard:employer.html';
           } else {
             window.location.href = 'job seekers dash.html';
           }
@@ -3232,7 +3232,7 @@
           // Fallback if no registration data
           const userType = getCurrentUserType();
           if (userType === 'employer') {
-            window.location.href = 'dashboard/employer.html';
+            window.location.href = ':dashboard:employer.html';
           } else {
             window.location.href = 'job seekers dash.html';
           }
