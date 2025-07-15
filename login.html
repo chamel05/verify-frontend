@@ -36,6 +36,9 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
     />
+    <!-- Supabase Client -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
     <style>
       :where([class^="ri-"])::before { content: "\f3c2"; }
       @import url('https://fonts.googleapis.com/css2?family=Futura:wght@400;500;700&display=swap');
@@ -234,8 +237,6 @@
           <!-- Login Form -->
           <form
             id="login-form"
-            action="https://readdy.ai/api/form/d1bh9sahnf08iom4v890"
-            method="POST"
             class="space-y-6"
           >
             <!-- Job Seeker Fields -->
@@ -600,7 +601,7 @@
           return name.trim().length >= 2 && /^[a-zA-Z\s]+$/.test(name);
         }
         
-        loginForm.addEventListener("submit", function (e) {
+        loginForm.addEventListener("submit", async function (e) {
           e.preventDefault();
           
           // Clear any previous errors
@@ -612,8 +613,7 @@
             ? "jobseeker"
             : "employer";
           
-          let identifier, identifierType;
-          let hasErrors = false;
+          let email, hasErrors = false;
           
           if (userType === "jobseeker") {
             const fullName = fullNameInput.value.trim();
@@ -648,15 +648,39 @@
               return;
             }
             
-            identifier = `${fullName}|${phoneNumber}`;
-            identifierType = "name_phone";
-          } else {
-            const email = emailInput.value.trim();
+            // For job seekers, we need to find their email or use username for login
+            // First try to find the user by full name and phone to get their username
+            try {
+              const { data: jobSeekerData, error: searchError } = await supabaseClient
+                .from('job_seekers')
+                .select('email, username, first_name, surname, phone')
+                .or(`and(first_name.ilike.%${fullName.split(' ')[0]}%,surname.ilike.%${fullName.split(' ').slice(1).join(' ')}%),phone.eq.${phoneNumber.replace(/\s/g, '')}`);
+              
+              if (searchError) {
+                throw new Error('Database error: ' + searchError.message);
+              }
+              
+              if (!jobSeekerData || jobSeekerData.length === 0) {
+                showMessage("No account found with these details. Please check your information or register first.", true);
+                return;
+              }
+              
+              const userData = jobSeekerData[0];
+              email = userData.email || `${userData.username}@jobseeker.verify.local`;
+              
+            } catch (error) {
+              console.error('Error finding job seeker:', error);
+              showMessage("Error looking up your account. Please try again.", true);
+              return;
+            }
             
-            if (!email) {
+          } else {
+            const emailValue = emailInput.value.trim();
+            
+            if (!emailValue) {
               highlightFieldError("email", "Email is required");
               hasErrors = true;
-            } else if (!validateEmail(email)) {
+            } else if (!validateEmail(emailValue)) {
               highlightFieldError("email", "Please enter a valid email address");
               hasErrors = true;
             }
@@ -674,8 +698,7 @@
               return;
             }
             
-            identifier = email;
-            identifierType = "email";
+            email = emailValue;
           }
           
           // Show loading state
@@ -684,71 +707,101 @@
           submitBtn.disabled = true;
           submitBtn.innerHTML = '<i class="ri-loader-line animate-spin mr-2"></i>Logging in...';
           
-          const formData = new FormData();
-          formData.append("identifier", identifier);
-          formData.append("identifier_type", identifierType);
-          formData.append("password", password);
-          formData.append("remember_me", rememberMe);
-          formData.append("user_type", userType);
-          
-          // For job seekers, also send individual fields
-          if (userType === "jobseeker") {
-            formData.append("full_name", fullNameInput.value.trim());
-            formData.append("phone_number", phoneNumberInput.value.trim());
-          } else {
-            formData.append("email", emailInput.value.trim());
-          }
-          
-          fetch(loginForm.action, {
-            method: "POST",
-            body: new URLSearchParams(formData),
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-          })
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-              }
-              return response.json().catch(() => ({})); // Handle non-JSON responses
-            })
-            .then((data) => {
-              showMessage("Login successful! Redirecting...");
-              setTimeout(() => {
-                if (userType === "jobseeker") {
-                  window.location.href = "job seekers dash.html";
-                } else {
-                  window.location.href = ":dashboard:employer.html";
-                }
-              }, 1500);
-            })
-            .catch((error) => {
-              console.error("Login error:", error);
-              
-              // Reset button state
-              submitBtn.disabled = false;
-              submitBtn.textContent = originalText;
-              
-              // Show specific error messages based on error type
-              if (error.message.includes('401')) {
-                showMessage("Invalid credentials. Please check your login details.", true);
-                if (userType === "jobseeker") {
-                  highlightFieldError("full-name", "");
-                  highlightFieldError("phone-number", "");
-                } else {
-                  highlightFieldError("email", "");
-                }
-                highlightFieldError("password", "");
-              } else if (error.message.includes('404')) {
-                showMessage("User not found. Please check your details or register first.", true);
-              } else if (error.message.includes('429')) {
-                showMessage("Too many login attempts. Please try again later.", true);
-              } else if (error.message.includes('500')) {
-                showMessage("Server error. Please try again later.", true);
-              } else {
-                showMessage("Login failed. Please check your connection and try again.", true);
-              }
+          try {
+            // Authenticate with Supabase
+            const { data: authData, error: authError } = await supabaseClient.auth.signInWithPassword({
+              email: email,
+              password: password
             });
+            
+            if (authError) {
+              throw new Error(authError.message);
+            }
+            
+            if (!authData.user) {
+              throw new Error('Authentication failed');
+            }
+            
+            // Store auth token if remember me is checked
+            if (rememberMe) {
+              localStorage.setItem('supabase.auth.token', authData.session?.access_token || '');
+            } else {
+              sessionStorage.setItem('supabase.auth.token', authData.session?.access_token || '');
+            }
+            
+            // Determine user type from database
+            let actualUserType = userType;
+            let redirectUrl = '';
+            
+            if (userType === "jobseeker") {
+              // Verify this is actually a job seeker
+              const { data: jobSeekerData, error: jsError } = await supabaseClient
+                .from('job_seekers')
+                .select('id, username, first_name, surname')
+                .eq('id', authData.user.id)
+                .single();
+              
+              if (jsError || !jobSeekerData) {
+                throw new Error('Account not found in job seekers database');
+              }
+              
+              actualUserType = 'jobseeker';
+              redirectUrl = 'job seekers dash.html';
+              
+            } else {
+              // Verify this is actually an employer
+              const { data: employerData, error: empError } = await supabaseClient
+                .from('employers')
+                .select('id, company_name, email')
+                .eq('id', authData.user.id)
+                .single();
+              
+              if (empError || !employerData) {
+                throw new Error('Account not found in employers database');
+              }
+              
+              actualUserType = 'employer';
+              redirectUrl = ':dashboard:employer.html';
+            }
+            
+            // Store user data in session
+            sessionStorage.setItem('currentUser', JSON.stringify({
+              id: authData.user.id,
+              type: actualUserType,
+              email: authData.user.email
+            }));
+            
+            showMessage("Login successful! Redirecting...");
+            
+            setTimeout(() => {
+              window.location.href = redirectUrl;
+            }, 1500);
+            
+          } catch (error) {
+            console.error("Login error:", error);
+            
+            // Reset button state
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+            
+            // Show specific error messages based on error type
+            if (error.message.includes('Invalid login credentials')) {
+              showMessage("Invalid credentials. Please check your login details.", true);
+              if (userType === "jobseeker") {
+                highlightFieldError("full-name", "");
+                highlightFieldError("phone-number", "");
+              } else {
+                highlightFieldError("email", "");
+              }
+              highlightFieldError("password", "");
+            } else if (error.message.includes('Account not found')) {
+              showMessage("Account not found. Please check your details or register first.", true);
+            } else if (error.message.includes('too many requests')) {
+              showMessage("Too many login attempts. Please try again later.", true);
+            } else {
+              showMessage(`Login failed: ${error.message}`, true);
+            }
+          }
         });
       });
     </script>
