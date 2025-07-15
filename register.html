@@ -126,7 +126,7 @@
       -- Job Seekers Table
       CREATE TABLE job_seekers (
         id UUID PRIMARY KEY REFERENCES auth.users(id),
-        email TEXT NOT NULL,
+        email TEXT, -- Email is optional for job seekers
         username TEXT UNIQUE NOT NULL,
         first_name TEXT,
         surname TEXT,
@@ -778,8 +778,7 @@
                       type="email"
                       id="email"
                       name="email"
-                      required
-                      placeholder="Email Address"
+                      placeholder="Email Address (optional)"
                       class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
                     />
                   </div>
@@ -2031,12 +2030,23 @@
 
             console.log('📋 Form data collected:', { email, username, hasPassword: !!password });
 
-            if (!email || !password || !username) {
-              throw new Error('Missing required fields: email, password, or username');
+            // Validate required fields - email is optional for job seekers
+            if (isJobSeekerForm) {
+              if (!password || !username) {
+                throw new Error('Missing required fields: password and username are required for job seekers');
+              }
+            } else {
+              // For employers, email is still required
+              if (!email || !password || !username) {
+                throw new Error('Missing required fields: email, password, and username are required for employers');
+              }
             }
 
             // Create auth user first
-            const { data: authData, error: authError } = await SupabaseAuth.signUp(email, password, {
+            // For job seekers without email, generate a placeholder email
+            const authEmail = email || (isJobSeekerForm ? `${username}@jobseeker.verify.local` : '');
+            
+            const { data: authData, error: authError } = await SupabaseAuth.signUp(authEmail, password, {
               username: username,
               user_type: isJobSeekerForm ? 'job_seeker' : 'employer'
             });
