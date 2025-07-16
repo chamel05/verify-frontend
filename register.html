@@ -274,6 +274,41 @@
       font-family: 'Futura', sans-serif;
       background-color: #f9fafb;
       }
+      
+      /* Enhanced error handling animations */
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+      }
+      
+      .animate-fadeIn {
+        animation: fadeIn 0.3s ease-out;
+      }
+      
+      .animate-shake {
+        animation: shake 0.5s ease-in-out;
+      }
+      
+      /* Enhanced error field styling */
+      .error-field {
+        transition: all 0.2s ease-in-out;
+      }
+      
+      .error-field:focus {
+        box-shadow: 0 0 0 3px rgba(245, 3, 2, 0.1);
+      }
+      
+      /* Field error message styling */
+      .field-error {
+        font-size: 0.75rem;
+      }
+      
       .checkbox-container input[type="checkbox"] {
       display: none;
       }
@@ -413,7 +448,7 @@
           </a>
           <div class="text-2xl font-bold tracking-tight flex items-center">
             <img
-              src="https://static.readdy.ai/image/783dd8c3d2d1f38f9648f46144ac17f1/bc2b69f3a823a0bfcee48284d9c2d098.jpeg"
+              src="/assets/verify-logo.svg"
               alt="Verify Logo"
               class="h-10"
             />
@@ -435,7 +470,7 @@
         <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-3xl">
           <div class="text-center mb-8">
             <img
-              src="https://static.readdy.ai/image/783dd8c3d2d1f38f9648f46144ac17f1/bc2b69f3a823a0bfcee48284d9c2d098.jpeg"
+              src="/assets/verify-logo.svg"
               alt="Verify Logo"
               class="h-12 mx-auto mb-6"
             />
@@ -1917,77 +1952,243 @@
         function validateForm(form) {
           let isValid = true;
           const errorMessages = [];
+          
+          // Clear any existing field errors first
+          clearFieldErrors();
+          
           // Check required fields
-          const requiredFields = form.querySelectorAll(
-            "input[required], select[required]",
-          );
+          const requiredFields = form.querySelectorAll("input[required], select[required]");
           requiredFields.forEach((field) => {
             if (!field.value.trim()) {
               isValid = false;
-              field.classList.add("border-red-500");
-              errorMessages.push(
-                `${field.placeholder || "Required field"} is required`,
-              );
-            } else {
-              field.classList.remove("border-red-500");
+              const fieldName = field.placeholder || field.name || "Required field";
+              highlightFieldError(field.id || field.name, `${fieldName} is required`);
+              errorMessages.push(`${fieldName} is required`);
             }
           });
-          // Validate password
-          const passwordField = form.querySelector("#seekerPassword");
-          const confirmPasswordField = form.querySelector("#confirmPassword");
           
-          if (passwordField && passwordField.value.length < 8) {
-            isValid = false;
-            passwordField.classList.add("border-red-500");
-            errorMessages.push("Password must be at least 8 characters long");
+          // Validate email format (for employer forms)
+          const emailField = form.querySelector('input[type="email"]');
+          if (emailField && emailField.value.trim()) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailField.value)) {
+              isValid = false;
+              highlightFieldError(emailField.id || emailField.name, "Please enter a valid email address");
+              errorMessages.push("Please enter a valid email address");
+            }
+          }
+          
+          // Validate username
+          const usernameField = form.querySelector('#username') || form.querySelector('input[placeholder*="Username"]');
+          if (usernameField && usernameField.value.trim()) {
+            if (usernameField.value.length < 3) {
+              isValid = false;
+              highlightFieldError(usernameField.id || usernameField.name, "Username must be at least 3 characters long");
+              errorMessages.push("Username must be at least 3 characters long");
+            } else if (!/^[a-zA-Z0-9_]+$/.test(usernameField.value)) {
+              isValid = false;
+              highlightFieldError(usernameField.id || usernameField.name, "Username can only contain letters, numbers, and underscores");
+              errorMessages.push("Username can only contain letters, numbers, and underscores");
+            }
+          }
+          
+          // Validate password
+          const passwordField = form.querySelector("#seekerPassword") || form.querySelector("#employerPassword");
+          if (passwordField && passwordField.value) {
+            if (passwordField.value.length < 6) {
+              isValid = false;
+              highlightFieldError(passwordField.id, "Password must be at least 6 characters long");
+              errorMessages.push("Password must be at least 6 characters long");
+            }
           }
           
           // Validate password confirmation
+          const confirmPasswordField = form.querySelector("#confirmPassword");
           if (passwordField && confirmPasswordField) {
             if (passwordField.value !== confirmPasswordField.value) {
               isValid = false;
-              confirmPasswordField.classList.add("border-red-500");
+              highlightFieldError(confirmPasswordField.id, "Passwords do not match");
               errorMessages.push("Passwords do not match");
-            } else {
-              confirmPasswordField.classList.remove("border-red-500");
             }
           }
+          
+          // Validate phone number format
+          const phoneField = form.querySelector('input[type="tel"]');
+          if (phoneField && phoneField.value.trim()) {
+            const phoneRegex = /^(\+27|0)[6-8][0-9]{8}$|^[0-9]{3}\s[0-9]{3}\s[0-9]{4}$/;
+            if (!phoneRegex.test(phoneField.value.replace(/\s/g, ''))) {
+              isValid = false;
+              highlightFieldError(phoneField.id || phoneField.name, "Please enter a valid South African phone number");
+              errorMessages.push("Please enter a valid South African phone number");
+            }
+          }
+          
           // Validate terms acceptance
-          const termsCheckbox = form.querySelector("#seekerTerms");
+          const termsCheckbox = form.querySelector("#seekerTerms") || form.querySelector("#employerTerms");
           if (termsCheckbox && !termsCheckbox.checked) {
             isValid = false;
-            errorMessages.push("Please accept the Terms of Service");
-            // Add visual cue to terms section
+            errorMessages.push("Please accept the Terms of Service and Privacy Policy");
+            // Add visual cue to terms section with enhanced styling
             const termsContainer = termsCheckbox.closest('.checkbox-container');
             if (termsContainer) {
-              termsContainer.classList.add('border-2', 'border-red-500', 'rounded-lg', 'p-2');
+              termsContainer.classList.add('border-2', 'border-red-500', 'rounded-lg', 'p-2', 'bg-red-50', 'animate-shake');
               // Remove the visual cue after a few seconds
               setTimeout(() => {
-                termsContainer.classList.remove('border-2', 'border-red-500', 'rounded-lg', 'p-2');
+                termsContainer.classList.remove('border-2', 'border-red-500', 'rounded-lg', 'p-2', 'bg-red-50', 'animate-shake');
               }, 5000);
             }
           }
-          // Check text length limit
+          
+          // Check text length limits
           const textInputs = form.querySelectorAll('input[type="text"], textarea');
           textInputs.forEach((input) => {
             if (input.value.length > 500) {
               isValid = false;
-              input.classList.add("border-red-500");
-              errorMessages.push(
-                `${input.placeholder || "Text field"} exceeds 500 characters limit`,
-              );
+              const fieldName = input.placeholder || input.name || "Text field";
+              highlightFieldError(input.id || input.name, `${fieldName} exceeds 500 character limit`);
+              errorMessages.push(`${fieldName} exceeds 500 character limit`);
             }
           });
+          
           return { isValid, errorMessages };
         }
         function showNotification(message, type = "error") {
+          // Remove any existing notifications
+          const existingNotifications = document.querySelectorAll('.notification-message');
+          existingNotifications.forEach(notif => notif.remove());
+          
           const notification = document.createElement("div");
-          notification.className = `fixed top-4 right-4 px-6 py-3 rounded shadow-lg ${
-            type === "success" ? "bg-green-500 text-white" : "bg-red-500 text-white"
-          }`;
-          notification.textContent = message;
+          notification.className = `notification-message fixed top-4 right-4 px-6 py-4 rounded-lg shadow-lg z-50 flex items-start max-w-md animate-fadeIn`;
+          
+          if (type === "success") {
+            notification.classList.add("bg-green-50", "border-l-4", "border-green-500", "text-green-700");
+            notification.innerHTML = `
+              <i class="ri-check-line mr-3 mt-0.5 text-green-500 flex-shrink-0"></i>
+              <div class="font-medium">${message}</div>
+            `;
+          } else {
+            notification.classList.add("bg-red-50", "border-l-4", "border-red-500", "text-red-700", "animate-pulse");
+            notification.innerHTML = `
+              <i class="ri-error-warning-line mr-3 mt-0.5 text-red-500 flex-shrink-0"></i>
+              <div class="font-medium">${message}</div>
+            `;
+            
+            // Remove pulse animation after 2 seconds for error messages
+            setTimeout(() => {
+              notification.classList.remove('animate-pulse');
+            }, 2000);
+          }
+          
           document.body.appendChild(notification);
-          setTimeout(() => notification.remove(), 3000);
+          
+          // Auto-scroll to notification if needed
+          setTimeout(() => {
+            notification.scrollIntoView({ 
+              behavior: 'smooth', 
+              block: 'nearest',
+              inline: 'nearest'
+            });
+          }, 50);
+          
+          // Auto-remove after 8 seconds for errors, 5 seconds for success
+          setTimeout(() => {
+            if (notification.parentNode) {
+              notification.style.transition = 'opacity 0.5s ease-out';
+              notification.style.opacity = '0';
+              setTimeout(() => {
+                if (notification.parentNode) notification.remove();
+              }, 500);
+            }
+          }, type === "error" ? 8000 : 5000);
+        }
+        
+        function highlightFieldError(fieldId, message) {
+          const field = document.getElementById(fieldId) || document.querySelector(`[name="${fieldId}"]`);
+          if (field) {
+            // Apply red error styling
+            field.classList.add('border-red-500', 'bg-red-50', 'ring-1', 'ring-red-500', 'error-field');
+            field.classList.remove('border-gray-300', 'focus:border-primary', 'focus:ring-primary');
+            
+            // Remove existing error message for this field
+            const existingError = field.parentNode.querySelector('.field-error');
+            if (existingError) existingError.remove();
+            
+            // Add error message below field if message is provided
+            if (message) {
+              const errorDiv = document.createElement('div');
+              errorDiv.className = 'field-error text-red-500 text-xs mt-1 flex items-center font-medium animate-fadeIn';
+              errorDiv.innerHTML = '<i class="ri-error-warning-line mr-1 text-red-500"></i>' + message;
+              field.parentNode.appendChild(errorDiv);
+            }
+            
+            // Add shake animation to the field
+            field.classList.add('animate-shake');
+            setTimeout(() => {
+              field.classList.remove('animate-shake');
+            }, 500);
+            
+            // Auto-scroll to the first error field
+            setTimeout(() => {
+              field.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center',
+                inline: 'nearest'
+              });
+            }, 100);
+            
+            // Remove error styling on input/focus
+            const clearError = function() {
+              field.classList.remove('border-red-500', 'bg-red-50', 'ring-1', 'ring-red-500', 'error-field');
+              field.classList.add('border-gray-300');
+              const errorMsg = field.parentNode.querySelector('.field-error');
+              if (errorMsg) {
+                errorMsg.style.transition = 'opacity 0.3s ease-out';
+                errorMsg.style.opacity = '0';
+                setTimeout(() => {
+                  if (errorMsg.parentNode) errorMsg.remove();
+                }, 300);
+              }
+              field.removeEventListener('input', clearError);
+              field.removeEventListener('focus', clearError);
+            };
+            
+            field.addEventListener('input', clearError);
+            field.addEventListener('focus', clearError);
+          }
+        }
+        
+        function clearFieldErrors() {
+          const errorFields = document.querySelectorAll('.error-field');
+          errorFields.forEach(field => {
+            field.classList.remove('border-red-500', 'bg-red-50', 'ring-1', 'ring-red-500', 'error-field', 'animate-shake');
+            field.classList.add('border-gray-300');
+            const errorMsg = field.parentNode.querySelector('.field-error');
+            if (errorMsg) {
+              errorMsg.style.transition = 'opacity 0.3s ease-out';
+              errorMsg.style.opacity = '0';
+              setTimeout(() => {
+                if (errorMsg.parentNode) errorMsg.remove();
+              }, 300);
+            }
+          });
+          
+          // Also remove any existing global notifications
+          const existingNotifications = document.querySelectorAll('.notification-message');
+          existingNotifications.forEach(notif => {
+            notif.style.transition = 'opacity 0.3s ease-out';
+            notif.style.opacity = '0';
+            setTimeout(() => {
+              if (notif.parentNode) notif.remove();
+            }, 300);
+          });
+        }
+        
+        // Focus management for better UX
+        function focusFirstErrorField() {
+          const errorFields = document.querySelectorAll('.error-field');
+          if (errorFields.length > 0) {
+            errorFields[0].focus();
+          }
         }
         async function handleFormSubmit(event) {
           event.preventDefault();
@@ -2008,7 +2209,8 @@
           
           const validation = validateForm(form);
           if (!validation.isValid) {
-            validation.errorMessages.forEach((message) => showNotification(message));
+            showNotification("❌ Please fix the errors below to continue with your registration.", "error");
+            focusFirstErrorField();
             return;
           }
 
@@ -2216,10 +2418,120 @@
 
           } catch (error) {
             console.error('Registration error:', error);
-            showNotification(
-              `Registration failed: ${error.message}. Please try again.`,
-              "error"
-            );
+            
+            // Clear any existing field errors first
+            clearFieldErrors();
+            
+            // Show specific error messages based on error type
+            let errorHandled = false;
+            
+            if (error.message.includes('User already registered') || 
+                error.message.includes('already exists') ||
+                error.message.includes('duplicate key')) {
+              errorHandled = true;
+              if (error.message.includes('email')) {
+                showNotification("❌ Account Already Exists: An account with this email address already exists. Please try logging in instead.", "error");
+                highlightFieldError("email", "This email is already registered");
+              } else if (error.message.includes('username')) {
+                showNotification("❌ Username Taken: This username is already in use. Please choose a different username.", "error");
+                highlightFieldError("username", "This username is already taken");
+              } else {
+                showNotification("❌ Account Already Exists: An account with these details already exists. Please try logging in or use different details.", "error");
+              }
+              
+            } else if (error.message.includes('Invalid email') || 
+                       error.message.includes('invalid_email') ||
+                       error.message.includes('Email not valid')) {
+              errorHandled = true;
+              showNotification("❌ Invalid Email: Please enter a valid email address format (e.g., user@example.com).", "error");
+              highlightFieldError("email", "Please enter a valid email address");
+              
+            } else if (error.message.includes('Password') && 
+                       (error.message.includes('weak') || error.message.includes('short') || error.message.includes('should be at least'))) {
+              errorHandled = true;
+              showNotification("❌ Password Too Weak: Your password must be at least 6 characters long and include a mix of letters and numbers.", "error");
+              highlightFieldError("seekerPassword", "Password must be at least 6 characters");
+              highlightFieldError("employerPassword", "Password must be at least 6 characters");
+              
+            } else if (error.message.includes('Username') && 
+                       (error.message.includes('too short') || error.message.includes('invalid'))) {
+              errorHandled = true;
+              showNotification("❌ Invalid Username: Username must be at least 3 characters long and contain only letters, numbers, and underscores.", "error");
+              highlightFieldError("username", "Please enter a valid username");
+              
+            } else if (error.message.includes('Missing required fields')) {
+              errorHandled = true;
+              showNotification("❌ Missing Information: Please fill in all required fields to complete your registration.", "error");
+              
+              // Highlight specific missing fields
+              if (error.message.includes('password')) {
+                highlightFieldError("seekerPassword", "Password is required");
+                highlightFieldError("employerPassword", "Password is required");
+              }
+              if (error.message.includes('username')) {
+                highlightFieldError("username", "Username is required");
+              }
+              if (error.message.includes('email')) {
+                highlightFieldError("email", "Email is required for employers");
+              }
+              
+            } else if (error.message.includes('too many requests') || 
+                       error.message.includes('rate_limit') ||
+                       error.message.includes('Rate limit')) {
+              errorHandled = true;
+              showNotification("❌ Too Many Attempts: You've tried to register too many times. Please wait 15 minutes before trying again.", "error");
+              
+            } else if (error.message.includes('Network') || 
+                       error.message.includes('network') || 
+                       error.message.includes('fetch') ||
+                       error.message.includes('Failed to fetch') ||
+                       error.message.includes('Connection')) {
+              errorHandled = true;
+              showNotification("❌ Connection Error: Unable to connect to our servers. Please check your internet connection and try again.", "error");
+              
+            } else if (error.message.includes('Database error') ||
+                       error.message.includes('Internal server error') ||
+                       error.message.includes('500') ||
+                       error.message.includes('relation') && error.message.includes('does not exist')) {
+              errorHandled = true;
+              showNotification("❌ System Error: Our registration system is experiencing issues. Please try again in a few minutes or contact support.", "error");
+              
+            } else if (error.message.includes('Authentication failed') ||
+                       error.message.includes('auth') && error.message.includes('failed')) {
+              errorHandled = true;
+              showNotification("❌ Authentication Error: Unable to create your account. Please check your details and try again.", "error");
+              
+            } else if (error.message.includes('timeout') ||
+                       error.message.includes('Timeout')) {
+              errorHandled = true;
+              showNotification("❌ Request Timeout: The registration request took too long. Please check your internet connection and try again.", "error");
+              
+            } else if (error.message.includes('File upload') ||
+                       error.message.includes('upload')) {
+              errorHandled = true;
+              showNotification("❌ File Upload Error: There was a problem uploading your files. Your account was created but please re-upload your documents later.", "error");
+              
+            } else if (error.message.includes('terms') || 
+                       error.message.includes('privacy') ||
+                       error.message.includes('agreement')) {
+              errorHandled = true;
+              showNotification("❌ Terms Required: You must accept the terms and conditions and privacy policy to complete registration.", "error");
+              
+            } else if (error.message.includes('age') || 
+                       error.message.includes('18')) {
+              errorHandled = true;
+              showNotification("❌ Age Requirement: You must be at least 18 years old to register for Verify.", "error");
+            }
+            
+            // Generic error message for unhandled errors
+            if (!errorHandled) {
+              console.warn("Unhandled registration error:", error.message);
+              showNotification(`❌ Registration Failed: ${error.message}. If this problem continues, please contact our support team for assistance.`, "error");
+            }
+            
+            // Focus on the first error field if any
+            focusFirstErrorField();
+            
           } finally {
             // Restore button state
             submitButton.disabled = false;
