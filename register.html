@@ -26,6 +26,27 @@
         },
       };
     </script>
+    
+    <!-- Custom Modal Styles -->
+    <style>
+      .modal-backdrop {
+        backdrop-filter: blur(2px);
+      }
+      .modal-content {
+        animation: modalFadeIn 0.3s ease-out;
+      }
+      @keyframes modalFadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9) translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+    </style>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -448,9 +469,9 @@
           </a>
           <div class="text-2xl font-bold tracking-tight flex items-center">
             <img
-              src="/assets/verify-logo.svg"
+              src="/assets/verify-logo.jpeg"
               alt="Verify – Empowering Opportunities Logo"
-              class="h-10"
+              class="h-16"
             />
           </div>
           <div class="w-24">
@@ -470,9 +491,9 @@
         <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-3xl">
           <div class="text-center mb-8">
             <img
-              src="/assets/verify-logo.svg"
+              src="/assets/verify-logo.jpeg"
               alt="Verify – Empowering Opportunities Logo"
-              class="h-12 mx-auto mb-6"
+              class="h-16 mx-auto mb-6"
             />
             <h1 class="text-2xl font-bold text-gray-900">
               Create your Verify account
@@ -1227,7 +1248,7 @@
                         >
                         <span class="text-red-500">*</span>
                         <span class="text-xs text-gray-500 block mt-1">
-                          💡 Click the checkbox to read and accept our terms
+                          Click the checkbox to read and accept our terms
                         </span>
                       </span>
                     </label>
@@ -1365,14 +1386,14 @@
                         <option value="drivers">Drivers</option>
                         <option value="domestic_workers">Domestic Workers</option>
                         <option value="child_elder_care">Child & Elder Care</option>
-                        <option value="security">Security</option>
-                        <option value="trades">Trades</option>
+                        <option value="security">Security Services</option>
+                        <option value="trades">Skilled Trades</option>
                         <option value="construction">Construction</option>
                         <option value="retail_hospitality">Retail & Hospitality</option>
-                        <option value="admin">Admin</option>
-                        <option value="warehouse">Warehouse</option>
+                        <option value="admin">Administrative & Office</option>
+                        <option value="warehouse">Warehouse & Logistics</option>
                         <option value="event_staff">Event Staff</option>
-                        <option value="truck_mechanics">Truck Mechanics</option>
+                        <option value="mechanics">Truck & Vehicle Mechanics</option>
                         <option value="agriculture_farm_work">Agriculture &amp; Farm Work</option>
                       </select>
                       <div
@@ -1565,7 +1586,7 @@
                         >
                         <span class="text-red-500">*</span>
                         <span class="text-xs text-gray-500 block mt-1">
-                          💡 Click the checkbox to read and accept our terms
+                          Click the checkbox to read and accept our terms
                         </span>
                       </span>
                     </label>
@@ -2992,60 +3013,62 @@
     </div>
 
     <!-- Terms of Service Modal -->
-    <div id="termsModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
-      <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden">
-        <div class="flex justify-between items-center p-6 border-b">
-          <h2 class="text-2xl font-bold">Terms of Service</h2>
-          <button onclick="closeModal('termsModal')" class="text-gray-500 hover:text-gray-700">
-            <i class="ri-close-line text-2xl"></i>
-          </button>
-        </div>
-        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mx-6 mt-4">
-          <div class="flex">
-            <div class="flex-shrink-0">
-              <i class="ri-information-line text-blue-400"></i>
-            </div>
-            <div class="ml-3">
-              <p class="text-sm text-blue-700">
-                Please read through our terms carefully. Click "Accept Terms & Continue" below to proceed with registration.
-              </p>
+    <div id="termsModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 modal-backdrop" style="display: none;">
+      <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl modal-content">
+          <div class="flex justify-between items-center p-6 border-b border-gray-200">
+            <h2 class="text-2xl font-bold text-gray-900">Terms of Service</h2>
+            <button onclick="closeModal('termsModal')" class="text-gray-500 hover:text-gray-700">
+              <i class="ri-close-line text-2xl"></i>
+            </button>
+          </div>
+          <div class="bg-red-50 border-l-4 border-primary p-4 mx-6 mt-4">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <i class="ri-information-line text-primary"></i>
+              </div>
+              <div class="ml-3">
+                <p class="text-sm text-red-700">
+                  Please read through our terms carefully. Click "Accept Terms & Continue" below to proceed with registration.
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="p-6 overflow-y-auto max-h-[70vh]">
-          <div class="prose max-w-none">
-            <h3>1. Acceptance of Terms</h3>
-            <p>By accessing and using Verify's services, you accept and agree to be bound by the terms and provision of this agreement.</p>
-            
-            <h3>2. Service Description</h3>
-            <p>Verify provides document verification services to connect job seekers with potential employers in South Africa.</p>
-            
-            <h3>3. User Responsibilities</h3>
-            <p>Users must provide accurate information and maintain the confidentiality of their account credentials.</p>
-            
-            <h3>4. Privacy and Data Protection</h3>
-            <p>We collect and process personal information in accordance with our Privacy Policy and applicable data protection laws.</p>
-            
-            <h3>5. Payment Terms</h3>
-            <p>All fees for verification services are clearly stated and must be paid in advance.</p>
-            
-            <h3>6. Limitation of Liability</h3>
-            <p>Verify's liability is limited to the extent permitted by law.</p>
-            
-            <h3>7. Termination</h3>
-            <p>Either party may terminate this agreement with appropriate notice.</p>
-            
-            <h3>8. Governing Law</h3>
-            <p>These terms are governed by the laws of South Africa.</p>
+          <div class="p-6 overflow-y-auto max-h-[60vh]">
+            <div class="prose max-w-none text-gray-700">
+              <h3 class="text-lg font-semibold text-gray-900 mb-3">1. Acceptance of Terms</h3>
+              <p class="mb-4">By accessing and using Verify's services, you accept and agree to be bound by the terms and provision of this agreement.</p>
+              
+              <h3 class="text-lg font-semibold text-gray-900 mb-3">2. Service Description</h3>
+              <p class="mb-4">Verify provides document verification services to connect job seekers with potential employers in South Africa.</p>
+              
+              <h3 class="text-lg font-semibold text-gray-900 mb-3">3. User Responsibilities</h3>
+              <p class="mb-4">Users must provide accurate information and maintain the confidentiality of their account credentials.</p>
+              
+              <h3 class="text-lg font-semibold text-gray-900 mb-3">4. Privacy and Data Protection</h3>
+              <p class="mb-4">We collect and process personal information in accordance with our Privacy Policy and applicable data protection laws.</p>
+              
+              <h3 class="text-lg font-semibold text-gray-900 mb-3">5. Payment Terms</h3>
+              <p class="mb-4">All fees for verification services are clearly stated and must be paid in advance.</p>
+              
+              <h3 class="text-lg font-semibold text-gray-900 mb-3">6. Limitation of Liability</h3>
+              <p class="mb-4">Verify's liability is limited to the extent permitted by law.</p>
+              
+              <h3 class="text-lg font-semibold text-gray-900 mb-3">7. Termination</h3>
+              <p class="mb-4">Either party may terminate this agreement with appropriate notice.</p>
+              
+              <h3 class="text-lg font-semibold text-gray-900 mb-3">8. Governing Law</h3>
+              <p class="mb-4">These terms are governed by the laws of South Africa.</p>
+            </div>
           </div>
-        </div>
-        <div class="flex justify-between items-center p-6 border-t bg-gray-50">
-          <button onclick="closeModal('termsModal')" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-button hover:bg-gray-400">
-            Cancel
-          </button>
-          <button onclick="acceptTerms()" class="bg-primary text-white px-6 py-2 rounded-button hover:bg-red-600">
-            Accept Terms & Continue
-          </button>
+          <div class="flex flex-col sm:flex-row justify-end items-center p-6 border-t border-gray-200 bg-gray-50 gap-3">
+            <button onclick="closeModal('termsModal')" class="w-full sm:w-auto bg-gray-300 text-gray-700 px-8 py-3 rounded-button hover:bg-gray-400 font-medium order-2 sm:order-1">
+              Cancel
+            </button>
+            <button onclick="acceptTerms()" class="w-full sm:w-auto bg-primary text-white px-8 py-3 rounded-button hover:bg-red-600 font-medium order-1 sm:order-2">
+              Accept Terms & Continue
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -3103,13 +3126,31 @@
       
       // Modal functions
       function openModal(modalId) {
-        document.getElementById(modalId).classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
+        console.log('🚀 Opening modal:', modalId);
+        const modal = document.getElementById(modalId);
+        if (modal) {
+          modal.classList.remove('hidden');
+          modal.style.display = 'flex';
+          modal.style.alignItems = 'center';
+          modal.style.justifyContent = 'center';
+          document.body.style.overflow = 'hidden';
+          console.log('✅ Modal opened successfully:', modalId);
+        } else {
+          console.error('❌ Modal not found:', modalId);
+        }
       }
       
       function closeModal(modalId) {
-        document.getElementById(modalId).classList.add('hidden');
-        document.body.style.overflow = 'auto';
+        console.log('🔒 Closing modal:', modalId);
+        const modal = document.getElementById(modalId);
+        if (modal) {
+          modal.classList.add('hidden');
+          modal.style.display = 'none';
+          document.body.style.overflow = 'auto';
+          console.log('✅ Modal closed successfully:', modalId);
+        } else {
+          console.error('❌ Modal not found:', modalId);
+        }
       }
       
       // Payment modal function
@@ -3131,6 +3172,11 @@
 
       // Terms and conditions functionality
       function acceptTerms() {
+        console.log('📋 Accepting terms and closing modal...');
+        
+        // Close modal immediately
+        closeModal('termsModal');
+        
         // Check both job seeker and employer terms checkboxes
         const seekerTermsCheckbox = document.getElementById('seekerTerms');
         const employerTermsCheckbox = document.getElementById('employerTerms');
@@ -3145,8 +3191,10 @@
           console.log('✅ Employer terms accepted and checkbox checked');
         }
         
-        showNotification('Terms & Conditions accepted!', 'success');
-        closeModal('termsModal');
+        // Show success notification after modal is closed
+        setTimeout(() => {
+          showNotification('Terms & Conditions accepted!', 'success');
+        }, 100);
       }
 
       function acceptPrivacy() {
