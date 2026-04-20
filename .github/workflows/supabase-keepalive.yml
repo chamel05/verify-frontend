@@ -1,0 +1,33 @@
+name: Supabase Keepalive
+
+on:
+  schedule:
+    - cron: '0 9 */3 * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping all Supabase projects
+        run: |
+          set +e
+          ping_project() {
+            local name="$1"
+            local url="$2"
+            local key="$3"
+            echo "=== Pinging $name ==="
+            code=$(curl -s -o /tmp/resp.txt -w "%{http_code}" \
+              -H "apikey: $key" \
+              -H "Authorization: Bearer $key" \
+              "$url/rest/v1/")
+            echo "$name -> HTTP $code"
+          }
+          ping_project "Brand OS" "https://ejgrljkmkguwivijmnat.supabase.co" "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqZ3Jsamtta2d1d2l2aWptbmF0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NTMyMDgsImV4cCI6MjA5MDAyOTIwOH0.Hu4Pg8RM1XzuBoN0uuukIwYemgYE9fWk4vq2mRE-iyM"
+          ping_project "La Vie" "https://fynarbxlhhlngxchsilc.supabase.co" "sb_publishable_2XLvjkx0gjviO1HZfmBgqw_DIzJ3rVK"
+          ping_project "Todoodles" "https://yqiijpyfqitmybzxwsfo.supabase.co" "sb_publishable_UMngVMmlAlU7tyg61Cak_w_hlS4E55e"
+          ping_project "Post Deck" "https://bhnrqdlzyfuyvqeantmk.supabase.co" "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJobnJxZGx6eWZ1eXZxZWFudG1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3NDkwNDYsImV4cCI6MjA5MTMyNTA0Nn0.ixpuQn_CPe8zoxX98Tx_hW2nAI8yMGbgXj8xDvQEXKs"
+          ping_project "Hellbent HACCP" "https://kybrxuiewolzaauvwvqy.supabase.co" "sb_publishable_SMfr-EGkNPipHTpoMT3_4A_TeVw981Y"
+          ping_project "Verify" "https://dvbbvjlwmkqqyfqdbupg.supabase.co" "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2YmJ2amx3bWtxcXlmcWRidXBnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAzNjI0OTYsImV4cCI6MjA2NTkzODQ5Nn0.Zpkj5G3mTngZD2lMCo7Yr6PeyEJ3X6jHndHrvDgPylA"
+          ping_project "Gova Directory" "https://xzxlzkcvkrrgjsyrpigt.supabase.co" "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh6eGx6a2N2a3JyZ2pzeXJwaWd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2ODYyNTcsImV4cCI6MjA4NzI2MjI1N30.XZLBd0CUMAUgvT4EDiy_S73bKXhw3TDdWzpUOs8CELU"
+          echo "All pings complete."
