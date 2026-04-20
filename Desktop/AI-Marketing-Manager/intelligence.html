@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brand OS — Intelligence Feed</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f0f11; color: #e8e8e8; min-height: 100vh; }
+  header { padding: 24px 32px; border-bottom: 1px solid #222; display: flex; align-items: center; justify-content: space-between; }
+  header h1 { font-size: 18px; font-weight: 600; letter-spacing: -0.3px; }
+  header h1 span { color: #6366f1; }
+  .meta { font-size: 12px; color: #666; }
+  main { max-width: 900px; margin: 0 auto; padding: 32px 24px; }
+  .filters { display: flex; gap: 8px; margin-bottom: 28px; flex-wrap: wrap; }
+  .filter-btn { padding: 6px 14px; border-radius: 20px; border: 1px solid #333; background: transparent; color: #aaa; font-size: 12px; cursor: pointer; transition: all 0.15s; }
+  .filter-btn:hover, .filter-btn.active { background: #6366f1; border-color: #6366f1; color: #fff; }
+  .cards { display: flex; flex-direction: column; gap: 16px; }
+  .card { background: #18181b; border: 1px solid #27272a; border-radius: 12px; padding: 20px 24px; }
+  .card:hover { border-color: #444; }
+  .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+  .card-title { font-size: 15px; font-weight: 600; line-height: 1.4; }
+  .badges { display: flex; gap: 6px; flex-shrink: 0; align-items: center; }
+  .badge { padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 500; }
+  .badge-type { background: #27272a; color: #a1a1aa; }
+  .badge-today    { background: #dc2626; color: #fff; }
+  .badge-instant  { background: #dc2626; color: #fff; animation: pulse 2s infinite; }
+  .badge-this_week { background: #d97706; color: #fff; }
+  .badge-this_month { background: #4b5563; color: #d1d5db; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
+  .card-summary { font-size: 13px; color: #a1a1aa; line-height: 1.6; margin-bottom: 12px; }
+  .suggested { background: #1c1c22; border-left: 3px solid #6366f1; border-radius: 0 6px 6px 0; padding: 10px 14px; }
+  .suggested-label { color: #818cf8; display: block; margin-bottom: 4px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+  .suggested-text { font-size: 12px; color: #c4c4e0; line-height: 1.5; }
+  .card-footer { margin-top: 14px; display: flex; align-items: center; justify-content: space-between; }
+  .card-date { font-size: 11px; color: #555; }
+  .actioned-btn { font-size: 11px; padding: 4px 12px; border-radius: 6px; border: 1px solid #333; background: transparent; color: #666; cursor: pointer; transition: all 0.15s; }
+  .actioned-btn:hover { border-color: #22c55e; color: #22c55e; }
+  .actioned-btn.done { border-color: #22c55e; color: #22c55e; background: #052e16; cursor: default; }
+  #loading { text-align: center; padding: 60px; color: #555; font-size: 14px; }
+  #empty { text-align: center; padding: 60px; color: #555; font-size: 14px; display: none; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Brand <span>OS</span> — Intelligence Feed</h1>
+  <span class="meta" id="last-updated"></span>
+</header>
+<main>
+  <div class="filters" id="filters">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="today">Today</button>
+    <button class="filter-btn" data-filter="instant">Instant</button>
+    <button class="filter-btn" data-filter="this_week">This Week</button>
+    <button class="filter-btn" data-filter="trend">Trends</button>
+    <button class="filter-btn" data-filter="actioned">Actioned</button>
+  </div>
+  <div id="loading">Loading intelligence...</div>
+  <div id="empty">No alerts match this filter.</div>
+  <div class="cards" id="cards"></div>
+</main>
+
+<script>
+const SUPABASE_URL = 'https://ejgrljkmkguwivijmnat.supabase.co';
+const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqZ3Jsamtta2d1d2l2aWptbmF0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NTMyMDgsImV4cCI6MjA5MDAyOTIwOH0.Hu4Pg8RM1XzuBoN0uuukIwYemgYE9fWk4vq2mRE-iyM';
+
+let allAlerts = [];
+let activeFilter = 'all';
+
+function esc(str) {
+  const d = document.createElement('div');
+  d.textContent = str || '';
+  return d.innerHTML;
+}
+
+function urgencyLabel(u) {
+  return (u || '').replace('_', ' ');
+}
+
+function createCard(a) {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.id = 'card-' + a.id;
+
+  const top = document.createElement('div');
+  top.className = 'card-top';
+
+  const title = document.createElement('div');
+  title.className = 'card-title';
+  title.textContent = a.title || '';
+  top.appendChild(title);
+
+  const badges = document.createElement('div');
+  badges.className = 'badges';
+  if (a.urgency) {
+    const b = document.createElement('span');
+    b.className = 'badge badge-' + a.urgency;
+    b.textContent = urgencyLabel(a.urgency);
+    badges.appendChild(b);
+  }
+  if (a.alert_type) {
+    const b = document.createElement('span');
+    b.className = 'badge badge-type';
+    b.textContent = a.alert_type;
+    badges.appendChild(b);
+  }
+  top.appendChild(badges);
+  card.appendChild(top);
+
+  const summary = document.createElement('p');
+  summary.className = 'card-summary';
+  summary.textContent = a.summary || '';
+  card.appendChild(summary);
+
+  if (a.suggested_action) {
+    const box = document.createElement('div');
+    box.className = 'suggested';
+    const label = document.createElement('span');
+    label.className = 'suggested-label';
+    label.textContent = 'Suggested Action';
+    const text = document.createElement('span');
+    text.className = 'suggested-text';
+    text.textContent = a.suggested_action;
+    box.appendChild(label);
+    box.appendChild(text);
+    card.appendChild(box);
+  }
+
+  const footer = document.createElement('div');
+  footer.className = 'card-footer';
+  const dateEl = document.createElement('span');
+  dateEl.className = 'card-date';
+  dateEl.textContent = new Date(a.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  footer.appendChild(dateEl);
+
+  const btn = document.createElement('button');
+  btn.className = 'actioned-btn' + (a.actioned ? ' done' : '');
+  btn.textContent = a.actioned ? 'Actioned' : 'Mark as actioned';
+  if (a.actioned) btn.disabled = true;
+  btn.addEventListener('click', () => markActioned(a.id, btn));
+  footer.appendChild(btn);
+  card.appendChild(footer);
+
+  return card;
+}
+
+async function load() {
+  const res = await fetch(SUPABASE_URL + '/rest/v1/intelligence_alerts?select=*&order=created_at.desc', {
+    headers: { apikey: ANON_KEY, Authorization: 'Bearer ' + ANON_KEY }
+  });
+  allAlerts = await res.json();
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('last-updated').textContent = 'Updated ' + new Date().toLocaleTimeString();
+  render();
+}
+
+function render() {
+  const container = document.getElementById('cards');
+  const empty = document.getElementById('empty');
+  let filtered = allAlerts;
+  if (activeFilter === 'actioned') filtered = allAlerts.filter(a => a.actioned);
+  else if (activeFilter !== 'all') {
+    if (['today', 'instant', 'this_week', 'this_month'].includes(activeFilter))
+      filtered = allAlerts.filter(a => a.urgency === activeFilter && !a.actioned);
+    else if (activeFilter === 'trend')
+      filtered = allAlerts.filter(a => a.alert_type === 'trend' && !a.actioned);
+  }
+
+  while (container.firstChild) container.removeChild(container.firstChild);
+  if (!filtered.length) { empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+  filtered.forEach(a => container.appendChild(createCard(a)));
+}
+
+async function markActioned(id, btn) {
+  btn.textContent = '...';
+  btn.disabled = true;
+  await fetch(SUPABASE_URL + '/rest/v1/intelligence_alerts?id=eq.' + id, {
+    method: 'PATCH',
+    headers: { apikey: ANON_KEY, Authorization: 'Bearer ' + ANON_KEY, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+    body: JSON.stringify({ actioned: true, actioned_at: new Date().toISOString() })
+  });
+  const a = allAlerts.find(x => x.id === id);
+  if (a) { a.actioned = true; a.actioned_at = new Date().toISOString(); }
+  render();
+}
+
+document.getElementById('filters').addEventListener('click', function(e) {
+  const f = e.target.dataset.filter;
+  if (!f) return;
+  activeFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(function(b) {
+    b.classList.toggle('active', b.dataset.filter === activeFilter);
+  });
+  render();
+});
+
+load();
+setInterval(load, 60000);
+</script>
+</body>
+</html>
