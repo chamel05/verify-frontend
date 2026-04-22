@@ -470,7 +470,200 @@ animation-play-state: paused;
 </div>
 </div>
 </section>
-
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // Verification timeframes dropdown handler
+  const verificationSelect = document.getElementById("verificationSelect");
+  const timeframeResult = document.getElementById("timeframeResult");
+  const selectedTimeframe = document.getElementById("selectedTimeframe");
+  if (verificationSelect) {
+    verificationSelect.addEventListener("change", function () {
+      const selectedValue = this.value;
+      if (selectedValue) {
+        selectedTimeframe.textContent = selectedValue;
+        timeframeResult.classList.remove("hidden");
+      } else {
+        timeframeResult.classList.add("hidden");
+      }
+    });
+  }
+  // Job Seeker Form Handler
+  const jobSeekerForm = document.getElementById("jobSeekerForm");
+  if (jobSeekerForm) {
+    jobSeekerForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const formData = new FormData(jobSeekerForm);
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">Registration Submitted</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">Thank you for registering with Verify! We'll review your information and contact you within 24-48 hours to complete your verification process.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+      document.body.appendChild(modal);
+      jobSeekerForm.reset();
+    });
+  }
+  // Category cards functionality
+  const categoryCards = document.querySelectorAll(".category-card");
+  function updateApplicantCount(element) {
+    if (!element || !element.dataset) return;
+    const min = parseInt(element.dataset.min) || 0;
+    const max = parseInt(element.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount} Applicants`;
+  }
+  function updateSubcategoryCount(element) {
+    if (!element || !element.closest(".subcategory-item")) return;
+    const item = element.closest(".subcategory-item");
+    const min = parseInt(item.dataset.min) || 0;
+    const max = parseInt(item.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount}`;
+  }
+  function initializeCounts() {
+    document.querySelectorAll(".applicant-count").forEach(updateApplicantCount);
+    document
+      .querySelectorAll(".subcategory-count")
+      .forEach(updateSubcategoryCount);
+  }
+  function updateAllCounts() {
+    document.querySelectorAll(".applicant-count").forEach((element) => {
+      if (!element || !element.dataset) return;
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(element.dataset.min) || 0;
+      const max = parseInt(element.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount} Applicants`;
+    });
+    document.querySelectorAll(".subcategory-count").forEach((element) => {
+      if (!element || !element.closest(".subcategory-item")) return;
+      const item = element.closest(".subcategory-item");
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(item.dataset.min) || 0;
+      const max = parseInt(item.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount}`;
+    });
+  }
+  // Category card click handlers
+  if (categoryCards) {
+    categoryCards.forEach((card) => {
+      if (!card) return;
+      card.addEventListener("click", function () {
+        const content = this.querySelector(".category-content");
+        if (content) {
+          const isExpanded = !content.classList.contains("hidden");
+          document.querySelectorAll(".category-content").forEach((c) => {
+            if (c !== content) {
+              c.classList.add("hidden");
+              c.closest(".category-card")?.classList.remove(
+                "shadow-lg",
+                "bg-gray-50",
+              );
+            }
+          });
+          content.classList.toggle("hidden");
+          this.classList.toggle("shadow-lg");
+          this.classList.toggle("bg-gray-50");
+          if (!isExpanded) {
+            this.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+        }
+      });
+    });
+  }
+  // Subcategory item click handlers
+  document.querySelectorAll(".subcategory-item").forEach((item) => {
+    if (!item) return;
+    item.addEventListener("click", function (e) {
+      e.stopPropagation();
+      const categoryName =
+        this.querySelector(".font-medium")?.textContent || "Category";
+      const applicants =
+        this.querySelector(".subcategory-count")?.textContent || "0";
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">${categoryName}</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">There are currently <span class="text-primary font-bold">${applicants}</span> verified applicants available for this position.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+      document.body.appendChild(modal);
+    });
+  });
+  // Mobile navigation
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenuClose = document.getElementById("mobile-menu-close");
+  const mobileNav = document.getElementById("mobile-nav");
+  if (mobileMenuButton && mobileMenuClose && mobileNav) {
+    const mobileNavLinks = mobileNav.querySelectorAll("a");
+    function toggleMobileMenu() {
+      const isOpen = mobileNav.classList.contains("translate-x-0");
+      mobileNav.classList.toggle("translate-x-0");
+      mobileNav.classList.toggle("translate-x-full");
+      document.body.style.overflow = isOpen ? "" : "hidden";
+    }
+    mobileMenuButton.addEventListener("click", toggleMobileMenu);
+    mobileMenuClose.addEventListener("click", toggleMobileMenu);
+    if (mobileNavLinks) {
+      mobileNavLinks.forEach((link) => {
+        if (!link) return;
+        link.addEventListener("click", toggleMobileMenu);
+      });
+    }
+  }
+  // FAQ toggles
+  const faqToggles = document.querySelectorAll(".faq-toggle");
+  if (faqToggles) {
+    faqToggles.forEach((toggle) => {
+      if (!toggle) return;
+      toggle.addEventListener("click", function (e) {
+        e.preventDefault();
+        const content = this.nextElementSibling;
+        const icon = this.querySelector(".faq-icon");
+        if (content && icon) {
+          content.classList.toggle("hidden");
+          const isExpanded = !content.classList.contains("hidden");
+          icon.className = isExpanded
+            ? "faq-icon ri-arrow-up-s-line"
+            : "faq-icon ri-arrow-down-s-line";
+          this.setAttribute("aria-expanded", isExpanded);
+        }
+      });
+    });
+  }
+  // Initialize counts and start updates
+  initializeCounts();
+  const updateInterval = setInterval(updateAllCounts, 5000);
+  // Clean up interval on page unload
+  window.addEventListener("unload", () => {
+    clearInterval(updateInterval);
+  });
+});
+</script>
 <!-- Verification Tiers -->
 <section id="pricing" class="py-16 bg-white">
 <div class="container mx-auto px-4">
@@ -703,7 +896,200 @@ animation-play-state: paused;
 </div>
 </div>
 </section>
-
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // Verification timeframes dropdown handler
+  const verificationSelect = document.getElementById("verificationSelect");
+  const timeframeResult = document.getElementById("timeframeResult");
+  const selectedTimeframe = document.getElementById("selectedTimeframe");
+  if (verificationSelect) {
+    verificationSelect.addEventListener("change", function () {
+      const selectedValue = this.value;
+      if (selectedValue) {
+        selectedTimeframe.textContent = selectedValue;
+        timeframeResult.classList.remove("hidden");
+      } else {
+        timeframeResult.classList.add("hidden");
+      }
+    });
+  }
+  // Job Seeker Form Handler
+  const jobSeekerForm = document.getElementById("jobSeekerForm");
+  if (jobSeekerForm) {
+    jobSeekerForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const formData = new FormData(jobSeekerForm);
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">Registration Submitted</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">Thank you for registering with Verify! We'll review your information and contact you within 24-48 hours to complete your verification process.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+      document.body.appendChild(modal);
+      jobSeekerForm.reset();
+    });
+  }
+  // Category cards functionality
+  const categoryCards = document.querySelectorAll(".category-card");
+  function updateApplicantCount(element) {
+    if (!element || !element.dataset) return;
+    const min = parseInt(element.dataset.min) || 0;
+    const max = parseInt(element.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount} Applicants`;
+  }
+  function updateSubcategoryCount(element) {
+    if (!element || !element.closest(".subcategory-item")) return;
+    const item = element.closest(".subcategory-item");
+    const min = parseInt(item.dataset.min) || 0;
+    const max = parseInt(item.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount}`;
+  }
+  function initializeCounts() {
+    document.querySelectorAll(".applicant-count").forEach(updateApplicantCount);
+    document
+      .querySelectorAll(".subcategory-count")
+      .forEach(updateSubcategoryCount);
+  }
+  function updateAllCounts() {
+    document.querySelectorAll(".applicant-count").forEach((element) => {
+      if (!element || !element.dataset) return;
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(element.dataset.min) || 0;
+      const max = parseInt(element.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount} Applicants`;
+    });
+    document.querySelectorAll(".subcategory-count").forEach((element) => {
+      if (!element || !element.closest(".subcategory-item")) return;
+      const item = element.closest(".subcategory-item");
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(item.dataset.min) || 0;
+      const max = parseInt(item.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount}`;
+    });
+  }
+  // Category card click handlers
+  if (categoryCards) {
+    categoryCards.forEach((card) => {
+      if (!card) return;
+      card.addEventListener("click", function () {
+        const content = this.querySelector(".category-content");
+        if (content) {
+          const isExpanded = !content.classList.contains("hidden");
+          document.querySelectorAll(".category-content").forEach((c) => {
+            if (c !== content) {
+              c.classList.add("hidden");
+              c.closest(".category-card")?.classList.remove(
+                "shadow-lg",
+                "bg-gray-50",
+              );
+            }
+          });
+          content.classList.toggle("hidden");
+          this.classList.toggle("shadow-lg");
+          this.classList.toggle("bg-gray-50");
+          if (!isExpanded) {
+            this.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+        }
+      });
+    });
+  }
+  // Subcategory item click handlers
+  document.querySelectorAll(".subcategory-item").forEach((item) => {
+    if (!item) return;
+    item.addEventListener("click", function (e) {
+      e.stopPropagation();
+      const categoryName =
+        this.querySelector(".font-medium")?.textContent || "Category";
+      const applicants =
+        this.querySelector(".subcategory-count")?.textContent || "0";
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">${categoryName}</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">There are currently <span class="text-primary font-bold">${applicants}</span> verified applicants available for this position.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+      document.body.appendChild(modal);
+    });
+  });
+  // Mobile navigation
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenuClose = document.getElementById("mobile-menu-close");
+  const mobileNav = document.getElementById("mobile-nav");
+  if (mobileMenuButton && mobileMenuClose && mobileNav) {
+    const mobileNavLinks = mobileNav.querySelectorAll("a");
+    function toggleMobileMenu() {
+      const isOpen = mobileNav.classList.contains("translate-x-0");
+      mobileNav.classList.toggle("translate-x-0");
+      mobileNav.classList.toggle("translate-x-full");
+      document.body.style.overflow = isOpen ? "" : "hidden";
+    }
+    mobileMenuButton.addEventListener("click", toggleMobileMenu);
+    mobileMenuClose.addEventListener("click", toggleMobileMenu);
+    if (mobileNavLinks) {
+      mobileNavLinks.forEach((link) => {
+        if (!link) return;
+        link.addEventListener("click", toggleMobileMenu);
+      });
+    }
+  }
+  // FAQ toggles
+  const faqToggles = document.querySelectorAll(".faq-toggle");
+  if (faqToggles) {
+    faqToggles.forEach((toggle) => {
+      if (!toggle) return;
+      toggle.addEventListener("click", function (e) {
+        e.preventDefault();
+        const content = this.nextElementSibling;
+        const icon = this.querySelector(".faq-icon");
+        if (content && icon) {
+          content.classList.toggle("hidden");
+          const isExpanded = !content.classList.contains("hidden");
+          icon.className = isExpanded
+            ? "faq-icon ri-arrow-up-s-line"
+            : "faq-icon ri-arrow-down-s-line";
+          this.setAttribute("aria-expanded", isExpanded);
+        }
+      });
+    });
+  }
+  // Initialize counts and start updates
+  initializeCounts();
+  const updateInterval = setInterval(updateAllCounts, 5000);
+  // Clean up interval on page unload
+  window.addEventListener("unload", () => {
+    clearInterval(updateInterval);
+  });
+});
+</script>
 <!-- Job Categories -->
 <section id="job-categories" class="py-16 bg-gray-50">
 <div class="container mx-auto px-4">
@@ -1226,7 +1612,200 @@ animation-play-state: paused;
 </div>
 </div>
 </section>
-
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // Verification timeframes dropdown handler
+  const verificationSelect = document.getElementById("verificationSelect");
+  const timeframeResult = document.getElementById("timeframeResult");
+  const selectedTimeframe = document.getElementById("selectedTimeframe");
+  if (verificationSelect) {
+    verificationSelect.addEventListener("change", function () {
+      const selectedValue = this.value;
+      if (selectedValue) {
+        selectedTimeframe.textContent = selectedValue;
+        timeframeResult.classList.remove("hidden");
+      } else {
+        timeframeResult.classList.add("hidden");
+      }
+    });
+  }
+  // Job Seeker Form Handler
+  const jobSeekerForm = document.getElementById("jobSeekerForm");
+  if (jobSeekerForm) {
+    jobSeekerForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const formData = new FormData(jobSeekerForm);
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">Registration Submitted</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">Thank you for registering with Verify! We'll review your information and contact you within 24-48 hours to complete your verification process.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+      document.body.appendChild(modal);
+      jobSeekerForm.reset();
+    });
+  }
+  // Category cards functionality
+  const categoryCards = document.querySelectorAll(".category-card");
+  function updateApplicantCount(element) {
+    if (!element || !element.dataset) return;
+    const min = parseInt(element.dataset.min) || 0;
+    const max = parseInt(element.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount} Applicants`;
+  }
+  function updateSubcategoryCount(element) {
+    if (!element || !element.closest(".subcategory-item")) return;
+    const item = element.closest(".subcategory-item");
+    const min = parseInt(item.dataset.min) || 0;
+    const max = parseInt(item.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount}`;
+  }
+  function initializeCounts() {
+    document.querySelectorAll(".applicant-count").forEach(updateApplicantCount);
+    document
+      .querySelectorAll(".subcategory-count")
+      .forEach(updateSubcategoryCount);
+  }
+  function updateAllCounts() {
+    document.querySelectorAll(".applicant-count").forEach((element) => {
+      if (!element || !element.dataset) return;
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(element.dataset.min) || 0;
+      const max = parseInt(element.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount} Applicants`;
+    });
+    document.querySelectorAll(".subcategory-count").forEach((element) => {
+      if (!element || !element.closest(".subcategory-item")) return;
+      const item = element.closest(".subcategory-item");
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(item.dataset.min) || 0;
+      const max = parseInt(item.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount}`;
+    });
+  }
+  // Category card click handlers
+  if (categoryCards) {
+    categoryCards.forEach((card) => {
+      if (!card) return;
+      card.addEventListener("click", function () {
+        const content = this.querySelector(".category-content");
+        if (content) {
+          const isExpanded = !content.classList.contains("hidden");
+          document.querySelectorAll(".category-content").forEach((c) => {
+            if (c !== content) {
+              c.classList.add("hidden");
+              c.closest(".category-card")?.classList.remove(
+                "shadow-lg",
+                "bg-gray-50",
+              );
+            }
+          });
+          content.classList.toggle("hidden");
+          this.classList.toggle("shadow-lg");
+          this.classList.toggle("bg-gray-50");
+          if (!isExpanded) {
+            this.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+        }
+      });
+    });
+  }
+  // Subcategory item click handlers
+  document.querySelectorAll(".subcategory-item").forEach((item) => {
+    if (!item) return;
+    item.addEventListener("click", function (e) {
+      e.stopPropagation();
+      const categoryName =
+        this.querySelector(".font-medium")?.textContent || "Category";
+      const applicants =
+        this.querySelector(".subcategory-count")?.textContent || "0";
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">${categoryName}</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">There are currently <span class="text-primary font-bold">${applicants}</span> verified applicants available for this position.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+      document.body.appendChild(modal);
+    });
+  });
+  // Mobile navigation
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenuClose = document.getElementById("mobile-menu-close");
+  const mobileNav = document.getElementById("mobile-nav");
+  if (mobileMenuButton && mobileMenuClose && mobileNav) {
+    const mobileNavLinks = mobileNav.querySelectorAll("a");
+    function toggleMobileMenu() {
+      const isOpen = mobileNav.classList.contains("translate-x-0");
+      mobileNav.classList.toggle("translate-x-0");
+      mobileNav.classList.toggle("translate-x-full");
+      document.body.style.overflow = isOpen ? "" : "hidden";
+    }
+    mobileMenuButton.addEventListener("click", toggleMobileMenu);
+    mobileMenuClose.addEventListener("click", toggleMobileMenu);
+    if (mobileNavLinks) {
+      mobileNavLinks.forEach((link) => {
+        if (!link) return;
+        link.addEventListener("click", toggleMobileMenu);
+      });
+    }
+  }
+  // FAQ toggles
+  const faqToggles = document.querySelectorAll(".faq-toggle");
+  if (faqToggles) {
+    faqToggles.forEach((toggle) => {
+      if (!toggle) return;
+      toggle.addEventListener("click", function (e) {
+        e.preventDefault();
+        const content = this.nextElementSibling;
+        const icon = this.querySelector(".faq-icon");
+        if (content && icon) {
+          content.classList.toggle("hidden");
+          const isExpanded = !content.classList.contains("hidden");
+          icon.className = isExpanded
+            ? "faq-icon ri-arrow-up-s-line"
+            : "faq-icon ri-arrow-down-s-line";
+          this.setAttribute("aria-expanded", isExpanded);
+        }
+      });
+    });
+  }
+  // Initialize counts and start updates
+  initializeCounts();
+  const updateInterval = setInterval(updateAllCounts, 5000);
+  // Clean up interval on page unload
+  window.addEventListener("unload", () => {
+    clearInterval(updateInterval);
+  });
+});
+</script>
 <!-- Blog Section -->
 <section id="blog-section" class="py-16 bg-white">
 <div class="container mx-auto px-4">
@@ -1475,7 +2054,200 @@ Your browser does not support the video tag.
 </div>
 </div>
 </section>
-
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // Verification timeframes dropdown handler
+  const verificationSelect = document.getElementById("verificationSelect");
+  const timeframeResult = document.getElementById("timeframeResult");
+  const selectedTimeframe = document.getElementById("selectedTimeframe");
+  if (verificationSelect) {
+    verificationSelect.addEventListener("change", function () {
+      const selectedValue = this.value;
+      if (selectedValue) {
+        selectedTimeframe.textContent = selectedValue;
+        timeframeResult.classList.remove("hidden");
+      } else {
+        timeframeResult.classList.add("hidden");
+      }
+    });
+  }
+  // Job Seeker Form Handler
+  const jobSeekerForm = document.getElementById("jobSeekerForm");
+  if (jobSeekerForm) {
+    jobSeekerForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const formData = new FormData(jobSeekerForm);
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">Registration Submitted</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">Thank you for registering with Verify! We'll review your information and contact you within 24-48 hours to complete your verification process.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+      document.body.appendChild(modal);
+      jobSeekerForm.reset();
+    });
+  }
+  // Category cards functionality
+  const categoryCards = document.querySelectorAll(".category-card");
+  function updateApplicantCount(element) {
+    if (!element || !element.dataset) return;
+    const min = parseInt(element.dataset.min) || 0;
+    const max = parseInt(element.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount} Applicants`;
+  }
+  function updateSubcategoryCount(element) {
+    if (!element || !element.closest(".subcategory-item")) return;
+    const item = element.closest(".subcategory-item");
+    const min = parseInt(item.dataset.min) || 0;
+    const max = parseInt(item.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount}`;
+  }
+  function initializeCounts() {
+    document.querySelectorAll(".applicant-count").forEach(updateApplicantCount);
+    document
+      .querySelectorAll(".subcategory-count")
+      .forEach(updateSubcategoryCount);
+  }
+  function updateAllCounts() {
+    document.querySelectorAll(".applicant-count").forEach((element) => {
+      if (!element || !element.dataset) return;
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(element.dataset.min) || 0;
+      const max = parseInt(element.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount} Applicants`;
+    });
+    document.querySelectorAll(".subcategory-count").forEach((element) => {
+      if (!element || !element.closest(".subcategory-item")) return;
+      const item = element.closest(".subcategory-item");
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(item.dataset.min) || 0;
+      const max = parseInt(item.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount}`;
+    });
+  }
+  // Category card click handlers
+  if (categoryCards) {
+    categoryCards.forEach((card) => {
+      if (!card) return;
+      card.addEventListener("click", function () {
+        const content = this.querySelector(".category-content");
+        if (content) {
+          const isExpanded = !content.classList.contains("hidden");
+          document.querySelectorAll(".category-content").forEach((c) => {
+            if (c !== content) {
+              c.classList.add("hidden");
+              c.closest(".category-card")?.classList.remove(
+                "shadow-lg",
+                "bg-gray-50",
+              );
+            }
+          });
+          content.classList.toggle("hidden");
+          this.classList.toggle("shadow-lg");
+          this.classList.toggle("bg-gray-50");
+          if (!isExpanded) {
+            this.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+        }
+      });
+    });
+  }
+  // Subcategory item click handlers
+  document.querySelectorAll(".subcategory-item").forEach((item) => {
+    if (!item) return;
+    item.addEventListener("click", function (e) {
+      e.stopPropagation();
+      const categoryName =
+        this.querySelector(".font-medium")?.textContent || "Category";
+      const applicants =
+        this.querySelector(".subcategory-count")?.textContent || "0";
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">${categoryName}</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">There are currently <span class="text-primary font-bold">${applicants}</span> verified applicants available for this position.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+      document.body.appendChild(modal);
+    });
+  });
+  // Mobile navigation
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenuClose = document.getElementById("mobile-menu-close");
+  const mobileNav = document.getElementById("mobile-nav");
+  if (mobileMenuButton && mobileMenuClose && mobileNav) {
+    const mobileNavLinks = mobileNav.querySelectorAll("a");
+    function toggleMobileMenu() {
+      const isOpen = mobileNav.classList.contains("translate-x-0");
+      mobileNav.classList.toggle("translate-x-0");
+      mobileNav.classList.toggle("translate-x-full");
+      document.body.style.overflow = isOpen ? "" : "hidden";
+    }
+    mobileMenuButton.addEventListener("click", toggleMobileMenu);
+    mobileMenuClose.addEventListener("click", toggleMobileMenu);
+    if (mobileNavLinks) {
+      mobileNavLinks.forEach((link) => {
+        if (!link) return;
+        link.addEventListener("click", toggleMobileMenu);
+      });
+    }
+  }
+  // FAQ toggles
+  const faqToggles = document.querySelectorAll(".faq-toggle");
+  if (faqToggles) {
+    faqToggles.forEach((toggle) => {
+      if (!toggle) return;
+      toggle.addEventListener("click", function (e) {
+        e.preventDefault();
+        const content = this.nextElementSibling;
+        const icon = this.querySelector(".faq-icon");
+        if (content && icon) {
+          content.classList.toggle("hidden");
+          const isExpanded = !content.classList.contains("hidden");
+          icon.className = isExpanded
+            ? "faq-icon ri-arrow-up-s-line"
+            : "faq-icon ri-arrow-down-s-line";
+          this.setAttribute("aria-expanded", isExpanded);
+        }
+      });
+    });
+  }
+  // Initialize counts and start updates
+  initializeCounts();
+  const updateInterval = setInterval(updateAllCounts, 5000);
+  // Clean up interval on page unload
+  window.addEventListener("unload", () => {
+    clearInterval(updateInterval);
+  });
+});
+</script>
 <!-- Testimonials -->
 <section class="py-16 bg-gray-50">
 <div class="container mx-auto px-4">
@@ -1583,7 +2355,200 @@ Employers
 </div>
 </div>
 </section>
-
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // Verification timeframes dropdown handler
+  const verificationSelect = document.getElementById("verificationSelect");
+  const timeframeResult = document.getElementById("timeframeResult");
+  const selectedTimeframe = document.getElementById("selectedTimeframe");
+  if (verificationSelect) {
+    verificationSelect.addEventListener("change", function () {
+      const selectedValue = this.value;
+      if (selectedValue) {
+        selectedTimeframe.textContent = selectedValue;
+        timeframeResult.classList.remove("hidden");
+      } else {
+        timeframeResult.classList.add("hidden");
+      }
+    });
+  }
+  // Job Seeker Form Handler
+  const jobSeekerForm = document.getElementById("jobSeekerForm");
+  if (jobSeekerForm) {
+    jobSeekerForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const formData = new FormData(jobSeekerForm);
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">Registration Submitted</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">Thank you for registering with Verify! We'll review your information and contact you within 24-48 hours to complete your verification process.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+      document.body.appendChild(modal);
+      jobSeekerForm.reset();
+    });
+  }
+  // Category cards functionality
+  const categoryCards = document.querySelectorAll(".category-card");
+  function updateApplicantCount(element) {
+    if (!element || !element.dataset) return;
+    const min = parseInt(element.dataset.min) || 0;
+    const max = parseInt(element.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount} Applicants`;
+  }
+  function updateSubcategoryCount(element) {
+    if (!element || !element.closest(".subcategory-item")) return;
+    const item = element.closest(".subcategory-item");
+    const min = parseInt(item.dataset.min) || 0;
+    const max = parseInt(item.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount}`;
+  }
+  function initializeCounts() {
+    document.querySelectorAll(".applicant-count").forEach(updateApplicantCount);
+    document
+      .querySelectorAll(".subcategory-count")
+      .forEach(updateSubcategoryCount);
+  }
+  function updateAllCounts() {
+    document.querySelectorAll(".applicant-count").forEach((element) => {
+      if (!element || !element.dataset) return;
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(element.dataset.min) || 0;
+      const max = parseInt(element.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount} Applicants`;
+    });
+    document.querySelectorAll(".subcategory-count").forEach((element) => {
+      if (!element || !element.closest(".subcategory-item")) return;
+      const item = element.closest(".subcategory-item");
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(item.dataset.min) || 0;
+      const max = parseInt(item.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount}`;
+    });
+  }
+  // Category card click handlers
+  if (categoryCards) {
+    categoryCards.forEach((card) => {
+      if (!card) return;
+      card.addEventListener("click", function () {
+        const content = this.querySelector(".category-content");
+        if (content) {
+          const isExpanded = !content.classList.contains("hidden");
+          document.querySelectorAll(".category-content").forEach((c) => {
+            if (c !== content) {
+              c.classList.add("hidden");
+              c.closest(".category-card")?.classList.remove(
+                "shadow-lg",
+                "bg-gray-50",
+              );
+            }
+          });
+          content.classList.toggle("hidden");
+          this.classList.toggle("shadow-lg");
+          this.classList.toggle("bg-gray-50");
+          if (!isExpanded) {
+            this.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+        }
+      });
+    });
+  }
+  // Subcategory item click handlers
+  document.querySelectorAll(".subcategory-item").forEach((item) => {
+    if (!item) return;
+    item.addEventListener("click", function (e) {
+      e.stopPropagation();
+      const categoryName =
+        this.querySelector(".font-medium")?.textContent || "Category";
+      const applicants =
+        this.querySelector(".subcategory-count")?.textContent || "0";
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">${categoryName}</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">There are currently <span class="text-primary font-bold">${applicants}</span> verified applicants available for this position.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+      document.body.appendChild(modal);
+    });
+  });
+  // Mobile navigation
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenuClose = document.getElementById("mobile-menu-close");
+  const mobileNav = document.getElementById("mobile-nav");
+  if (mobileMenuButton && mobileMenuClose && mobileNav) {
+    const mobileNavLinks = mobileNav.querySelectorAll("a");
+    function toggleMobileMenu() {
+      const isOpen = mobileNav.classList.contains("translate-x-0");
+      mobileNav.classList.toggle("translate-x-0");
+      mobileNav.classList.toggle("translate-x-full");
+      document.body.style.overflow = isOpen ? "" : "hidden";
+    }
+    mobileMenuButton.addEventListener("click", toggleMobileMenu);
+    mobileMenuClose.addEventListener("click", toggleMobileMenu);
+    if (mobileNavLinks) {
+      mobileNavLinks.forEach((link) => {
+        if (!link) return;
+        link.addEventListener("click", toggleMobileMenu);
+      });
+    }
+  }
+  // FAQ toggles
+  const faqToggles = document.querySelectorAll(".faq-toggle");
+  if (faqToggles) {
+    faqToggles.forEach((toggle) => {
+      if (!toggle) return;
+      toggle.addEventListener("click", function (e) {
+        e.preventDefault();
+        const content = this.nextElementSibling;
+        const icon = this.querySelector(".faq-icon");
+        if (content && icon) {
+          content.classList.toggle("hidden");
+          const isExpanded = !content.classList.contains("hidden");
+          icon.className = isExpanded
+            ? "faq-icon ri-arrow-up-s-line"
+            : "faq-icon ri-arrow-down-s-line";
+          this.setAttribute("aria-expanded", isExpanded);
+        }
+      });
+    });
+  }
+  // Initialize counts and start updates
+  initializeCounts();
+  const updateInterval = setInterval(updateAllCounts, 5000);
+  // Clean up interval on page unload
+  window.addEventListener("unload", () => {
+    clearInterval(updateInterval);
+  });
+});
+</script>
 <!-- FAQ Section -->
 <section id="faq" class="py-16 bg-white">
 <div class="container mx-auto px-4">
@@ -1673,7 +2638,200 @@ Employers
 </div>
 </div>
 </section>
-
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // Verification timeframes dropdown handler
+  const verificationSelect = document.getElementById("verificationSelect");
+  const timeframeResult = document.getElementById("timeframeResult");
+  const selectedTimeframe = document.getElementById("selectedTimeframe");
+  if (verificationSelect) {
+    verificationSelect.addEventListener("change", function () {
+      const selectedValue = this.value;
+      if (selectedValue) {
+        selectedTimeframe.textContent = selectedValue;
+        timeframeResult.classList.remove("hidden");
+      } else {
+        timeframeResult.classList.add("hidden");
+      }
+    });
+  }
+  // Job Seeker Form Handler
+  const jobSeekerForm = document.getElementById("jobSeekerForm");
+  if (jobSeekerForm) {
+    jobSeekerForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const formData = new FormData(jobSeekerForm);
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">Registration Submitted</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">Thank you for registering with Verify! We'll review your information and contact you within 24-48 hours to complete your verification process.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+      document.body.appendChild(modal);
+      jobSeekerForm.reset();
+    });
+  }
+  // Category cards functionality
+  const categoryCards = document.querySelectorAll(".category-card");
+  function updateApplicantCount(element) {
+    if (!element || !element.dataset) return;
+    const min = parseInt(element.dataset.min) || 0;
+    const max = parseInt(element.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount} Applicants`;
+  }
+  function updateSubcategoryCount(element) {
+    if (!element || !element.closest(".subcategory-item")) return;
+    const item = element.closest(".subcategory-item");
+    const min = parseInt(item.dataset.min) || 0;
+    const max = parseInt(item.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount}`;
+  }
+  function initializeCounts() {
+    document.querySelectorAll(".applicant-count").forEach(updateApplicantCount);
+    document
+      .querySelectorAll(".subcategory-count")
+      .forEach(updateSubcategoryCount);
+  }
+  function updateAllCounts() {
+    document.querySelectorAll(".applicant-count").forEach((element) => {
+      if (!element || !element.dataset) return;
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(element.dataset.min) || 0;
+      const max = parseInt(element.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount} Applicants`;
+    });
+    document.querySelectorAll(".subcategory-count").forEach((element) => {
+      if (!element || !element.closest(".subcategory-item")) return;
+      const item = element.closest(".subcategory-item");
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(item.dataset.min) || 0;
+      const max = parseInt(item.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount}`;
+    });
+  }
+  // Category card click handlers
+  if (categoryCards) {
+    categoryCards.forEach((card) => {
+      if (!card) return;
+      card.addEventListener("click", function () {
+        const content = this.querySelector(".category-content");
+        if (content) {
+          const isExpanded = !content.classList.contains("hidden");
+          document.querySelectorAll(".category-content").forEach((c) => {
+            if (c !== content) {
+              c.classList.add("hidden");
+              c.closest(".category-card")?.classList.remove(
+                "shadow-lg",
+                "bg-gray-50",
+              );
+            }
+          });
+          content.classList.toggle("hidden");
+          this.classList.toggle("shadow-lg");
+          this.classList.toggle("bg-gray-50");
+          if (!isExpanded) {
+            this.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+        }
+      });
+    });
+  }
+  // Subcategory item click handlers
+  document.querySelectorAll(".subcategory-item").forEach((item) => {
+    if (!item) return;
+    item.addEventListener("click", function (e) {
+      e.stopPropagation();
+      const categoryName =
+        this.querySelector(".font-medium")?.textContent || "Category";
+      const applicants =
+        this.querySelector(".subcategory-count")?.textContent || "0";
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">${categoryName}</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">There are currently <span class="text-primary font-bold">${applicants}</span> verified applicants available for this position.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+      document.body.appendChild(modal);
+    });
+  });
+  // Mobile navigation
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenuClose = document.getElementById("mobile-menu-close");
+  const mobileNav = document.getElementById("mobile-nav");
+  if (mobileMenuButton && mobileMenuClose && mobileNav) {
+    const mobileNavLinks = mobileNav.querySelectorAll("a");
+    function toggleMobileMenu() {
+      const isOpen = mobileNav.classList.contains("translate-x-0");
+      mobileNav.classList.toggle("translate-x-0");
+      mobileNav.classList.toggle("translate-x-full");
+      document.body.style.overflow = isOpen ? "" : "hidden";
+    }
+    mobileMenuButton.addEventListener("click", toggleMobileMenu);
+    mobileMenuClose.addEventListener("click", toggleMobileMenu);
+    if (mobileNavLinks) {
+      mobileNavLinks.forEach((link) => {
+        if (!link) return;
+        link.addEventListener("click", toggleMobileMenu);
+      });
+    }
+  }
+  // FAQ toggles
+  const faqToggles = document.querySelectorAll(".faq-toggle");
+  if (faqToggles) {
+    faqToggles.forEach((toggle) => {
+      if (!toggle) return;
+      toggle.addEventListener("click", function (e) {
+        e.preventDefault();
+        const content = this.nextElementSibling;
+        const icon = this.querySelector(".faq-icon");
+        if (content && icon) {
+          content.classList.toggle("hidden");
+          const isExpanded = !content.classList.contains("hidden");
+          icon.className = isExpanded
+            ? "faq-icon ri-arrow-up-s-line"
+            : "faq-icon ri-arrow-down-s-line";
+          this.setAttribute("aria-expanded", isExpanded);
+        }
+      });
+    });
+  }
+  // Initialize counts and start updates
+  initializeCounts();
+  const updateInterval = setInterval(updateAllCounts, 5000);
+  // Clean up interval on page unload
+  window.addEventListener("unload", () => {
+    clearInterval(updateInterval);
+  });
+});
+</script>
 <!-- CTA Section -->
 <section class="py-16 bg-gray-900 text-white" style="background-image: url('/assets/cta-background.jpg'); background-size: cover; background-position: center;">
 <div class="container mx-auto px-4 text-center">
@@ -1685,7 +2843,200 @@ Employers
 </div>
 </div>
 </section>
-
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // Verification timeframes dropdown handler
+  const verificationSelect = document.getElementById("verificationSelect");
+  const timeframeResult = document.getElementById("timeframeResult");
+  const selectedTimeframe = document.getElementById("selectedTimeframe");
+  if (verificationSelect) {
+    verificationSelect.addEventListener("change", function () {
+      const selectedValue = this.value;
+      if (selectedValue) {
+        selectedTimeframe.textContent = selectedValue;
+        timeframeResult.classList.remove("hidden");
+      } else {
+        timeframeResult.classList.add("hidden");
+      }
+    });
+  }
+  // Job Seeker Form Handler
+  const jobSeekerForm = document.getElementById("jobSeekerForm");
+  if (jobSeekerForm) {
+    jobSeekerForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const formData = new FormData(jobSeekerForm);
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">Registration Submitted</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">Thank you for registering with Verify! We'll review your information and contact you within 24-48 hours to complete your verification process.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+      document.body.appendChild(modal);
+      jobSeekerForm.reset();
+    });
+  }
+  // Category cards functionality
+  const categoryCards = document.querySelectorAll(".category-card");
+  function updateApplicantCount(element) {
+    if (!element || !element.dataset) return;
+    const min = parseInt(element.dataset.min) || 0;
+    const max = parseInt(element.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount} Applicants`;
+  }
+  function updateSubcategoryCount(element) {
+    if (!element || !element.closest(".subcategory-item")) return;
+    const item = element.closest(".subcategory-item");
+    const min = parseInt(item.dataset.min) || 0;
+    const max = parseInt(item.dataset.max) || 100;
+    const randomCount = Math.floor(Math.random() * (max - min + 1)) + min;
+    element.textContent = `${randomCount}`;
+  }
+  function initializeCounts() {
+    document.querySelectorAll(".applicant-count").forEach(updateApplicantCount);
+    document
+      .querySelectorAll(".subcategory-count")
+      .forEach(updateSubcategoryCount);
+  }
+  function updateAllCounts() {
+    document.querySelectorAll(".applicant-count").forEach((element) => {
+      if (!element || !element.dataset) return;
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(element.dataset.min) || 0;
+      const max = parseInt(element.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount} Applicants`;
+    });
+    document.querySelectorAll(".subcategory-count").forEach((element) => {
+      if (!element || !element.closest(".subcategory-item")) return;
+      const item = element.closest(".subcategory-item");
+      const currentCount = parseInt(element.textContent) || 0;
+      const min = parseInt(item.dataset.min) || 0;
+      const max = parseInt(item.dataset.max) || 100;
+      const change = Math.floor(Math.random() * 3) - 1;
+      const newCount = Math.min(Math.max(currentCount + change, min), max);
+      element.textContent = `${newCount}`;
+    });
+  }
+  // Category card click handlers
+  if (categoryCards) {
+    categoryCards.forEach((card) => {
+      if (!card) return;
+      card.addEventListener("click", function () {
+        const content = this.querySelector(".category-content");
+        if (content) {
+          const isExpanded = !content.classList.contains("hidden");
+          document.querySelectorAll(".category-content").forEach((c) => {
+            if (c !== content) {
+              c.classList.add("hidden");
+              c.closest(".category-card")?.classList.remove(
+                "shadow-lg",
+                "bg-gray-50",
+              );
+            }
+          });
+          content.classList.toggle("hidden");
+          this.classList.toggle("shadow-lg");
+          this.classList.toggle("bg-gray-50");
+          if (!isExpanded) {
+            this.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+        }
+      });
+    });
+  }
+  // Subcategory item click handlers
+  document.querySelectorAll(".subcategory-item").forEach((item) => {
+    if (!item) return;
+    item.addEventListener("click", function (e) {
+      e.stopPropagation();
+      const categoryName =
+        this.querySelector(".font-medium")?.textContent || "Category";
+      const applicants =
+        this.querySelector(".subcategory-count")?.textContent || "0";
+      const modal = document.createElement("div");
+      modal.className =
+        "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      modal.innerHTML = `
+<div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">${categoryName}</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<p class="mb-4">There are currently <span class="text-primary font-bold">${applicants}</span> verified applicants available for this position.</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-red-600" onclick="this.closest('.fixed').remove()">Close</button>
+</div>
+</div>
+`;
+      document.body.appendChild(modal);
+    });
+  });
+  // Mobile navigation
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenuClose = document.getElementById("mobile-menu-close");
+  const mobileNav = document.getElementById("mobile-nav");
+  if (mobileMenuButton && mobileMenuClose && mobileNav) {
+    const mobileNavLinks = mobileNav.querySelectorAll("a");
+    function toggleMobileMenu() {
+      const isOpen = mobileNav.classList.contains("translate-x-0");
+      mobileNav.classList.toggle("translate-x-0");
+      mobileNav.classList.toggle("translate-x-full");
+      document.body.style.overflow = isOpen ? "" : "hidden";
+    }
+    mobileMenuButton.addEventListener("click", toggleMobileMenu);
+    mobileMenuClose.addEventListener("click", toggleMobileMenu);
+    if (mobileNavLinks) {
+      mobileNavLinks.forEach((link) => {
+        if (!link) return;
+        link.addEventListener("click", toggleMobileMenu);
+      });
+    }
+  }
+  // FAQ toggles
+  const faqToggles = document.querySelectorAll(".faq-toggle");
+  if (faqToggles) {
+    faqToggles.forEach((toggle) => {
+      if (!toggle) return;
+      toggle.addEventListener("click", function (e) {
+        e.preventDefault();
+        const content = this.nextElementSibling;
+        const icon = this.querySelector(".faq-icon");
+        if (content && icon) {
+          content.classList.toggle("hidden");
+          const isExpanded = !content.classList.contains("hidden");
+          icon.className = isExpanded
+            ? "faq-icon ri-arrow-up-s-line"
+            : "faq-icon ri-arrow-down-s-line";
+          this.setAttribute("aria-expanded", isExpanded);
+        }
+      });
+    });
+  }
+  // Initialize counts and start updates
+  initializeCounts();
+  const updateInterval = setInterval(updateAllCounts, 5000);
+  // Clean up interval on page unload
+  window.addEventListener("unload", () => {
+    clearInterval(updateInterval);
+  });
+});
+</script>
 <!-- Footer -->
 <footer class="bg-gray-100 pt-16 pb-8">
 <div class="container mx-auto px-4">
